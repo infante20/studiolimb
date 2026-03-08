@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Triangle Generator | StudioLimb</title>
+    <meta name="description"
+        content="Create pure CSS triangles visually. Generate the border code for tooltips, arrows, and speech bubbles instantly with this free client-side tool." />
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CSS Triangle Generator - StudioLimb",
+      "description": "Create pure CSS triangles visually. Generate the border code for tooltips, arrows, and speech bubbles instantly.",
+      "url": "https://studiolimb.com/css-triangle-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #050508;
+            color: #f8fafc;
+            /* Background pattern */
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+
+        /* Box Background for Preview */
+        .preview-bg {
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+    </style>
+</head>
+
+<body class="antialiased flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html"
+                class="flex items-center gap-2 text-white font-semibold text-lg tracking-tight hover:text-indigo-400 transition-colors">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                StudioLimb
+            </a>
+            <div class="flex items-center gap-4 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-white transition-colors">All Tools</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-24 pb-12 px-6">
+        <div class="max-w-5xl mx-auto">
+
+            <!-- Tool Header -->
+            <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1
+                        class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-3">
+                        CSS Triangle Generator
+                    </h1>
+                    <p class="text-slate-400 text-lg max-w-xl">
+                        Create pure CSS triangles visually. Generate the border code for tooltips, arrows, and speech
+                        bubbles instantly.
+                    </p>
+                </div>
+                <div class="flex gap-2 justify-center md:justify-start">
+                    <span
+                        class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20">CSS
+                        Code</span>
+                    <span
+                        class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-medium border border-purple-500/20">Design</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Left Panel: Controls -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6">
+                        <h2 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
+                                </path>
+                            </svg>
+                            Triangle Settings
+                        </h2>
+
+                        <!-- Direction -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-slate-300 mb-3">Direction</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="setDirection('top-left')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="top-left"><svg class="w-5 h-5 rotate-[-45deg]" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+                                <button onclick="setDirection('top')"
+                                    class="dir-btn p-3 rounded-lg bg-indigo-500/20 border border-indigo-500 text-indigo-400 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center focus:outline-none"
+                                    data-dir="top"><svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+                                <button onclick="setDirection('top-right')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="top-right"><svg class="w-5 h-5 rotate-[45deg]" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+
+                                <button onclick="setDirection('left')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="left"><svg class="w-5 h-5 -rotate-90" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+                                <div class="flex items-center justify-center">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                                </div>
+                                <button onclick="setDirection('right')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="right"><svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+
+                                <button onclick="setDirection('bottom-left')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="bottom-left"><svg class="w-5 h-5 rotate-[-135deg]" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+                                <button onclick="setDirection('bottom')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="bottom"><svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+                                <button onclick="setDirection('bottom-right')"
+                                    class="dir-btn p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition flex items-center justify-center text-slate-400 focus:outline-none"
+                                    data-dir="bottom-right"><svg class="w-5 h-5 rotate-[135deg]" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg></button>
+                            </div>
+                        </div>
+
+                        <!-- Width -->
+                        <div class="mb-5">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-sm font-medium text-slate-300">Width</label>
+                                <span id="widthValue"
+                                    class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">100px</span>
+                            </div>
+                            <input type="range" id="widthSlider" min="0" max="250" value="100"
+                                class="w-full accent-indigo-500 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer">
+                        </div>
+
+                        <!-- Height / Left / Right (Depends on dir) -->
+                        <div class="mb-6" id="secondaryDimensionContainer">
+                            <div class="flex justify-between items-center mb-2">
+                                <label id="heightLabel" class="text-sm font-medium text-slate-300">Height</label>
+                                <span id="heightValue"
+                                    class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">100px</span>
+                            </div>
+                            <input type="range" id="heightSlider" min="0" max="250" value="100"
+                                class="w-full accent-indigo-500 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer">
+                        </div>
+
+                        <!-- Color -->
+                        <div class="mb-2">
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Color</label>
+                            <div class="flex items-center gap-3">
+                                <input type="color" id="colorPicker" value="#7c5cfc"
+                                    class="w-12 h-12 rounded border border-white/10 p-1 bg-white/5 cursor-pointer">
+                                <span id="colorHex" class="text-sm font-mono text-slate-400 uppercase">#7c5cfc</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Preview & Code -->
+                <div class="lg:col-span-8 flex flex-col gap-6">
+
+                    <!-- Preview Area -->
+                    <div class="glass-panel p-2 flex-grow flex flex-col min-h-[400px]">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+                            <h3 class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                    </path>
+                                </svg>
+                                Live Preview
+                            </h3>
+                        </div>
+                        <div
+                            class="flex-grow rounded-b-[0.9rem] flex items-center justify-center preview-bg relative overflow-hidden">
+                            <!-- This div will become the triangle -->
+                            <div id="trianglePreview" class="transition-all duration-300"></div>
+
+                            <!-- Dimensions overlay -->
+                            <div
+                                class="absolute bottom-4 right-4 text-xs font-mono text-slate-400 bg-[#050508]/80 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-md">
+                                <span id="dimDisplay">100 x 100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Output -->
+                    <div class="glass-panel p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                                Generated CSS
+                            </h3>
+                            <button id="copyBtn"
+                                class="px-3 py-1.5 text-xs font-medium bg-white/5 hover:bg-white/10 text-white rounded-md transition-colors border border-white/10 flex items-center gap-1.5 focus:outline-none">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                Copy Code
+                            </button>
+                        </div>
+                        <div
+                            class="bg-black/50 rounded-lg p-5 font-mono text-sm text-slate-300 overflow-x-auto border border-white/5 relative group">
+                            <pre id="codeOutput" class="whitespace-pre-wrap leading-relaxed space-y-2"></pre>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SEO Explanatory Content -->
+            <article class="mt-20">
+                <div class="glass-panel p-8 md:p-12">
+                    <h2
+                        class="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-6">
+                        How to Create Triangles in Pure CSS</h2>
+                    <div class="text-slate-400 leading-relaxed mb-10 space-y-6">
+                        <p>
+                            Creating triangles with purely CSS—without needing SVGs or external images—is an incredibly
+                            elegant styling trick. It leverages the way browsers render thick CSS borders where they
+                            meet at an angle.
+                        </p>
+                        <p>
+                            By setting the `<span class="text-indigo-400">width</span>` and `<span
+                                class="text-indigo-400">height</span>` of a container to `0`, and strategically applying
+                            wide bounds with `border-style: solid;` setting the relevant borders to `<span
+                                class="text-pink-400">transparent</span>` and one border to a visible color, you
+                            generate a beautiful, responsive, and lightweight triangle shape. Our Custom CSS Triangle
+                            Generator calculates all exact math required for any side instantly.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mt-12 mb-8">Frequently Asked Questions (FAQ)
+                    </h3>
+
+                    <div class="space-y-6">
+                        <!-- FAQ 1 -->
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Is a CSS Triangle responsive?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                Yes. CSS triangles render flawlessly without pixelation on high-density displays
+                                (Retina). If you want its size to adapt dynamically to the screen viewport width, you
+                                can replace the fixed `px` values generated above with responsive units like `vw`, `vh`,
+                                or `em`.
+                            </p>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Can I apply a box-shadow to a CSS Triangle?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                Standard CSS `box-shadow` will not work properly because it applies the shadow to the
+                                square invisible bounding box of your element, rather than the visual triangle. The
+                                secret workaround is to use the <code
+                                    class="text-indigo-300">filter: drop-shadow(...)</code> property on your element,
+                                which traces the exact visible pixel boundaries.
+                            </p>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Do you host or upload my code designs?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                Never. StudioLimb is a strictly Client-Side Suite. When you define parameters here, all
+                                calculations are executed locally via JavaScript within your browser window. No design
+                                data leaves your device whatsoever.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-8">
+        <div
+            class="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <p class="mt-2 md:mt-0 font-medium">Built for the Modern Web.</p>
+        </div>
+    </footer>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                    // Registered
+                });
+            });
+        }
+    </script>
+
+    <script>
+        // State
+        let currentDir = 'top';
+        const widthSlider = document.getElementById('widthSlider');
+        const heightSlider = document.getElementById('heightSlider');
+        const colorPicker = document.getElementById('colorPicker');
+
+        const widthValue = document.getElementById('widthValue');
+        const heightValue = document.getElementById('heightValue');
+        const heightLabel = document.getElementById('heightLabel');
+        const colorHex = document.getElementById('colorHex');
+
+        const preview = document.getElementById('trianglePreview');
+        const codeOutput = document.getElementById('codeOutput');
+        const dimDisplay = document.getElementById('dimDisplay');
+        const copyBtn = document.getElementById('copyBtn');
+
+        // Initialize UI
+        function setDirection(dir) {
+            currentDir = dir;
+
+            // Update active state of buttons
+            document.querySelectorAll('.dir-btn').forEach(btn => {
+                if (btn.dataset.dir === dir) {
+                    btn.classList.remove('bg-white/5', 'text-slate-400');
+                    btn.classList.add('bg-indigo-500/20', 'text-indigo-400', 'border-indigo-500');
+                } else {
+                    btn.classList.remove('bg-indigo-500/20', 'text-indigo-400', 'border-indigo-500');
+                    btn.classList.add('bg-white/5', 'text-slate-400');
+                }
+            });
+
+            // Change secondary slider label based on direction
+            let finalWidthLabel = 'Width';
+            let finalHeightLabel = 'Height';
+
+            if (['left', 'right'].includes(dir)) {
+                finalHeightLabel = 'Horizontal Span';
+                finalWidthLabel = 'Vertical Span';
+            }
+
+            document.querySelector("label[for='widthSlider']") || document.querySelectorAll("label.text-sm.font-medium.text-slate-300")[1]; // Hacky fallback if missing ID
+            heightLabel.textContent = finalHeightLabel;
+
+            updateTriangle();
+        }
+
+        function updateTriangle() {
+            const w = parseFloat(widthSlider.value);
+            const h = parseFloat(heightSlider.value);
+            const c = colorPicker.value;
+
+            widthValue.textContent = `${w}px`;
+            heightValue.textContent = `${h}px`;
+            colorHex.textContent = c.toUpperCase();
+
+            dimDisplay.textContent = `${w} x ${h}`;
+
+            // Calculate borders based on direction
+            let top = 0, right = 0, bottom = 0, left = 0;
+            let topColor = "transparent", rightColor = "transparent", bottomColor = "transparent", leftColor = "transparent";
+
+            switch (currentDir) {
+                case 'top':
+                    left = w / 2; right = w / 2; bottom = h; bottomColor = c;
+                    break;
+                case 'bottom':
+                    left = w / 2; right = w / 2; top = h; topColor = c;
+                    break;
+                case 'left':
+                    top = w / 2; bottom = w / 2; right = h; rightColor = c;
+                    break;
+                case 'right':
+                    top = w / 2; bottom = w / 2; left = h; leftColor = c;
+                    break;
+                case 'top-left':
+                    top = h; right = w; topColor = c;
+                    break;
+                case 'top-right':
+                    top = h; left = w; topColor = c;
+                    break;
+                case 'bottom-left':
+                    bottom = h; right = w; bottomColor = c;
+                    break;
+                case 'bottom-right':
+                    bottom = h; left = w; bottomColor = c;
+                    break;
+            }
+
+            // Apply to preview element
+            // We use standard pixels for the style but we remove any borders that are 0 for cleaner output
+            preview.style.width = '0';
+            preview.style.height = '0';
+            preview.style.borderStyle = 'solid';
+            preview.style.borderWidth = `${top}px ${right}px ${bottom}px ${left}px`;
+            preview.style.borderColor = `${topColor} ${rightColor} ${bottomColor} ${leftColor}`;
+
+            // Generate CSS Text
+            let cssString = `.triangle {\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: ${top}px ${right}px ${bottom}px ${left}px;\n  border-color: ${topColor} ${rightColor} ${bottomColor} ${leftColor};\n}`;
+
+            // Syntax Highlighting
+            cssString = cssString.replace(/([a-z-]+):/g, '<span class="text-indigo-300">$1</span>:');
+            cssString = cssString.replace(/;/g, '<span class="text-white/50">;</span>');
+            cssString = cssString.replace(/({|})/g, '<span class="text-amber-300">$1</span>');
+            cssString = cssString.replace(/(transparent)/g, '<span class="text-slate-500">$1</span>');
+            cssString = cssString.replace(/(#[A-Za-z0-9]+)/g, '<span class="text-sky-300">$1</span>');
+            cssString = cssString.replace(/(\b\d+(\.\d+)?px\b)/g, '<span class="text-emerald-300">$1</span>');
+            cssString = cssString.replace(/(\.triangle)/g, '<span class="text-amber-200">$1</span>');
+
+            codeOutput.innerHTML = cssString;
+        }
+
+        // Event Listeners
+        widthSlider.addEventListener('input', updateTriangle);
+        heightSlider.addEventListener('input', updateTriangle);
+        colorPicker.addEventListener('input', updateTriangle);
+
+        copyBtn.addEventListener('click', () => {
+            // extract raw text from HTML
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = codeOutput.innerText;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Copied!`;
+            copyBtn.classList.remove('text-white');
+            copyBtn.classList.add('text-emerald-400', 'border-emerald-400/50');
+
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+                copyBtn.classList.add('text-white');
+                copyBtn.classList.remove('text-emerald-400', 'border-emerald-400/50');
+            }, 2000);
+        });
+
+        // Initialize
+        updateTriangle();
+
+    </script>
+</body>
+
+</html>
