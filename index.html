@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <!-- SEO Meta Tags -->
+    <title>StudioLimb | Essential Web Design & Development Tools</title>
+    <meta name="description"
+        content="Discover StudioLimb: A free, premium suite of over 20+ modern web micro-tools. Generators for CSS gradients, glassmorphism, flexbox, grid, image compression, and SVG optimization." />
+    <meta name="keywords"
+        content="web design tools, css generators, flexbox playground, image compressor, svg optimizer, web development tools, glassmorphism generator, gradient generator" />
+    <meta name="author" content="StudioLimb" />
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="StudioLimb | Essential Web Design & Development Tools" />
+    <meta property="og:description"
+        content="A free, premium suite of modern web micro-tools for designers and developers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://studiolimb.com" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "primary-hover": "#6545ea",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050508;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(124, 92, 252, 0.05), transparent 25%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(124, 92, 252, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(124, 92, 252, 0.2);
+        }
+
+        /* Abstract glowing blobs for background */
+        .bg-shape {
+            position: absolute;
+            filter: blur(90px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Subtle grid background pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050508;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 92, 252, 0.5);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Background decorative elements -->
+    <div class="fixed inset-0 z-[-1] bg-grid pointer-events-none"></div>
+    <div class="bg-shape bg-primary w-96 h-96 rounded-full top-[-100px] left-[-100px] animate-blob mix-blend-screen">
+    </div>
+    <div
+        class="bg-shape bg-indigo-600 w-96 h-96 rounded-full top-[20%] right-[-100px] animate-blob animation-delay-2000 mix-blend-screen">
+    </div>
+    <div
+        class="bg-shape bg-fuchsia-600 w-80 h-80 rounded-full bottom-[-100px] left-[20%] animate-blob animation-delay-4000 mix-blend-screen">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 px-6 py-6 max-w-7xl mx-auto w-full flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white shadow-[0_0_20px_rgba(124,92,252,0.4)]">
+                <span class="material-symbols-outlined text-[28px]">token</span>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold leading-none tracking-tight">StudioLimb</h1>
+                <p class="text-[10px] uppercase tracking-widest font-bold text-primary opacity-80 mt-1">Creative Suite
+                </p>
+            </div>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+            <a href="#tools" class="hover:text-white transition-colors">Tools</a>
+            <a href="#" class="hover:text-white transition-colors">Resources</a>
+            <a href="#" class="hover:text-white transition-colors">Pro</a>
+        </div>
+        <a href="#tools"
+            class="hidden md:flex h-10 px-6 items-center justify-center rounded-xl bg-white/10 text-white text-sm font-bold border border-white/10 hover:bg-white/20 transition-all gap-2">
+            Explore Suite <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header
+        class="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 pb-32 max-w-5xl mx-auto">
+        <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 shadow-[0_0_15px_rgba(124,92,252,0.15)]">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            20+ Free Tools Available
+        </div>
+
+        <h2
+            class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
+            The Ultimate Toolkit for <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-fuchsia-500">Modern Web
+                Creators</span>
+        </h2>
+
+        <p class="text-lg md:text-xl text-slate-400 max-w-2xl font-medium mb-12 leading-relaxed">
+            Elevate your workflow with our premium suite of micro-tools. Generate CSS properties, optimize assets, and
+            design layouts faster than ever. 100% free, always fast.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <a href="#tools"
+                class="flex h-14 px-8 items-center justify-center rounded-xl bg-primary text-white text-base font-bold shadow-[0_0_30px_rgba(124,92,252,0.4)] hover:shadow-[0_0_40px_rgba(124,92,252,0.6)] hover:bg-primary-hover transition-all gap-2 transform hover:-translate-y-1">
+                <span class="material-symbols-outlined">bolt</span> Start Creating
+            </a>
+            <button
+                class="flex h-14 px-8 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white text-base font-bold hover:bg-white/10 transition-all gap-2">
+                <span class="material-symbols-outlined">bookmark</span> Bookmark (Ctrl+D)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Tools Directory -->
+    <main id="tools" class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 pb-24">
+
+        <div class="flex items-end justify-between mb-10 border-b border-white/10 pb-6">
+            <div>
+                <h3 class="text-3xl font-bold tracking-tight mb-2">Tool Directory</h3>
+                <p class="text-slate-400 text-sm">Everything you need, directly in your browser.</p>
+            </div>
+
+            <!-- AdSense Placeholder (Top) -->
+            <div
+                class="hidden lg:flex w-[468px] h-[60px] bg-white/5 border border-dashed border-white/20 rounded-lg items-center justify-center text-xs text-slate-500 font-mono">
+                [AdSense Banner Space: 468x60]
+            </div>
+        </div>
+
+        <!-- CSS Generators -->
+        <h4 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined">css</span> CSS Generators
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="gradient-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-white text-xl">palette</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Gradient Gen</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Create beautiful linear and radial CSS background
+                    gradients.</p>
+            </a>
+
+            <a href="glassmorphism-generator.html"
+                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-white text-xl">layers</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Glassmorphism</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Generate perfect frosted glass UI components for your
+                    interfaces.</p>
+            </a>
+
+            <a href="box-shadow-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-[#2a2a35] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.8)] border border-white/5 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">content_copy</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Box Shadow</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Visually design layered drop shadows for depth and
+                    elevation.</p>
+            </a>
+
+            <a href="border-radius-visualizer.html"
+                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 !rounded-[10px_20px_5px_15px] bg-[#334155] border-2 border-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">rounded_corner</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Border Radius</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Visualize and generate complex 8-point CSS border radius
+                    values.</p>
+            </a>
+
+            <a href="snowfall-premier.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30">
+                        <span class="material-symbols-outlined text-xl">ac_unit</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Snowfall Effect</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Interactive CSS particle snow effect generator.</p>
+            </a>
+
+        </div>
+
+        <!-- Typography & Layout -->
+        <h4 class="text-xl font-bold mb-6 text-emerald-400 flex items-center gap-2">
+            <span class="material-symbols-outlined">text_fields</span> Typography & Layout
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="flexbox-playground.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                        <span class="material-symbols-outlined text-xl">view_column</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Flexbox Playground</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Master CSS Flexbox visually with interactive controls.
+                </p>
+            </a>
+
+            <a href="grid-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                        <span class="material-symbols-outlined text-xl">grid_4x4</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">CSS Grid Gen</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Build complex CSS Grid layouts in seconds, drag layout
+                    grids visually.</p>
+            </a>
+
+            <a href="font-pairing.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
+                        <span class="material-symbols-outlined text-xl">match_case</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Font Pairing</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Discover and preview harmonious Google Font combinations.
+                </p>
+            </a>
+
+            <a href="type-scale-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
+                        <span class="material-symbols-outlined text-xl">format_size</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Type Scale</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Generate modular perfect typography scales using
+                    mathematical ratios.</p>
+            </a>
+
+            <a href="lorem-ipsum-premier.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-slate-500/20 text-slate-300 flex items-center justify-center border border-slate-500/30">
+                        <span class="material-symbols-outlined text-xl">subject</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Lorem Ipsum</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Generate placeholder text instantly with paragraph and
+                    word controls.</p>
+            </a>
+
+        </div>
+
+        <!-- Image & Asset Utilities -->
+        <h4 class="text-xl font-bold mb-6 text-fuchsia-400 flex items-center gap-2">
+            <span class="material-symbols-outlined">image</span> Image & Assets
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="image-compressor.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
+                        <span class="material-symbols-outlined text-xl">compress</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Image Compressor</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Reduce image file sizes instantly entirely within your
+                    browser.</p>
+            </a>
+
+            <a href="image-format-converter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
+                        <span class="material-symbols-outlined text-xl">transform</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Format Converter</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Convert between WebP, PNG, and JPG preserving
+                    transparency.</p>
+            </a>
+
+            <a href="image-resizer.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
+                        <span class="material-symbols-outlined text-xl">crop</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Image Resizer</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Resize images accurately with aspect ratio constraints.
+                </p>
+            </a>
+
+            <a href="svg-optimizer.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
+                        <span class="material-symbols-outlined text-xl">cleaning_services</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">SVG Optimizer</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Clean and shrink SVG markup for production environments.
+                </p>
+            </a>
+
+            <a href="svg-wave-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
+                        <span class="material-symbols-outlined text-xl">water</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">SVG Waves</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Generate beautiful scalable section dividers and wave
+                    shapes.</p>
+            </a>
+
+            <a href="qr-code-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
+                        <span class="material-symbols-outlined text-xl">qr_code_2</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">QR Code Gen</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Create custom, high-resolution QR codes with logo
+                    embedding.</p>
+            </a>
+
+        </div>
+
+        <!-- Utilities & Color -->
+        <h4 class="text-xl font-bold mb-6 text-sky-400 flex items-center gap-2">
+            <span class="material-symbols-outlined">build</span> Color & Utilities
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+
+            <a href="color-palette-generator.html"
+                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-500 flex items-center justify-center border border-yellow-500/30">
+                        <span class="material-symbols-outlined text-xl">color_lens</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Color Palette</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Extract and generate color combinations automatically.
+                </p>
+            </a>
+
+            <a href="contrast-checker.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center border border-white/30">
+                        <span class="material-symbols-outlined text-xl">contrast</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Contrast Checker</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Ensure accessibility by checking WCAG color contrast
+                    ratios.</p>
+            </a>
+
+            <a href="px-rem-converter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-slate-500/20 text-slate-300 flex items-center justify-center border border-slate-500/30">
+                        <span class="material-symbols-outlined text-xl">calculate</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">PX to REM</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Quickly convert pixel values to rem for scalable CSS.</p>
+            </a>
+
+            <a href="social-media-sizes.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+                        <span class="material-symbols-outlined text-xl">share</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Social Sizes List</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Up-to-date reference sheet for all platform image
+                    dimensions.</p>
+            </a>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom AdSense Banner -->
+    <div class="w-full flex justify-center pb-12">
+        <div
+            class="w-full max-w-[728px] h-[90px] bg-white/5 border border-dashed border-white/20 rounded-lg flex flex-col items-center justify-center text-xs text-slate-500 font-mono">
+            <span>[AdSense Banner Space: 728x90]</span>
+            <span class="text-[10px] opacity-70 mt-1">Ready for monetization script</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-white/10 bg-[#020205] pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-primary text-xl">token</span>
+                    <span class="text-lg font-bold text-white">StudioLimb</span>
+                </div>
+                <p class="text-slate-400 text-sm max-w-xs mb-4">
+                    The ultimate destination for modern web design tools. Built for speed, precision, and aesthetics.
+                </p>
+                <!-- Affiliate placeholder link example -->
+                <a href="#" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300">
+                    <span class="material-symbols-outlined text-[14px]">sell</span> Recommended Web Hosting
+                </a>
+            </div>
+
+            <div>
+                <h6 class="text-white font-bold mb-4">Tools Index</h6>
+                <ul class="text-sm text-slate-400 space-y-2">
+                    <li><a href="gradient-generator.html" class="hover:text-primary transition-colors">CSS Gradients</a>
+                    </li>
+                    <li><a href="svg-optimizer.html" class="hover:text-primary transition-colors">SVG Optimization</a>
+                    </li>
+                    <li><a href="image-compressor.html" class="hover:text-primary transition-colors">Image
+                            Compression</a></li>
+                    <li><a href="flexbox-playground.html" class="hover:text-primary transition-colors">CSS Layout
+                            Guides</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="text-white font-bold mb-4">Legal</h6>
+                <ul class="text-sm text-slate-400 space-y-2">
+                    <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <p class="mt-2 md:mt-0 font-medium">Built for the Modern Web.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

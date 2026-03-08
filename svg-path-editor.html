@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb | SVG Path Editor Premier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "code": ["Fira Code", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .canvas-container {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+        }
+
+        textarea {
+            background: rgba(10, 10, 15, 0.9);
+            color: #dcdcaa;
+            /* VS Code Yellow for attributes */
+            font-family: 'Fira Code', monospace;
+            resize: none;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #7c5cfc;
+            box-shadow: 0 0 0 2px rgba(124, 92, 252, 0.2);
+        }
+
+        .btn-action {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .btn-action:hover {
+            background: rgba(124, 92, 252, 0.1);
+            border-color: #7c5cfc;
+            color: white;
+            box-shadow: 0 4px 12px rgba(124, 92, 252, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
+    <div class="relative flex h-screen w-full flex-col">
+        <!-- Main Background Canvas -->
+        <div class="absolute inset-0 z-0 canvas-container"></div>
+
+        <!-- Top Navigation Bar -->
+        <header class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined">polyline</span>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight">StudioLimb</h2>
+                    <p class="text-[10px] uppercase tracking-widest font-semibold opacity-60">SVG Suite</p>
+                </div>
+            </div>
+
+            <button
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-all border border-primary/50"
+                onclick="copyPath()">
+                <span class="material-symbols-outlined text-[18px] mr-2">content_copy</span> Copy Raw Data
+            </button>
+        </header>
+
+        <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+            <!-- Sidebar Controls -->
+            <div class="flex w-[350px] flex-col gap-4 h-full">
+                <div
+                    class="flex flex-col gap-4 glass-panel p-6 rounded-xl overflow-y-auto scrollbar-hide h-full relative">
+
+                    <div class="mb-2">
+                        <h1 class="text-xl font-bold mb-1">Path Editor</h1>
+                        <p class="text-xs text-slate-400 font-medium leading-relaxed">Modify and optimize SVG <code
+                                class="font-code text-[10px] bg-white/10 px-1 py-0.5 rounded">d="..."</code> path data
+                            visually.</p>
+                    </div>
+
+                    <div class="h-px bg-white/10 my-1"></div>
+
+                    <!-- Transform Matrix -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">Transform
+                            Path</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="btn-action flex flex-col items-center gap-1" onclick="flip('h')">
+                                <span class="material-symbols-outlined text-[20px] mb-1">flip</span> Flip Horizontal
+                            </button>
+                            <button class="btn-action flex flex-col items-center gap-1" onclick="flip('v')">
+                                <span class="material-symbols-outlined text-[20px] mb-1 rotate-90">flip</span> Flip
+                                Vertical
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-white/10 my-2"></div>
+
+                    <!-- Scaling -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">Scale
+                            Geometry</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="btn-action flex items-center justify-center gap-2" onclick="scale(0.9)">
+                                <span class="material-symbols-outlined text-[16px]">remove</span> Reduce 10%
+                            </button>
+                            <button class="btn-action flex items-center justify-center gap-2" onclick="scale(1.1)">
+                                <span class="material-symbols-outlined text-[16px]">add</span> Expand 10%
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-white/10 my-2"></div>
+
+                    <!-- Optimization -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">Clean &
+                            Optimize</label>
+                        <button class="btn-action w-full flex items-center justify-between px-4 py-3"
+                            onclick="minify()">
+                            <div class="text-left">
+                                <p class="text-white">Minify Strings</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Remove empty spaces</p>
+                            </div>
+                            <span class="material-symbols-outlined text-primary">cleaning_services</span>
+                        </button>
+
+                        <button class="btn-action w-full flex items-center justify-between px-4 py-3"
+                            onclick="roundCoords()">
+                            <div class="text-left">
+                                <p class="text-white">Round Decimals</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Whole pixel numbers</p>
+                            </div>
+                            <span class="material-symbols-outlined text-primary">money_off</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Central Content Stage -->
+            <div class="flex-1 glass-panel rounded-xl flex flex-col relative overflow-hidden bg-[#0a0a0f]/90">
+
+                <div class="flex-1 flex flex-col h-full">
+
+                    <!-- Code Bar -->
+                    <div class="h-32 shrink-0 border-b border-white/10 bg-[#000] relative">
+                        <div
+                            class="absolute top-0 left-0 bg-primary/20 text-primary border-b border-r border-primary/30 px-3 py-1 font-mono text-[10px] font-bold rounded-br-lg z-20 shadow-md">
+                            d=
+                        </div>
+                        <textarea id="pathInput" spellcheck="false"
+                            class="w-full h-full p-6 pt-10 border-none font-code text-[14px] leading-relaxed break-all"
+                            oninput="updatePreview()">M50 80 C70 80 80 60 80 40 C80 20 65 10 50 10 C35 10 20 20 20 40 C20 60 30 80 50 80 Z</textarea>
+                    </div>
+
+                    <!-- Visual Stage -->
+                    <div
+                        class="flex-1 relative bg-[#0a0a0f]/80 flex items-center justify-center p-8 overflow-hidden shadow-inner">
+                        <!-- Blueprint Grid Background -->
+                        <div class="absolute inset-0 opacity-10" style="background-image: 
+                            linear-gradient(#7c5cfc 1px, transparent 1px),
+                            linear-gradient(90deg, #7c5cfc 1px, transparent 1px),
+                            linear-gradient(rgba(124, 92, 252, 0.2) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(124, 92, 252, 0.2) 1px, transparent 1px);
+                            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+                            background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;">
+                        </div>
+
+                        <div
+                            class="relative z-10 w-full max-w-2xl aspect-square flex items-center justify-center bg-transparent rounded-2xl p-4 mix-blend-screen">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"
+                                class="w-full h-full overflow-visible">
+                                <path id="pathPreview"
+                                    class="fill-primary/20 stroke-primary stroke-[0.5] drop-shadow-[0_0_15px_rgba(124,92,252,0.8)] transition-all duration-300"
+                                    d="M50 80 C70 80 80 60 80 40 C80 20 65 10 50 10 C35 10 20 20 20 40 C20 60 30 80 50 80 Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 bg-white text-black font-bold px-6 py-3 rounded-full flex items-center gap-2 shadow-2xl z-50 pointer-events-none">
+        <span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+        <span>Path coordinates copied!</span>
+    </div>
+
+    <script>
+        const input = document.getElementById('pathInput');
+        const pathEl = document.getElementById('pathPreview');
+
+        function updatePreview() {
+            try {
+                // Remove transform safely if new string
+                pathEl.setAttribute('d', input.value.trim());
+            } catch (e) {
+                // Don't crash on invalid SVGs during typing
+            }
+        }
+
+        function flip(axis) {
+            const scaleX = axis === 'h' ? -1 : 1;
+            const scaleY = axis === 'v' ? -1 : 1;
+
+            // Visual transform for simplicity in MVP
+            const currentTransform = pathEl.getAttribute('transform') || '';
+            const newT = currentTransform + ` scale(${scaleX}, ${scaleY})`;
+            pathEl.setAttribute('transform', newT.trim());
+
+            // Note: True data mutation requires an SVG parser to read absolute/relative commands.
+            // For this UI overhaul, we maintain the original logic which applied pure visual CSS scales.
+            triggerToast(`Geometry Flipped ${axis.toUpperCase()}`);
+        }
+
+        function minify() {
+            let d = input.value;
+            d = d.replace(/\s+/g, ' ')
+                .replace(/([A-Za-z])\s+/g, '$1')
+                .replace(/\s+([A-Za-z])/g, '$1')
+                .replace(/, /g, ',')
+                .trim();
+            input.value = d;
+            updatePreview();
+            triggerToast("Strings minified");
+        }
+
+        function roundCoords() {
+            let d = input.value;
+            d = d.replace(/(-?\d+\.\d+)/g, (match) => Math.round(parseFloat(match)));
+            input.value = d;
+            updatePreview();
+            triggerToast("Decimals rounded");
+        }
+
+        function scale(factor) {
+            const currentTransform = pathEl.getAttribute('transform') || '';
+            pathEl.setAttribute('transform', currentTransform + ` scale(${factor})`);
+            triggerToast(`Grid scaled by ${factor}x`);
+        }
+
+        function triggerToast(msg) {
+            const toast = document.getElementById('toast');
+            if (msg) toast.querySelector('span:nth-child(2)').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        function copyPath() {
+            navigator.clipboard.writeText(input.value).then(() => {
+                triggerToast('Path coordinates copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+
+</html>
