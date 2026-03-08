@@ -23,6 +23,11 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://studiolimb.com/" />
 
+    <!-- PWA Settings -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
@@ -669,6 +674,18 @@
         </div>
     </footer>
 
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
