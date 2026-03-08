@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb | Photo Filters & Effects</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .checkered-bg {
+            background-color: #050508;
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        /* Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #7c5cfc;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(124, 92, 252, 0.5);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: filter 0.2s ease-out;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 0.5rem;
+        }
+
+        .filter-preset {
+            transition: all 0.2s;
+        }
+
+        .filter-preset.active {
+            border-color: #7c5cfc;
+            background-color: rgba(124, 92, 252, 0.1);
+        }
+
+        .filter-preset:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased h-screen overflow-hidden flex flex-col">
+    <!-- Top Navigation -->
+    <header
+        class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl shrink-0">
+        <div class="flex items-center gap-3">
+            <a href="index.html"
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                <span class="material-symbols-outlined">auto_fix_high</span>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold leading-tight tracking-tight">Photo Filters & Effects</h2>
+                <p class="text-[10px] uppercase tracking-widest font-semibold text-slate-400">StudioLimb Tools</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="btnDownload" onclick="downloadImage()" disabled
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25 hover:opacity-90 transition-all gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-[18px]">download</span> Export Image
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+        <!-- Sidebar Controls -->
+        <div class="flex w-80 flex-col gap-4 h-full shrink-0">
+            <div class="flex flex-col flex-1 glass-panel p-5 rounded-xl overflow-y-auto scrollbar-hide">
+                <div class="space-y-6">
+
+                    <!-- Upload Input -->
+                    <div id="uploadSection" class="relative group cursor-pointer"
+                        onclick="document.getElementById('fileInput').click()">
+                        <div
+                            class="absolute inset-0 bg-primary/20 rounded-xl blur-xl group-hover:bg-primary/30 transition-all">
+                        </div>
+                        <div
+                            class="relative flex flex-col items-center justify-center py-6 px-4 border-2 border-dashed border-primary/50 rounded-xl bg-[#050508] text-center hover:border-primary transition-colors">
+                            <span
+                                class="material-symbols-outlined text-3xl text-primary mb-1">add_photo_alternate</span>
+                            <span class="text-xs font-bold text-slate-200">Upload Image</span>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*" class="hidden"
+                            onchange="handleImageUpload(event)">
+                    </div>
+
+                    <div id="controlsSection" class="opacity-50 pointer-events-none transition-opacity space-y-6">
+
+                        <!-- Quick Presets -->
+                        <div>
+                            <label
+                                class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-3">Instagram-style
+                                Presets</label>
+                            <div class="grid grid-cols-2 gap-2" id="presetContainer">
+                                <button onclick="applyPreset('none', this)"
+                                    class="filter-preset active p-2 border border-white/10 rounded-lg text-xs font-bold text-center bg-white/5">Normal</button>
+                                <button onclick="applyPreset('vintage', this)"
+                                    class="filter-preset p-2 border border-white/10 rounded-lg text-xs font-bold text-center bg-white/5">Vintage</button>
+                                <button onclick="applyPreset('lark', this)"
+                                    class="filter-preset p-2 border border-white/10 rounded-lg text-xs font-bold text-center bg-white/5">Lark</button>
+                                <button onclick="applyPreset('moon', this)"
+                                    class="filter-preset p-2 border border-white/10 rounded-lg text-xs font-bold text-center bg-white/5">B&W</button>
+                                <button onclick="applyPreset('clarendon', this)"
+                                    class="filter-preset p-2 border border-white/10 rounded-lg text-xs font-bold text-center bg-white/5">Clarendon</button>
+                                <button onclick="applyPreset('sepia', this)"
+                                    class="filter-preset p-2 border border-white/10 rounded-lg text-xs font-bold text-center bg-white/5">Sepia</button>
+                            </div>
+                        </div>
+
+                        <!-- Manual Adjustments -->
+                        <div class="pt-4 border-t border-white/5 space-y-5">
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block">Fine
+                                    Tuning</label>
+                                <button onclick="resetSliders()"
+                                    class="text-[10px] hover:text-primary text-slate-400 font-bold transition-colors">RESET</button>
+                            </div>
+
+                            <!-- Brightness -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Brightness</span>
+                                    <span class="text-xs font-mono text-primary" id="val-brightness">100%</span>
+                                </div>
+                                <input type="range" id="filter-brightness" data-unit="%" min="0" max="200" value="100"
+                                    class="filter-slider">
+                            </div>
+
+                            <!-- Contrast -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Contrast</span>
+                                    <span class="text-xs font-mono text-primary" id="val-contrast">100%</span>
+                                </div>
+                                <input type="range" id="filter-contrast" data-unit="%" min="0" max="200" value="100"
+                                    class="filter-slider">
+                            </div>
+
+                            <!-- Saturation -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Saturation</span>
+                                    <span class="text-xs font-mono text-primary" id="val-saturate">100%</span>
+                                </div>
+                                <input type="range" id="filter-saturate" data-unit="%" min="0" max="200" value="100"
+                                    class="filter-slider">
+                            </div>
+
+                            <!-- Hue Rotate -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Hue</span>
+                                    <span class="text-xs font-mono text-primary" id="val-hue-rotate">0deg</span>
+                                </div>
+                                <input type="range" id="filter-hue-rotate" data-unit="deg" min="0" max="360" value="0"
+                                    class="filter-slider">
+                            </div>
+
+                            <!-- Blur -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Blur</span>
+                                    <span class="text-xs font-mono text-primary" id="val-blur">0px</span>
+                                </div>
+                                <input type="range" id="filter-blur" data-unit="px" min="0" max="20" step="0.5"
+                                    value="0" class="filter-slider">
+                            </div>
+
+                            <!-- Grayscale -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Grayscale</span>
+                                    <span class="text-xs font-mono text-primary" id="val-grayscale">0%</span>
+                                </div>
+                                <input type="range" id="filter-grayscale" data-unit="%" min="0" max="100" value="0"
+                                    class="filter-slider">
+                            </div>
+
+                            <!-- Sepia -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Sepia Tone</span>
+                                    <span class="text-xs font-mono text-primary" id="val-sepia">0%</span>
+                                </div>
+                                <input type="range" id="filter-sepia" data-unit="%" min="0" max="100" value="0"
+                                    class="filter-slider">
+                            </div>
+
+                            <!-- Invert -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-slate-300">Invert Colors</span>
+                                    <span class="text-xs font-mono text-primary" id="val-invert">0%</span>
+                                </div>
+                                <input type="range" id="filter-invert" data-unit="%" min="0" max="100" value="0"
+                                    class="filter-slider">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Work Area -->
+        <div
+            class="flex-1 glass-panel rounded-xl flex items-center justify-center overflow-hidden relative checkered-bg p-8">
+            <div id="editorPlaceholder" class="flex flex-col items-center text-slate-500 gap-4">
+                <span class="material-symbols-outlined text-6xl opacity-20">photo_filter</span>
+                <p class="text-sm">Upload an image to apply filters</p>
+            </div>
+            <!-- The actual image we will style with CSS filters -->
+            <img id="previewImage" class="hidden" src="" alt="Filter Preview">
+
+            <!-- Hidden canvas used ONLY for exporting the final composed image -->
+            <canvas id="exportCanvas" class="hidden"></canvas>
+        </div>
+    </main>
+
+    <script>
+        const previewImage = document.getElementById('previewImage');
+        const sliders = document.querySelectorAll('.filter-slider');
+
+        let originalFileName = 'filtered-image';
+        let originalFileType = 'image/jpeg';
+        let currentFilterString = '';
+
+        // Default slider values
+        const defaults = {
+            'filter-brightness': 100,
+            'filter-contrast': 100,
+            'filter-saturate': 100,
+            'filter-hue-rotate': 0,
+            'filter-blur': 0,
+            'filter-grayscale': 0,
+            'filter-sepia': 0,
+            'filter-invert': 0
+        };
+
+        const presets = {
+            'none': { ...defaults },
+            'vintage': { ...defaults, 'filter-sepia': 50, 'filter-contrast': 120, 'filter-brightness': 90 },
+            'lark': { ...defaults, 'filter-brightness': 108, 'filter-contrast': 90, 'filter-saturate': 130 },
+            'moon': { ...defaults, 'filter-grayscale': 100, 'filter-contrast': 110, 'filter-brightness': 110 },
+            'clarendon': { ...defaults, 'filter-contrast': 120, 'filter-saturate': 125 },
+            'sepia': { ...defaults, 'filter-sepia': 100 }
+        };
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            originalFileName = file.name.split('.')[0];
+            originalFileType = file.type;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                document.getElementById('editorPlaceholder').classList.add('hidden');
+                previewImage.classList.remove('hidden');
+                document.getElementById('controlsSection').classList.remove('opacity-50', 'pointer-events-none');
+                document.getElementById('btnDownload').disabled = false;
+
+                // Reset to normal on new image
+                document.getElementById('presetContainer').firstElementChild.click();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateFilters() {
+            let filterStr = '';
+            sliders.forEach(slider => {
+                const name = slider.id.replace('filter-', '');
+                const val = slider.value;
+                const unit = slider.getAttribute('data-unit');
+                filterStr += `${name}(${val}${unit}) `;
+
+                // Update UI label
+                document.getElementById(`val-${name}`).textContent = val + unit;
+            });
+
+            currentFilterString = filterStr.trim();
+            previewImage.style.filter = currentFilterString;
+        }
+
+        // Attach listeners to sliders
+        sliders.forEach(slider => {
+            slider.addEventListener('input', () => {
+                // If user touches a slider, remove active class from presets
+                document.querySelectorAll('.filter-preset').forEach(b => b.classList.remove('active'));
+                updateFilters();
+            });
+        });
+
+        function applyPreset(presetName, btnElement) {
+            const settings = presets[presetName];
+
+            // Update sliders to match preset
+            sliders.forEach(slider => {
+                slider.value = settings[slider.id];
+            });
+
+            // Update UI
+            document.querySelectorAll('.filter-preset').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            updateFilters();
+        }
+
+        function resetSliders() {
+            applyPreset('none');
+            // Re-highlight "Normal" preset
+            document.getElementById('presetContainer').firstElementChild.classList.add('active');
+        }
+
+        function downloadImage() {
+            if (!previewImage.src) return;
+
+            // To export an image with CSS filters, we must draw it to a canvas 
+            // and apply the ctx.filter property before drawing.
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = previewImage.naturalWidth;
+            canvas.height = previewImage.naturalHeight;
+
+            // Apply the exact CSS filter string we built to the canvas context
+            ctx.filter = currentFilterString;
+
+            // Draw image. The filter is applied during drawing.
+            ctx.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+
+            // Export
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${originalFileName}-filtered.${originalFileType.split('/')[1]}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, originalFileType, 0.95);
+        }
+
+    </script>
+</body>
+
+</html>
