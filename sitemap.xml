@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://studiolimb.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url><loc>https://studiolimb.com/bg-remover.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/border-radius-visualizer.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/box-shadow-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/collage-maker.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/color-palette-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/contrast-checker.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/flexbox-playground.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/font-pairing.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/glassmorphism-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/gradient-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/grid-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/image-compressor.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://studiolimb.com/image-cropper.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://studiolimb.com/image-format-converter.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://studiolimb.com/image-resizer.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://studiolimb.com/lorem-ipsum-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/lorem-ipsum-premier.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/photo-filters.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://studiolimb.com/px-rem-converter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/qr-code-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/snowfall-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/snowfall-premier.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/social-media-sizes.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/svg-optimizer.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/svg-path-editor.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/svg-wave-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://studiolimb.com/type-scale-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://studiolimb.com/watermark-creator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+</urlset>
