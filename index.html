@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="dark overflow-x-hidden" lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -160,13 +160,16 @@
 
     <!-- Background decorative elements -->
     <div class="fixed inset-0 z-[-1] bg-grid pointer-events-none"></div>
-    <div class="bg-shape bg-primary w-96 h-96 rounded-full top-[-100px] left-[-100px] animate-blob mix-blend-screen">
-    </div>
-    <div
-        class="bg-shape bg-indigo-600 w-96 h-96 rounded-full top-[20%] right-[-100px] animate-blob animation-delay-2000 mix-blend-screen">
-    </div>
-    <div
-        class="bg-shape bg-fuchsia-600 w-80 h-80 rounded-full bottom-[-100px] left-[20%] animate-blob animation-delay-4000 mix-blend-screen">
+    <div class="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div
+            class="bg-shape bg-primary w-96 h-96 rounded-full top-[-100px] left-[-100px] animate-blob mix-blend-screen">
+        </div>
+        <div
+            class="bg-shape bg-indigo-600 w-96 h-96 rounded-full top-[20%] right-[-100px] animate-blob animation-delay-2000 mix-blend-screen">
+        </div>
+        <div
+            class="bg-shape bg-fuchsia-600 w-80 h-80 rounded-full bottom-[-100px] left-[20%] animate-blob animation-delay-4000 mix-blend-screen">
+        </div>
     </div>
 
     <!-- Navigation -->
@@ -190,7 +193,7 @@
         <div
             class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 shadow-[0_0_15px_rgba(124,92,252,0.15)]">
             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            20+ Free Tools Available
+            30+ Free Tools Available
         </div>
 
         <h2
