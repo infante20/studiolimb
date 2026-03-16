@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb | Generador QR Premier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .canvas-container {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+        }
+
+        .qr-stage {
+            background-color: #050508;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(124, 92, 252, 0.1) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px, 20px 20px;
+        }
+
+        #qrcode img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Custom Input */
+        .color-well-wrapper {
+            position: relative;
+            width: 100%;
+            height: 44px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .color-well-wrapper input[type="color"] {
+            position: absolute;
+            inset: -10px;
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            background: transparent;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/qr-code-generator.html">
+    <meta name="description" content="Genera códigos QR personalizados de alta calidad al instante.">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
+    <div class="relative flex h-screen w-full flex-col">
+        <!-- Main Background Canvas -->
+        <div class="absolute inset-0 z-0 canvas-container"></div>
+
+        <!-- Top Navigation Bar -->
+        <header class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined">qr_code_2</span>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight">StudioLimb</h2>
+                    <p class="text-[10px] uppercase tracking-widest font-semibold opacity-60">Generator Suite</p>
+                </div>
+            </div>
+
+            <button
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all border border-primary/50"
+                onclick="downloadQR()">
+                <span class="material-symbols-outlined text-[18px] mr-2">download</span> Export PNG
+            </button>
+        </header>
+
+        <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+            <!-- Sidebar Controls -->
+            <div class="flex w-[400px] flex-col gap-4 h-full">
+                <div
+                    class="flex flex-col gap-4 glass-panel p-6 rounded-xl overflow-y-auto scrollbar-hide h-full relative">
+
+                    <div class="mb-2">
+                        <h1 class="text-xl font-bold mb-1">QR Code Generator</h1>
+                        <p class="text-xs text-slate-400 font-medium leading-relaxed">Create crisp, custom, high-res QR
+                            codes instantly.</p>
+                    </div>
+
+                    <div class="h-px bg-white/10 my-1"></div>
+
+                    <!-- Target URL -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">Link or Data
+                            payload</label>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">link</span>
+                            <input type="text" id="textInput" value="https://studiolimb.com" placeholder="https://"
+                                class="w-full bg-[#0a0a0f] border border-white/10 rounded-xl pl-12 pr-4 py-4 text-sm font-bold text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all shadow-inner">
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-white/10 my-2"></div>
+
+                    <!-- Visual Options -->
+                    <div class="space-y-4">
+                        <label class="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">Colors &
+                            Styling</label>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-300">Bloques de Datos</label>
+                                <div class="color-well-wrapper">
+                                    <input type="color" id="fgColor" value="#050508">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-300">Fondo</label>
+                                <div class="color-well-wrapper">
+                                    <input type="color" id="bgColor" value="#ffffff">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-white/10 my-2"></div>
+
+                    <!-- Export Resolution -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">Raster
+                            Size</label>
+
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">photo_size_select_large</span>
+                            <select id="sizeSelect"
+                                class="w-full bg-[#0a0a0f] border border-white/10 rounded-xl pl-12 pr-10 py-4 text-sm font-bold text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer transition-all shadow-inner">
+                                <option value="256">256 x 256 px</option>
+                                <option value="512" selected>512 x 512 px (HD)</option>
+                                <option value="1024">1024 x 1024 px (Ultra)</option>
+                                <option value="2048">2048 x 2048 px (Print)</option>
+                            </select>
+                            <span
+                                class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">expand_content</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex-1 mt-6 bg-white/5 rounded-xl border border-white/10 p-5 relative overflow-hidden flex flex-col justify-center items-center text-center">
+                        <span
+                            class="material-symbols-outlined text-primary/40 text-[48px] absolute -top-4 -right-4">verified_user</span>
+                        <h4 class="text-sm font-bold text-white mb-2 relative z-10">100% Private</h4>
+                        <p class="text-xs text-slate-400 relative z-10 max-w-[200px]">QR Code data is generated securely
+                            within your browser. No strings attached.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Central Stage -->
+            <div
+                class="flex-1 rounded-xl qr-stage flex items-center justify-center p-8 overflow-hidden relative shadow-2xl border border-white/5">
+
+                <div class="relative group">
+                    <!-- Glow effect -->
+                    <div
+                        class="absolute -inset-4 bg-primary/20 blur-2xl rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                    </div>
+
+                    <!-- QR Container -->
+                    <div
+                        class="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl shadow-black relative z-10 ring-1 ring-white/10 transform transition-transform hover:scale-[1.02] duration-300">
+                        <div id="qrcode" class="w-full max-w-[280px] aspect-square"></div>
+
+                        <!-- Premium embellishment -->
+                        <div class="absolute top-4 left-4 w-2 h-2 rounded-full bg-primary/20"></div>
+                        <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-primary/20"></div>
+                        <div class="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-primary/20"></div>
+                        <div class="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-primary/20"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 bg-[#050508] text-white border border-white/10 font-bold px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl z-50 pointer-events-none backdrop-blur-md">
+        <span class="material-symbols-outlined text-primary text-[20px]">download_done</span>
+        <span>QR Code saved locally!</span>
+    </div>
+
+    <script>
+        let qrcode = null;
+        const textInput = document.getElementById('textInput');
+        const fgColor = document.getElementById('fgColor');
+        const bgColor = document.getElementById('bgColor');
+        const sizeSelect = document.getElementById('sizeSelect');
+
+        function generate() {
+            const container = document.getElementById('qrcode');
+            container.innerHTML = '';
+
+            const size = parseInt(sizeSelect.value);
+
+            // Using qrcode.js
+            qrcode = new QRCode(container, {
+                text: textInput.value || "https://studiolimb.com",
+                width: size,
+                height: size,
+                colorDark: fgColor.value,
+                colorLight: bgColor.value,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Wait for canvas/img to be generated, then remove inline styles scaling it down
+            setTimeout(() => {
+                const img = container.querySelector('img');
+                const canvas = container.querySelector('canvas');
+                if (img) {
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                }
+                if (canvas && !img) {
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                }
+            }, 50);
+        }
+
+        // Live Event Listeners
+        [textInput, fgColor, bgColor, sizeSelect].forEach(el => {
+            el.addEventListener('input', generate);
+        });
+
+        function downloadQR() {
+            const img = document.querySelector('#qrcode img');
+            const canvas = document.querySelector('#qrcode canvas');
+
+            if (img && img.src) {
+                triggerDownload(img.src);
+            } else if (canvas) {
+                triggerDownload(canvas.toDataURL("image/png"));
+            }
+        }
+
+        function triggerDownload(dataUrl) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `studiolimb-qr-${Date.now()}.png`;
+            link.click();
+
+            // Show toast
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        // Initial render
+        window.addEventListener('DOMContentLoaded', () => {
+            // slight delay to ensure library is fully loaded
+            setTimeout(generate, 100);
+        });
+    </script>
+</body>
+
+</html>

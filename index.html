@@ -151,7 +151,34 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(124, 92, 252, 0.5);
+        /* Glassmorphism Language Selector Tooltip */
+        .lang-selector { position: relative; z-index: 100; }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem; font-weight: 500; cursor: pointer;
+            display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;
         }
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .lang-dropdown {
+            position: absolute; top: calc(100% + 0.5rem); right: 0;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 0.5rem; min-width: 140px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s;
+            display: flex; flex-direction: column; gap: 0.25rem;
+        }
+        .lang-selector:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .lang-option {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem;
+            color: #94a3b8; text-decoration: none; font-size: 0.85rem; border-radius: 6px; transition: all 0.2s; font-weight: 500;
+        }
+        .lang-option:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+        .lang-option.active { color: #10b981; background: rgba(16, 185, 129, 0.15); } 
+        .lang-flag { font-size: 1rem; }
     </style>
 </head>
 
@@ -175,14 +202,31 @@
     <!-- Navigation -->
     <nav class="relative z-50 px-6 py-6 max-w-7xl mx-auto w-full flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <div
-                class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white shadow-[0_0_20px_rgba(124,92,252,0.4)]">
-                <span class="material-symbols-outlined text-[28px]">token</span>
-            </div>
-            <div>
-                <h1 class="text-2xl font-bold leading-none tracking-tight">StudioLimb</h1>
-                <p class="text-[10px] uppercase tracking-widest font-bold text-primary opacity-80 mt-1">Creative Suite
-                </p>
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                <div
+                    class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white shadow-[0_0_20px_rgba(124,92,252,0.4)]">
+                    <span class="material-symbols-outlined text-[28px]">token</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold leading-none tracking-tight">StudioLimb</h1>
+                    <p class="text-[10px] uppercase tracking-widest font-bold text-primary opacity-80 mt-1">Creative Suite
+                    </p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Language Selector -->
+        <div class="lang-selector">
+            <button class="lang-btn">
+                <span class="lang-flag">🇺🇸</span> EN
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="lang-dropdown">
+                <a href="index.html" class="lang-option active"><span class="lang-flag">🇺🇸</span> English</a>
+                <a href="es/index.html" class="lang-option"><span class="lang-flag">🇪🇸</span> Español</a>
+                <a href="fr/index.html" class="lang-option"><span class="lang-flag">🇫🇷</span> Français</a>
+                <a href="hi/index.html" class="lang-option"><span class="lang-flag">🇮🇳</span> हिन्दी</a>
+                <a href="pt/index.html" class="lang-option"><span class="lang-flag">🇧🇷</span> Português</a>
             </div>
         </div>
     </nav>

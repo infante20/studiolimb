@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>यूआरएल एनकोडर | StudioLimb</title>
+    <meta name="description"
+        content="Free online URL Encoder and Decoder. Safely encode your URLs or decode query parameters instantly in your browser." />
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="apple-touch-icon" href="../icons/icon-192x192.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "URL Encoder / Decoder - StudioLimb",
+      "description": "Free online URL Encoder and Decoder. Safely encode your URLs or decode query parameters instantly.",
+      "url": "https://studiolimb.com/url-encode-decode.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #050508;
+            color: #f8fafc;
+            /* Background pattern */
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+
+        .encoded-char {
+            color: #818cf8;
+            /* indigo-400 */
+            font-weight: 600;
+            background-color: rgba(99, 102, 241, 0.15);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/url-encode-decode.html">
+</head>
+
+<body class="antialiased flex flex-col min-h-screen">
+
+    <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html"
+                class="flex items-center gap-2 text-white font-semibold text-lg tracking-tight hover:text-indigo-400 transition-colors">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                StudioLimb
+            </a>
+            <div class="flex items-center gap-4 text-sm font-medium text-slate-400">
+                <a href="../index.html" class="hover:text-white transition-colors">All Tools</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-24 pb-12 px-6">
+        <div class="max-w-5xl mx-auto">
+
+            <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1
+                        class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-3">
+                        URL Encoder & Decoder
+                    </h1>
+                    <p class="text-slate-400 text-lg max-w-xl">
+                        Escape special characters to safely transmit strings in URLs. Client-side, instant, and secure.
+                    </p>
+                </div>
+                <div class="flex gap-2 justify-center md:justify-start">
+                    <span
+                        class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20">Developer
+                        Utility</span>
+                </div>
+            </div>
+
+            <!-- Mode Selector -->
+            <div class="flex justify-center mb-8">
+                <div class="glass-panel p-1 inline-flex rounded-xl relative overflow-hidden shadow-lg shadow-black/20">
+                    <div id="modeIndicator"
+                        class="absolute w-1/2 h-full top-0 left-0 bg-white/5 border border-white/10 rounded-lg transition-transform duration-300 ease-in-out shadow-lg">
+                    </div>
+
+                    <button id="btnEncode"
+                        class="relative z-10 px-8 py-2.5 text-sm font-medium text-white focus:outline-none flex items-center gap-2">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                            </path>
+                        </svg>
+                        Encode
+                    </button>
+                    <button id="btnDecode"
+                        class="relative z-10 px-8 py-2.5 text-sm font-medium text-slate-400 focus:outline-none flex items-center gap-2 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        Decode
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tool Layout -->
+            <div class="relative max-w-4xl mx-auto flex flex-col gap-6">
+
+                <!-- Input Box -->
+                <div class="glass-panel overflow-hidden shadow-lg transition-all">
+                    <div class="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-white/[0.02]">
+                        <h2 id="inputLabel" class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500 hidden md:block"></span>
+                            Text to Encode
+                        </h2>
+                        <button id="clearBtn"
+                            class="text-xs font-medium text-slate-400 hover:text-white px-2 py-1 transition-colors focus:outline-none">साफ़ करें</button>
+                    </div>
+                    <textarea id="ioInput"
+                        placeholder="Enter text here... E.g. https://example.com/search?q=hello world!"
+                        class="w-full h-40 bg-transparent border-none text-slate-300 font-mono text-[15px] leading-relaxed p-5 resize-none focus:ring-0 outline-none custom-scrollbar"
+                        autocomplete="off" spellcheck="false"></textarea>
+                </div>
+
+                <!-- Connector Directional Indicator -->
+                <div
+                    class="absolute inset-x-0 top-1/2 -mt-1 left-1/2 -ml-6 flex items-center justify-center pointer-events-none z-20">
+                    <div
+                        class="w-12 h-12 rounded-full glass-panel bg-[#050508] border border-white/10 flex items-center justify-center shadow-xl shadow-black/40">
+                        <svg id="dirArrow" class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Output Box -->
+                <div class="glass-panel overflow-hidden shadow-lg bg-black/20">
+                    <div class="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-white/[0.02]">
+                        <h2 id="outputLabel" class="text-sm font-medium text-emerald-400 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 hidden md:block"></span>
+                            URL Encoded Output
+                        </h2>
+                        <button id="copyBtn"
+                            class="text-xs font-medium bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded transition-colors border border-emerald-500/20 flex items-center gap-1.5 focus:outline-none">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            Copy Result
+                        </button>
+                    </div>
+
+                    <div class="relative h-40">
+                        <!-- We use a div to display highlighted text, and a hidden textarea for ease of copying raw if needed -->
+                        <div id="ioOutputView"
+                            class="w-full h-full p-5 overflow-auto custom-scrollbar font-mono text-[15px] leading-relaxed text-slate-300 break-all select-text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <article class="mt-24">
+                <div class="glass-panel p-8 md:p-12">
+                    <h2
+                        class="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-6">
+                        What is URL Encoding?</h2>
+
+                    <div class="text-slate-400 leading-relaxed mb-10 space-y-6">
+                        <p>
+                            URLs can only be sent over the Internet using the US-ASCII character set. Since URLs often
+                            contain characters outside the ASCII set (like spaces, or symbols like `?`, `&`, `=` which
+                            have special meanings), the URL has to be converted into a valid ASCII format.
+                        </p>
+                        <p>
+                            URL encoding (or Percent-encoding) does this by replacing unsafe ASCII characters with a "%"
+                            followed by two hexadecimal digits. For example, a space becomes `%20`. Modern web
+                            applications require you to encode query parameters to prevent routing errors and security
+                            vulnerabilities like XSS.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mt-12 mb-6">Frequently Asked Questions</h3>
+                    <div class="space-y-6">
+                        <div
+                            class="border border-white/10 bg-white/5 rounded-xl p-6 transition-colors hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                encodeURI vs encodeURIComponent?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                This tool uses JavaScript's `encodeURIComponent()` under the hood. It is the safest
+                                choice for query strings because it encodes <em>all</em> special characters including
+                                `+`, `?`, `/`, and `:`. If you used `encodeURI()`, it would leave those characters
+                                untouched, which is only suitable for encoding a full, complete URL path.
+                            </p>
+                        </div>
+
+                        <div
+                            class="border border-white/10 bg-white/5 rounded-xl p-6 transition-colors hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Is this tool secure?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                Yes. 100% of the encoding and decoding happens directly in your browser using
+                                Client-Side JavaScript. Your URLs and token parameters are never sent to a backend
+                                server.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="mt-auto py-8 text-center text-xs text-slate-500 border-t border-white/5">
+        <p>&copy; 2026 StudioLimb. Secure & Client-Side.</p>
+    </footer>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+    </script>
+
+    <script>
+        // DOM Elements
+        const modeIndicator = document.getElementById('modeIndicator');
+        const btnEncode = document.getElementById('btnEncode');
+        const btnDecode = document.getElementById('btnDecode');
+
+        const inputLabel = document.getElementById('inputLabel');
+        const outputLabel = document.getElementById('outputLabel');
+
+        const box1 = document.getElementById('ioInput');
+        const box2 = document.getElementById('ioOutputView');
+
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        let isEncodingMode = true;
+        let finalOutputData = ""; // Store raw string for copying
+
+        // Initialization
+        function setMode(encode) {
+            isEncodingMode = encode;
+
+            if (encode) {
+                modeIndicator.style.transform = 'translateX(0)';
+                btnEncode.classList.replace('text-slate-400', 'text-white');
+                btnEncode.querySelector('svg').classList.add('text-emerald-400');
+                btnDecode.classList.replace('text-white', 'text-slate-400');
+                btnDecode.querySelector('svg').classList.remove('text-indigo-400');
+
+                inputLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-indigo-500 hidden md:block"></span>Text to Encode`;
+                outputLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 hidden md:block"></span>URL Encoded Output`;
+
+                box1.placeholder = "Enter text here... E.g. https://example.com/search?q=hello world!";
+            } else {
+                modeIndicator.style.transform = 'translateX(100%)';
+                btnDecode.classList.replace('text-slate-400', 'text-white');
+                btnDecode.querySelector('svg').classList.add('text-indigo-400');
+                btnEncode.classList.replace('text-white', 'text-slate-400');
+                btnEncode.querySelector('svg').classList.remove('text-emerald-400');
+
+                inputLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 hidden md:block"></span>URL Encoded Input`;
+                outputLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-indigo-500 hidden md:block"></span>Decoded Plain Text`;
+
+                box1.placeholder = "Enter encoded string here... E.g. https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%20world!";
+            }
+
+            // Swap Contents
+            const currentInput = box1.value;
+            if (currentInput || finalOutputData) {
+                box1.value = finalOutputData;
+                processData();
+            } else {
+                processData();
+            }
+        }
+
+        // Processing Logic
+        function processData() {
+            const input = box1.value;
+            if (!input) {
+                box2.innerHTML = '<span class="text-slate-500 italic">परिणाम यहाँ दिखाई देगा...</span>';
+                finalOutputData = "";
+                return;
+            }
+
+            try {
+                if (isEncodingMode) {
+                    finalOutputData = encodeURIComponent(input);
+                    // Add fancy syntax highlighting for encoded parts (%XX)
+                    const highlighted = finalOutputData.replace(/(%[A-Za-z0-9]{2})/g, '<span class="encoded-char">$1</span>');
+                    box2.innerHTML = highlighted;
+
+                } else {
+                    finalOutputData = decodeURIComponent(input);
+                    // Escape HTML so it doesn't render arbitrarily if decoding HTML-like structures
+                    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+                    box2.innerHTML = finalOutputData.replace(/[&<>"']/g, function (m) { return map[m]; });
+                }
+            } catch (err) {
+                box2.innerHTML = `<span class="text-red-400">Malformed input: ${err.message}</span>`;
+                finalOutputData = "";
+            }
+        }
+
+        // Event Listeners
+        btnEncode.addEventListener('click', () => { if (!isEncodingMode) setMode(true); });
+        btnDecode.addEventListener('click', () => { if (isEncodingMode) setMode(false); });
+        box1.addEventListener('input', processData);
+
+        clearBtn.addEventListener('click', () => {
+            box1.value = '';
+            processData();
+            box1.focus();
+        });
+
+        copyBtn.addEventListener('click', () => {
+            if (!finalOutputData) return;
+            navigator.clipboard.writeText(finalOutputData).then(() => {
+                const icon = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = `${icon} Copied!`;
+                copyBtn.classList.add('border-emerald-400', 'bg-emerald-500/20');
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('border-emerald-400', 'bg-emerald-500/20');
+                }, 2000);
+            });
+        });
+
+        // Init blank
+        processData();
+    </script>
+</body>
+
+</html>

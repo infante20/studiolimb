@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border Radius Visualizer — StudioLimb</title>
+    <meta name="description" content="8-बिंदु वाले CSS बॉर्डर-रेडियस मानों का उपयोग करके दृष्टिगत रूप से जैविक आकार उत्पन्न करें।">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #0f0f14;
+            --bg-secondary: #1a1a24;
+            --bg-card: #22222f;
+            --bg-input: #2a2a3a;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9999aa;
+            --text-muted: #666677;
+            --accent: #7c5cfc;
+            --accent-hover: #6a48e8;
+            --border: #333344;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 700;
+            background: linear-gradient(135deg, #f0f0f5 0%, #7c5cfc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Preview Area */
+        .preview-pane {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .blob-container {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent) 0%, #a855f7 100%);
+            box-shadow: 0 20px 40px rgba(124, 92, 252, 0.3);
+            transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 40px;
+        }
+
+        /* Controls Area */
+        .controls-pane {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-input);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .code-box {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 24px;
+            width: 100%;
+            position: relative;
+        }
+
+        .code-box pre {
+            color: #9cdcfe;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 64px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/border-radius-visualizer.html">
+</head>
+
+<body>
+    <div class="container">
+        <div style="margin-bottom: 24px; padding-left: 8px;">
+            <h1 style="font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px;">Border Radius Visualizer
+            </h1>
+            <p style="font-size: 14px; color: var(--text-secondary);">Create organic shapes with CSS border-radius.</p>
+        </div>
+
+        <div class="workspace">
+            <main class="preview-pane">
+                <div class="blob-container" id="blob"></div>
+
+                <div class="code-box">
+                    <pre id="codeOutput">border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;</pre>
+                    <button class="btn-copy" onclick="copyCode()">Copy CSS</button>
+                </div>
+            </main>
+
+            <aside class="controls-pane">
+                <!-- Horizontals -->
+                <div class="control-group">
+                    <label class="control-label">Top Left (H) <span id="val-1">50%</span></label>
+                    <input type="range" id="h1" value="50" min="0" max="100" oninput="update()">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Top Right (H) <span id="val-2">50%</span></label>
+                    <input type="range" id="h2" value="50" min="0" max="100" oninput="update()">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Bottom Right (H) <span id="val-3">50%</span></label>
+                    <input type="range" id="h3" value="50" min="0" max="100" oninput="update()">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Bottom Left (H) <span id="val-4">50%</span></label>
+                    <input type="range" id="h4" value="50" min="0" max="100" oninput="update()">
+                </div>
+
+                <hr style="border: 0.5px solid var(--border); margin: 24px 0;">
+
+                <!-- Verticals -->
+                <div class="control-group">
+                    <label class="control-label">Top Left (V) <span id="val-5">50%</span></label>
+                    <input type="range" id="v1" value="50" min="0" max="100" oninput="update()">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Top Right (V) <span id="val-6">50%</span></label>
+                    <input type="range" id="v2" value="50" min="0" max="100" oninput="update()">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Bottom Right (V) <span id="val-7">50%</span></label>
+                    <input type="range" id="v3" value="50" min="0" max="100" oninput="update()">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Bottom Left (V) <span id="val-8">50%</span></label>
+                    <input type="range" id="v4" value="50" min="0" max="100" oninput="update()">
+                </div>
+
+                <button class="btn btn-copy"
+                    style="position: static; width: 100%; padding: 14px; margin-top: 12px; border-radius: 8px;"
+                    onclick="randomize()">Randomize Shape</button>
+            </aside>
+        </div>
+
+        <footer class="footer">
+            Built with ❤️ by <a href="https://studiolimb.com">StudioLimb</a> — Free design tools for creators.
+        </footer>
+    </div>
+
+    <script>
+        const blob = document.getElementById('blob');
+        const codeOut = document.getElementById('codeOutput');
+        const ids = ['h1', 'h2', 'h3', 'h4', 'v1', 'v2', 'v3', 'v4'];
+
+        function update() {
+            const vals = ids.map(id => document.getElementById(id).value + '%');
+
+            // UI Label update
+            ids.forEach((id, i) => {
+                document.getElementById(`val-${i + 1}`).innerText = vals[i];
+            });
+
+            // Calculate border radius
+            // Format: tl-h tr-h br-h bl-h / tl-v tr-v br-v bl-v
+            const h = `${vals[0]} ${100 - parseInt(vals[1])}% ${100 - parseInt(vals[2])}% ${vals[3]}`;
+            const v = `${vals[4]} ${vals[5]} ${100 - parseInt(vals[6])}% ${100 - parseInt(vals[7])}%`;
+            const fullRadius = `${h} / ${v}`;
+
+            blob.style.borderRadius = fullRadius;
+            codeOut.innerText = `border-radius: ${fullRadius};`;
+        }
+
+        function randomize() {
+            ids.forEach(id => {
+                document.getElementById(id).value = 30 + Math.floor(Math.random() * 40);
+            });
+            update();
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText(codeOut.innerText).then(() => {
+                alert('CSS copied!');
+            });
+        }
+
+        // Init
+        update();
+    </script>
+</body>
+
+</html>

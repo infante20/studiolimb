@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html class="dark" lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Générateur de Palette | StudioLimb</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .canvas-container {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+        }
+
+        .color-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex: 1;
+        }
+
+        .color-column:hover {
+            flex: 1.2;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            transform: scaleY(1.02);
+        }
+
+        .color-column__actions {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .color-column:hover .color-column__actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        .action-btn--active {
+            background: white;
+            color: #050508;
+        }
+
+        .color-hex {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast--show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/color-palette-generator.html">
+    <meta name="description" content="Générateur professionnel de palettes de couleurs web.">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
+    <div class="relative flex h-screen w-full flex-col">
+        <!-- Main Background Canvas -->
+        <div class="absolute inset-0 z-0 canvas-container"></div>
+
+        <!-- Top Navigation Bar -->
+        <header class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined">palette</span>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight">StudioLimb</h2>
+                    <p class="text-[10px] uppercase tracking-widest font-semibold opacity-60">Creative Suite</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest hidden md:block">Press <kbd
+                        class="px-2 py-1 bg-white/10 rounded-md text-white border border-white/20">Space</kbd> to
+                    generate</p>
+                <div class="w-px h-6 bg-white/10 hidden md:block"></div>
+                <select id="harmonySelect"
+                    class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-slate-200 outline-none focus:border-primary">
+                    <option value="random" class="bg-[#050508]">Aléatoire</option>
+                    <option value="analogous" class="bg-[#050508]">Analogue</option>
+                    <option value="monochromatic" class="bg-[#050508]">Monochromatique</option>
+                    <option value="triadic" class="bg-[#050508]">Triadique</option>
+                    <option value="complementary" class="bg-[#050508]">Complémentaire</option>
+                    <option value="shades" class="bg-[#050508]">Nuances</option>
+                </select>
+                <button
+                    class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25 hover:opacity-90 transition-all gap-2"
+                    onclick="generatePalette()">
+                    <span class="material-symbols-outlined text-[18px]">auto_awesome</span> Générer Palette
+                </button>
+            </div>
+        </header>
+
+        <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+            <!-- Central Content Stage -->
+            <div class="flex-1 glass-panel rounded-xl flex flex-col relative overflow-hidden">
+
+                <!-- Palette Columns -->
+                <div class="flex-1 flex w-full rounded-t-xl overflow-hidden" id="palette">
+                    <!-- Colors filled by JS -->
+                </div>
+
+                <!-- Mini Visualizer Panel -->
+                <div
+                    class="h-48 bg-[#0b0b12]/95 backdrop-blur-xl border-t border-white/5 p-6 flex gap-8 items-center justify-center">
+
+                    <div
+                        class="w-72 bg-[#1a1a24] rounded-xl p-4 border border-white/5 shadow-2xl relative overflow-hidden">
+                        <div class="absolute inset-0 opacity-[0.03]"
+                            style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 16px 16px;">
+                        </div>
+                        <div class="flex items-center gap-3 mb-4 relative z-10">
+                            <div class="w-10 h-10 rounded-full" id="vizAvatar"></div>
+                            <div class="flex-1 space-y-2">
+                                <div class="h-2 w-3/4 rounded-full bg-white/10"></div>
+                                <div class="h-2 w-1/2 rounded-full bg-white/5"></div>
+                            </div>
+                        </div>
+                        <button class="w-full py-2.5 rounded-lg text-xs font-bold transition-all relative z-10"
+                            id="vizBtn">Bouton d'Action</button>
+                    </div>
+
+                    <div class="w-72 space-y-4">
+                        <h3 class="text-lg font-bold" id="vizHeadline">Aperçu UI Moderne</h3>
+                        <p class="text-xs text-slate-400">See how your colors flow together in a real interface. The
+                            primary color drives action.</p>
+                        <div class="flex gap-2">
+                            <div class="w-6 h-6 rounded-full" id="vizDot1"></div>
+                            <div class="w-6 h-6 rounded-full" id="vizDot2"></div>
+                            <div class="w-6 h-6 rounded-full" id="vizDot3"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <div class="toast" id="toast">Couleur Copiée !</div>
+
+    <script>
+        let palette = [
+            { hex: '#7C5CFC', locked: false },
+            { hex: '#A855F7', locked: false },
+            { hex: '#6366F1', locked: false },
+            { hex: '#F43F5E', locked: false },
+            { hex: '#10B981', locked: false }
+        ];
+
+        window.onload = () => {
+            generatePalette();
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && e.target === document.body) {
+                    e.preventDefault();
+                    generatePalette();
+                }
+            });
+        };
+
+        function generatePalette() {
+            const harmony = document.getElementById('harmonySelect').value;
+
+            if (harmony === 'random') {
+                palette.forEach(color => {
+                    if (!color.locked) color.hex = generateRandomHex();
+                });
+            } else {
+                let baseColor = palette.find(c => c.locked) || { hex: generateRandomHex() };
+                const hsl = hexToHsl(baseColor.hex);
+                const newColors = generateHarmonicColors(hsl, harmony, 5);
+                palette.forEach((color, i) => {
+                    if (!color.locked) color.hex = newColors[i];
+                });
+            }
+
+            renderPalette();
+            updateVisualization();
+        }
+
+        function generateRandomHex() {
+            return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+        }
+
+        function generateHarmonicColors(base, type, count) {
+            let colors = [];
+            let { h, s, l } = base;
+
+            switch (type) {
+                case 'analogous':
+                    for (let i = 0; i < count; i++) colors.push(hslToHex((h + (i - 2) * 20 + 360) % 360, s, l));
+                    break;
+                case 'monochromatic':
+                    for (let i = 0; i < count; i++) colors.push(hslToHex(h, s, Math.max(10, Math.min(90, l + (i - 2) * 15))));
+                    break;
+                case 'triadic':
+                    colors = [
+                        hslToHex(h, s, l),
+                        hslToHex((h + 120) % 360, s, l),
+                        hslToHex((h + 240) % 360, s, l),
+                        hslToHex(h, s, Math.max(10, l - 20)),
+                        hslToHex((h + 120) % 360, s, Math.max(10, l - 20))
+                    ];
+                    break;
+                case 'complementary':
+                    colors = [
+                        hslToHex(h, s, l),
+                        hslToHex((h + 180) % 360, s, l),
+                        hslToHex(h, s, Math.max(10, l - 30)),
+                        hslToHex((h + 180) % 360, s, Math.max(10, l - 30)),
+                        hslToHex(h, Math.max(10, s - 30), l)
+                    ];
+                    break;
+                case 'shades':
+                    for (let i = 0; i < count; i++) colors.push(hslToHex(h, s, 10 + (i * 15)));
+                    break;
+            }
+            return colors;
+        }
+
+        function renderPalette() {
+            const container = document.getElementById('palette');
+            container.innerHTML = '';
+
+            palette.forEach((color, i) => {
+                const col = document.createElement('div');
+                col.className = 'color-column';
+                col.style.backgroundColor = color.hex;
+
+                const contrastColor = getContrastYIQ(color.hex);
+
+                col.innerHTML = `
+                    <div class="color-column__actions">
+                        <button class="action-btn ${color.locked ? 'action-btn--active' : ''}" onclick="toggleLock(event, ${i})" title="Toggle Lock">
+                            <span class="material-symbols-outlined text-[18px]">${color.locked ? 'lock' : 'lock_open'}</span>
+                        </button>
+                        <button class="action-btn" onclick="copyColor(event, '${color.hex}')" title="Copy HEX">
+                            <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                        </button>
+                    </div>
+                    <div class="color-hex" style="color: ${contrastColor}">${color.hex}</div>
+                `;
+
+                col.onclick = () => copyColor(null, color.hex);
+                container.appendChild(col);
+            });
+        }
+
+        function updateVisualization() {
+            const c = palette.map(p => p.hex);
+
+            document.getElementById('vizAvatar').style.backgroundColor = c[0];
+            const btn = document.getElementById('vizBtn');
+            btn.style.backgroundColor = c[1];
+            btn.style.color = getContrastYIQ(c[1]);
+            document.getElementById('vizHeadline').style.color = c[0];
+            document.getElementById('vizDot1').style.backgroundColor = c[2];
+            document.getElementById('vizDot2').style.backgroundColor = c[3];
+            document.getElementById('vizDot3').style.backgroundColor = c[4];
+        }
+
+        function toggleLock(e, index) {
+            e.stopPropagation();
+            palette[index].locked = !palette[index].locked;
+            renderPalette();
+        }
+
+        function copyColor(e, hex) {
+            if (e) e.stopPropagation();
+            navigator.clipboard.writeText(hex).then(() => {
+                showToast(`Copied ${hex}`);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('toast--show');
+            setTimeout(() => toast.classList.remove('toast--show'), 2000);
+        }
+
+        function getContrastYIQ(hexcolor) {
+            hexcolor = hexcolor.replace("#", "");
+            var r = parseInt(hexcolor.substring(0, 2), 16);
+            var g = parseInt(hexcolor.substring(2, 4), 16);
+            var b = parseInt(hexcolor.substring(4, 6), 16);
+            var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+            return (yiq >= 128) ? '#050508' : '#ffffff';
+        }
+
+        function hexToHsl(hex) {
+            let r = parseInt(hex.slice(1, 3), 16) / 255;
+            let g = parseInt(hex.slice(3, 5), 16) / 255;
+            let b = parseInt(hex.slice(5, 7), 16) / 255;
+            let max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            if (max == min) { h = s = 0; }
+            else {
+                let d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return { h: h * 360, s: s * 100, l: l * 100 };
+        }
+
+        function hslToHex(h, s, l) {
+            h /= 360; s /= 100; l /= 100;
+            let r, g, b;
+            if (s === 0) { r = g = b = l; }
+            else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1 / 6) return p + (q - p) * 6 * t;
+                    if (t < 1 / 2) return q;
+                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+            const toHex = x => Math.round(x * 255).toString(16).padStart(2, '0');
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="dark" lang="hi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>एआई पृष्ठभूमि रिमूवर | StudioLimb</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- @imgly/background-removal for client-side AI processing -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/imgly-background-removal.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .checkered-bg {
+            background-color: #050508;
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            user-select: none;
+            transition: opacity 0.3s;
+        }
+
+        .loading-pulse {
+            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.05);
+            }
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/bg-remover.html">
+    <meta name="description" content="स्थानीय एआई का उपयोग करके छवियों से पृष्ठभूमि हटा दें।">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased h-screen overflow-hidden flex flex-col">
+    <!-- Top Navigation -->
+    <header
+        class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl shrink-0">
+        <div class="flex items-center gap-3">
+            <a href="index.html"
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                <span class="material-symbols-outlined">person_cancel</span>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold leading-tight tracking-tight">एआई पृष्ठभूमि इरेज़र</h2>
+                <p class="text-[10px] uppercase tracking-widest font-semibold text-slate-400">StudioLimb Tools</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="btnDownload" onclick="downloadImage()" disabled
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25 hover:opacity-90 transition-all gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-[18px]">download</span> Export PNG
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+        <!-- Sidebar Controls -->
+        <div class="flex w-80 flex-col gap-4 h-full shrink-0">
+            <div
+                class="flex flex-col flex-1 glass-panel p-5 rounded-xl overflow-y-auto scrollbar-hide bg-gradient-to-br from-black/20 to-primary/5">
+                <div class="space-y-6">
+
+                    <div class="text-center pb-4 border-b border-white/5">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-2">memory</span>
+                        <h3 class="font-bold text-sm text-white mb-1">Local AI Processing</h3>
+                        <p class="text-[10px] text-slate-500 leading-relaxed">Images are processed entirely on your
+                            device using WebGL. Your photos are never uploaded to a server, ensuring 100% privacy.</p>
+                    </div>
+
+                    <!-- Upload Input -->
+                    <div id="uploadSection" class="relative group cursor-pointer"
+                        onclick="document.getElementById('fileInput').click()">
+                        <div
+                            class="absolute inset-0 bg-primary/20 rounded-xl blur-xl group-hover:bg-primary/30 transition-all">
+                        </div>
+                        <div
+                            class="relative flex flex-col items-center justify-center py-8 px-4 border-2 border-dashed border-primary/50 rounded-xl bg-[#050508] text-center hover:border-primary transition-colors">
+                            <span
+                                class="material-symbols-outlined text-3xl text-primary mb-2">add_photo_alternate</span>
+                            <span class="text-sm font-bold text-slate-200">छवि चुनें</span>
+                            <span class="text-[10px] text-slate-500 mt-1 block">Best with clear subjects</span>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/jpeg, image/png, image/webp" class="hidden"
+                            onchange="handleImageUpload(event)">
+                    </div>
+
+                    <!-- Processing Status -->
+                    <div id="statusSection" class="hidden opacity-0 transition-opacity duration-300">
+                        <div class="bg-black/40 border border-primary/20 rounded-xl p-4 relative overflow-hidden">
+                            <!-- Progress Bar Background -->
+                            <div class="absolute bottom-0 left-0 h-1 bg-white/5 w-full">
+                                <div id="progressBar" class="h-full bg-primary w-0 transition-all duration-300"></div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <span id="statusIcon"
+                                    class="material-symbols-outlined text-primary text-xl loading-pulse">smart_toy</span>
+                                <div>
+                                    <p id="statusTitle" class="text-xs font-bold text-white uppercase tracking-wider">
+                                        Processing</p>
+                                    <p id="statusMsg" class="text-[10px] text-slate-400 mt-0.5">Initializing AI Model...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 mt-4" id="viewControls" style="display: none;">
+                            <button onclick="toggleView(false)" id="btnOriginal"
+                                class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5">Original</button>
+                            <button onclick="toggleView(true)" id="btnRemoved"
+                                class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-primary/20 text-primary border border-primary/30 transition-all">Transparent</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Work Area -->
+        <div
+            class="flex-1 glass-panel rounded-xl flex items-center justify-center overflow-hidden relative checkered-bg p-8">
+            <div id="editorPlaceholder" class="flex flex-col items-center text-slate-500 gap-4">
+                <span class="material-symbols-outlined text-6xl opacity-20">aspect_ratio</span>
+                <p class="text-sm border border-dashed border-slate-600/50 px-4 py-2 rounded-lg">Background will be
+                    replaced with transparency</p>
+            </div>
+
+            <img id="previewImage" class="hidden" src="" alt="Processing Preview">
+        </div>
+    </main>
+
+    <script>
+        const previewImage = document.getElementById('previewImage');
+        const statusSection = document.getElementById('statusSection');
+        const progressBar = document.getElementById('progressBar');
+        const statusTitle = document.getElementById('statusTitle');
+        const statusMsg = document.getElementById('statusMsg');
+        const statusIcon = document.getElementById('statusIcon');
+        const viewControls = document.getElementById('viewControls');
+        const btnDownload = document.getElementById('btnDownload');
+        const uploadSection = document.getElementById('uploadSection');
+
+        // State
+        let originalFileName = 'image';
+        let originalBlobUrl = null;
+        let processedBlobUrl = null;
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            originalFileName = file.name.split('.')[0];
+
+            // Clean up old URLs
+            if (originalBlobUrl) URL.revokeObjectURL(originalBlobUrl);
+            if (processedBlobUrl) URL.revokeObjectURL(processedBlobUrl);
+
+            // Set up initial view
+            originalBlobUrl = URL.createObjectURL(file);
+            previewImage.src = originalBlobUrl;
+
+            document.getElementById('editorPlaceholder').classList.add('hidden');
+            previewImage.classList.remove('hidden');
+
+            // UI Reset
+            viewControls.style.display = 'none';
+            btnDownload.disabled = true;
+            uploadSection.classList.add('opacity-50', 'pointer-events-none');
+
+            // Show status
+            statusSection.classList.remove('hidden');
+            setTimeout(() => statusSection.classList.remove('opacity-0'), 50);
+
+            startBackgroundRemoval(file);
+        }
+
+        async function startBackgroundRemoval(imageFile) {
+            try {
+                // Update UI: Loading Model
+                statusTitle.textContent = "Loading AI Model";
+                statusMsg.textContent = "Downloading model locally (first time only)";
+                progressBar.style.width = "20%";
+                statusIcon.textContent = "downloading";
+                statusIcon.classList.add('loading-pulse');
+
+                const config = {
+                    progress: (key, current, total) => {
+                        // Track download progress for the WASM models
+                        if (total) {
+                            const percent = Math.round((current / total) * 100);
+                            statusTitle.textContent = "Processing Features";
+                            statusMsg.textContent = `Analyzing pixels: ${percent}%`;
+                            progressBar.style.width = `${20 + (percent * 0.6)}%`;
+                        } else {
+                            statusTitle.textContent = "Segmenting Subject";
+                            statusMsg.textContent = "Isolating foreground elements...";
+                            progressBar.style.width = "85%";
+                        }
+                    }
+                };
+
+                // The Magic Call (Using imgly SDK)
+                const imageBlob = await imglyRemoveBackground(imageFile, config);
+
+                // Success
+                processedBlobUrl = URL.createObjectURL(imageBlob);
+                previewImage.src = processedBlobUrl;
+
+                // Update UI: Complete
+                progressBar.style.width = "100%";
+                setTimeout(() => progressBar.style.width = "0%", 1000);
+
+                statusTitle.textContent = "Complete!";
+                statusTitle.classList.replace('text-white', 'text-emerald-400');
+                statusMsg.textContent = "Subject successfully extracted.";
+                statusIcon.textContent = "check_circle";
+                statusIcon.classList.remove('loading-pulse');
+                statusIcon.classList.replace('text-primary', 'text-emerald-400');
+
+                viewControls.style.display = 'flex';
+                btnDownload.disabled = false;
+                toggleView(true); // show removed by default
+
+            } catch (error) {
+                console.error("Background removal failed:", error);
+                // Update UI: Error
+                statusTitle.textContent = "Error Isolated";
+                statusTitle.classList.replace('text-white', 'text-red-400');
+                statusMsg.textContent = "Could not process image on this device.";
+                statusIcon.textContent = "error";
+                statusIcon.classList.remove('loading-pulse');
+                statusIcon.classList.replace('text-primary', 'text-red-400');
+                progressBar.style.width = "0%";
+            } finally {
+                uploadSection.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function toggleView(showRemoved) {
+            const btnOriginal = document.getElementById('btnOriginal');
+            const btnRemoved = document.getElementById('btnRemoved');
+
+            if (showRemoved) {
+                if (processedBlobUrl) previewImage.src = processedBlobUrl;
+                btnRemoved.classList.replace('bg-white/5', 'bg-primary/20');
+                btnRemoved.classList.replace('border-white/5', 'border-primary/30');
+                btnRemoved.classList.replace('text-slate-400', 'text-primary');
+
+                btnOriginal.classList.replace('bg-primary/20', 'bg-white/5');
+                btnOriginal.classList.replace('border-primary/30', 'border-white/5');
+                btnOriginal.classList.replace('text-primary', 'text-slate-400');
+            } else {
+                if (originalBlobUrl) previewImage.src = originalBlobUrl;
+                btnOriginal.classList.replace('bg-white/5', 'bg-primary/20');
+                btnOriginal.classList.replace('border-white/5', 'border-primary/30');
+                btnOriginal.classList.replace('text-slate-400', 'text-primary');
+
+                btnRemoved.classList.replace('bg-primary/20', 'bg-white/5');
+                btnRemoved.classList.replace('border-primary/30', 'border-white/5');
+                btnRemoved.classList.replace('text-primary', 'text-slate-400');
+            }
+        }
+
+        function downloadImage() {
+            if (!processedBlobUrl) return;
+
+            const a = document.createElement('a');
+            a.href = processedBlobUrl;
+            // Always save as PNG to keep transparency
+            a.download = `${originalFileName}-nobg.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testeur d'Expressions Régulières | StudioLimb</title>
+    <meta name="description"
+        content="Free online Regular Expression tester. Validate and debug your regex patterns in real-time with syntax highlighting and match explanations." />
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="apple-touch-icon" href="../icons/icon-192x192.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Regex Tester - StudioLimb",
+      "description": "Free online Regular Expression tester. Validate and debug your regex patterns in real-time.",
+      "url": "https://studiolimb.com/regex-tester.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #050508;
+            color: #f8fafc;
+            /* Background pattern */
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+
+        .highlight-match {
+            background-color: rgba(99, 102, 241, 0.3);
+            /* indigo-500/30 */
+            border-bottom: 2px solid #818cf8;
+            /* indigo-400 */
+            border-radius: 2px;
+        }
+
+        .highlight-match-alt {
+            background-color: rgba(168, 85, 247, 0.3);
+            /* purple-500/30 */
+            border-bottom: 2px solid #c084fc;
+            /* purple-400 */
+            border-radius: 2px;
+        }
+
+        /* Editable div that looks like a text area */
+        .editor-box {
+            min-height: 200px;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            outline: none;
+            cursor: text;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/regex-tester.html">
+</head>
+
+<body class="antialiased flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html"
+                class="flex items-center gap-2 text-white font-semibold text-lg tracking-tight hover:text-indigo-400 transition-colors">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                StudioLimb
+            </a>
+            <div class="flex items-center gap-4 text-sm font-medium text-slate-400">
+                <a href="../index.html" class="hover:text-white transition-colors">All Tools</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-24 pb-12 px-6">
+        <div class="max-w-5xl mx-auto">
+
+            <!-- Tool Header -->
+            <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1
+                        class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-3">
+                        Regex Tester
+                    </h1>
+                    <p class="text-slate-400 text-lg max-w-xl">
+                        Validate, debug, and understand your Regular Expressions in real-time. Client-side processing
+                        for your data privacy.
+                    </p>
+                </div>
+                <div class="flex gap-2 justify-center md:justify-start">
+                    <span
+                        class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20">Developer
+                        Utility</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Layout -->
+            <div class="space-y-6">
+
+                <!-- Regex Input Area -->
+                <div
+                    class="glass-panel p-1 border-indigo-500/20 focus-within:border-indigo-500/50 transition-colors shadow-lg shadow-black/20">
+                    <div class="flex flex-wrap md:flex-nowrap">
+                        <!-- Left: / and pattern -->
+                        <div class="flex flex-grow items-center bg-transparent relative">
+                            <span class="text-3xl font-light text-slate-500 pl-4 py-3 select-none">/</span>
+                            <input type="text" id="regexPattern"
+                                placeholder="Enter regular expression here... (e.g. ^[a-z0-9_-]{3,16}$)"
+                                value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                class="w-full bg-transparent border-none text-white font-mono text-lg py-4 focus:ring-0 placeholder:text-slate-600 outline-none"
+                                autocomplete="off" spellcheck="false">
+                            <span class="text-3xl font-light text-slate-500 pr-4 py-3 select-none">/</span>
+                        </div>
+
+                        <!-- Right: Flags -->
+                        <div
+                            class="flex items-center bg-[#0a0a0f] md:rounded-r-xl border-t md:border-t-0 md:border-l border-white/5 w-full md:w-auto px-4 py-3">
+                            <input type="text" id="regexFlags" value="gm"
+                                class="w-16 bg-transparent border-none text-indigo-400 font-mono text-lg font-semibold focus:ring-0 outline-none text-center"
+                                autocomplete="off" spellcheck="false" title="Regex Flags (g, m, i, u, s)">
+                            <div class="relative group">
+                                <svg class="w-5 h-5 text-slate-500 cursor-help" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <!-- Tooltip for flags -->
+                                <div
+                                    class="absolute right-0 top-full mt-2 w-48 bg-[#1e1e24] border border-white/10 rounded-lg p-3 text-xs text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none shadow-xl shadow-black/50">
+                                    <div class="font-semibold text-white mb-1">Indicateurs:</div>
+                                    <div class="space-y-1">
+                                        <div><span class="text-indigo-400 font-mono">g</span> - Global match</div>
+                                        <div><span class="text-indigo-400 font-mono">m</span> - Multiline</div>
+                                        <div><span class="text-indigo-400 font-mono">i</span> - Ignore case</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Display -->
+                <div id="errorDisplay"
+                    class="hidden glass-panel bg-red-500/10 border-red-500/20 p-4 text-red-400 text-sm font-mono flex items-center gap-3">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                    <span id="errorText">Invalid regular expression</span>
+                </div>
+
+                <!-- Test String Area -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                    <div class="lg:col-span-2 glass-panel flex flex-col">
+                        <div
+                            class="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-white/[0.02]">
+                            <h2 class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                                Test String
+                            </h2>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-400 font-mono"><span id="matchCount"
+                                        class="text-white font-semibold">0</span> matches</span>
+                            </div>
+                        </div>
+                        <div class="relative flex-grow">
+                            <!-- Overlay div for highlights -->
+                            <div id="highlights"
+                                class="absolute inset-0 p-6 editor-box text-transparent pointer-events-none font-mono text-[15px] leading-relaxed z-0"
+                                aria-hidden="true"></div>
+                            <!-- Actual textarea for input -->
+                            <textarea id="testString"
+                                class="absolute inset-0 w-full h-full p-6 editor-box bg-transparent border-none text-slate-300 font-mono text-[15px] leading-relaxed resize-none focus:ring-0 outline-none z-10"
+                                spellcheck="false">john.doe@example.com
+invalid-email@domain
+support@studiolimb.com
+hello@world.co.uk</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Match Results Sidebar -->
+                    <div class="glass-panel flex flex-col h-[500px]">
+                        <div class="px-6 py-4 border-b border-white/5 bg-white/[0.02]">
+                            <h2 class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                    </path>
+                                </svg>
+                                Match Results
+                            </h2>
+                        </div>
+                        <div class="p-4 flex-grow overflow-y-auto custom-scrollbar" id="resultsSidebar">
+                            <!-- Populated via JS -->
+                            <div class="text-center text-slate-500 py-10 text-sm">En attente...</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <article class="mt-20">
+                <div class="glass-panel p-8 md:p-12">
+                    <h2
+                        class="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-6">
+                        How to Use the Free Regex Tester</h2>
+                    <div class="text-slate-400 leading-relaxed mb-10 space-y-6">
+                        <p>
+                            Regular Expressions (Regex) are incredibly powerful patterns used to match character
+                            combinations in strings. Our free client-side Regex Tester allows you to build, validate,
+                            and debug complex regular expressions instantly without ever sending your sensitive text
+                            data to an external server.
+                        </p>
+                        <p>
+                            Simply enter your pattern between the forward slashes <code>/ /</code>, modify the matching
+                            flags (like <code>g</code> for global or <code>i</code> for case-insensitive), and paste
+                            your target text below. The tool will highlight matches in real-time.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mt-12 mb-8">Frequently Asked Questions (FAQ)
+                    </h3>
+
+                    <div class="space-y-6">
+                        <!-- FAQ 1 -->
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Which Regex syntax is supported?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                StudioLimb's Regex Tester runs directly in your browser using the JavaScript
+                                (ECMAScript) Regex engine. This means it fully supports JS-specific features like
+                                lookahead, lookbehind (in modern browsers), and named capture groups.
+                            </p>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Is my test data private?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                100% Private. If you are testing regex patterns against confidential user data,
+                                passwords, or emails, it is crucial that this data is not intercepted. Because our tool
+                                is pure Client-Side logic, nothing is ever uploaded to a backend. It functions offline.
+                            </p>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                What do the flags mean?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                Flags change how the regex engine searches. <code class="text-indigo-300">g</code>
+                                (global) finds all matches rather than stopping after the first. <code
+                                    class="text-indigo-300">i</code> (ignoreCase) makes <code>[A-Z]</code> match
+                                <code>[a-z]</code>. <code class="text-indigo-300">m</code> (multiline) makes
+                                <code>^</code> and <code>$</code> match the start/end of a line, not just the whole
+                                string.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="mt-auto py-8">
+        <div
+            class="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('../sw.js');
+            });
+        }
+    </script>
+
+    <script>
+        const inputPattern = document.getElementById('regexPattern');
+        const inputFlags = document.getElementById('regexFlags');
+        const inputText = document.getElementById('testString');
+        const highlightsDiv = document.getElementById('highlights');
+        const errorDisplay = document.getElementById('errorDisplay');
+        const errorText = document.getElementById('errorText');
+        const resultsSidebar = document.getElementById('resultsSidebar');
+        const matchCountEl = document.getElementById('matchCount');
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+        }
+
+        // Sync scroll between textarea and highlights div
+        inputText.addEventListener('scroll', () => {
+            highlightsDiv.scrollTop = inputText.scrollTop;
+            highlightsDiv.scrollLeft = inputText.scrollLeft;
+        });
+
+        function parseRegex() {
+            const pattern = inputPattern.value;
+            let flags = inputFlags.value.replace(/[^gimuy]/ig, ''); // Sanitize flags
+            inputFlags.value = flags;
+
+            const text = inputText.value;
+
+            errorDisplay.classList.add('hidden');
+            inputText.style.color = '#cbd5e1'; // Reset text color
+
+            if (!pattern) {
+                highlightsDiv.innerHTML = escapeHtml(text);
+                resultsSidebar.innerHTML = '<div class="text-center text-slate-500 py-10 text-sm">Enter a regex pattern above.</div>';
+                matchCountEl.textContent = "0";
+                return;
+            }
+
+            try {
+                // If the user wants to see all matches, 'g' flag is mandatory
+                const displayFlags = flags.includes('g') ? flags : flags + 'g';
+                const regex = new RegExp(pattern, displayFlags);
+
+                let matches = [];
+                let match;
+
+                // Collect matches
+                while ((match = regex.exec(text)) !== null) {
+                    matches.push({
+                        index: match.index,
+                        length: match[0].length,
+                        value: match[0],
+                        groups: match.slice(1) // Capture groups
+                    });
+
+                    if (match[0].length === 0) {
+                        regex.lastIndex++; // Prevent infinite loops on zero-length matches (e.g. ^ or .*)
+                    }
+                }
+
+                matchCountEl.textContent = matches.length;
+
+                // Build highlighted text and sidebar
+                if (matches.length > 0) {
+                    // Update Textarea background (highlights)
+                    let highlightedText = "";
+                    let lastIndex = 0;
+
+                    let sidebarHtml = `<div class="space-y-3">`;
+
+                    matches.forEach((m, idx) => {
+                        // Text up to the match
+                        highlightedText += escapeHtml(text.substring(lastIndex, m.index));
+
+                        // Alternating highlight colors for adjacent matches
+                        const bgClass = idx % 2 === 0 ? 'highlight-match' : 'highlight-match-alt';
+
+                        // The matched text
+                        highlightedText += `<mark class="${bgClass} text-transparent">${escapeHtml(m.value)}</mark>`;
+                        lastIndex = m.index + m.length;
+
+                        // Sidebar Item
+                        sidebarHtml += `
+                        <div class="bg-black/30 rounded border border-white/5 overflow-hidden">
+                            <div class="bg-white/5 py-1.5 px-3 text-xs text-slate-400 font-mono flex justify-between">
+                                <span>Match ${idx + 1}</span>
+                                <span>Pos: ${m.index}-${m.index + m.length}</span>
+                            </div>
+                            <div class="p-3 text-sm font-mono text-white break-all">
+                                ${escapeHtml(m.value)}
+                            </div>
+                        `;
+
+                        // Render Groups if they exist
+                        if (m.groups && m.groups.length > 0 && m.groups.some(g => g !== undefined)) {
+                            sidebarHtml += `<div class="border-t border-white/5 p-2 space-y-1 bg-black/50">`;
+                            m.groups.forEach((group, gIdx) => {
+                                if (group !== undefined) {
+                                    sidebarHtml += `
+                                    <div class="flex items-start gap-2 text-xs">
+                                        <span class="text-indigo-400 font-mono shrink-0">Group ${gIdx + 1}:</span>
+                                        <span class="text-slate-300 font-mono break-all">${escapeHtml(group)}</span>
+                                    </div>`;
+                                }
+                            });
+                            sidebarHtml += `</div>`;
+                        }
+
+                        sidebarHtml += `</div>`;
+                    });
+
+                    // Remaining text
+                    highlightedText += escapeHtml(text.substring(lastIndex));
+
+                    sidebarHtml += `</div>`;
+
+                    // We need a subtle trick here: we color the actual textarea text very dark/transparent
+                    // and let the underlying div show the text with the exact spacing, but that causes cursor issues.
+                    // Instead, we just show the highlight background in the div, and let the real text sit on top.
+
+                    // Modify the highlight builder slightly to just render colored boxes underneath:
+                    let highlightBoxesOnly = "";
+                    let bLastIndex = 0;
+                    matches.forEach((m, idx) => {
+                        highlightBoxesOnly += escapeHtml(text.substring(bLastIndex, m.index));
+                        const bgClass = idx % 2 === 0 ? 'highlight-match' : 'highlight-match-alt';
+                        // Keep text inside mark so it takes up exact space, but transparent
+                        highlightBoxesOnly += `<mark class="${bgClass} text-transparent">${escapeHtml(m.value)}</mark>`;
+                        bLastIndex = m.index + m.length;
+                    });
+                    highlightBoxesOnly += escapeHtml(text.substring(bLastIndex));
+
+                    highlightsDiv.innerHTML = highlightBoxesOnly;
+                    resultsSidebar.innerHTML = sidebarHtml;
+
+                } else {
+                    highlightsDiv.innerHTML = escapeHtml(text);
+                    resultsSidebar.innerHTML = '<div class="text-center text-slate-500 py-10 text-sm">Aucun résultat.</div>';
+                }
+
+            } catch (err) {
+                // Invalid Regex
+                errorDisplay.classList.remove('hidden');
+                errorText.textContent = err.message;
+                highlightsDiv.innerHTML = escapeHtml(text);
+                resultsSidebar.innerHTML = '<div class="text-center text-red-500/50 py-10 text-sm flex flex-col items-center gap-2"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>Syntax Error</div>';
+                matchCountEl.textContent = "0";
+            }
+        }
+
+        // Event listeners for live updates
+        inputPattern.addEventListener('input', parseRegex);
+        inputFlags.addEventListener('input', parseRegex);
+        inputText.addEventListener('input', parseRegex);
+
+        // Handle scroll syncing formatting issue where textarea adds extra scroll space
+        const resizeObserver = new ResizeObserver(() => {
+            highlightsDiv.style.height = `${inputText.scrollHeight}px`;
+        });
+        resizeObserver.observe(inputText);
+
+        // Intial Run
+        parseRegex();
+    </script>
+</body>
+
+</html>

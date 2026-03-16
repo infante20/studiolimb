@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Placeholder | StudioLimb</title>
+    <meta name="description"
+        content="Create custom image placeholders instantly. Generate dummy image URLs or SVG/PNG downloads with specific dimensions, colors, and text for your web projects." />
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="apple-touch-icon" href="../icons/icon-192x192.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Placeholder Generator - StudioLimb",
+      "description": "Create custom image placeholders instantly. Generate dummy images with specific dimensions, colors, and text.",
+      "url": "https://studiolimb.com/image-placeholder.html",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #050508;
+            color: #f8fafc;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+
+        .preview-bg {
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        /* Range Slider Styling Overrides */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/image-placeholder.html">
+</head>
+
+<body class="antialiased flex flex-col min-h-screen">
+
+    <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html"
+                class="flex items-center gap-2 text-white font-semibold text-lg tracking-tight hover:text-indigo-400 transition-colors">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                StudioLimb
+            </a>
+            <div class="flex items-center gap-4 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-white transition-colors">All Tools</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-24 pb-12 px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1
+                        class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-3">
+                        Image Placeholder Generator
+                    </h1>
+                    <p class="text-slate-400 text-lg max-w-xl">
+                        Create custom dummy images for your wireframes instantly. Export as SVG, PNG, or base64 data
+                        URIs.
+                    </p>
+                </div>
+                <div class="flex gap-2 justify-center md:justify-start">
+                    <span
+                        class="px-3 py-1 rounded-full bg-pink-500/10 text-pink-400 text-xs font-medium border border-pink-500/20">Design
+                        Utility</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Left Details -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6">
+                        <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
+                                </path>
+                            </svg>
+                            Placeholder Settings
+                        </h2>
+
+                        <!-- Size -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label
+                                    class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Width
+                                    (px)</label>
+                                <input type="number" id="imgWidth" value="800" min="10" max="4000"
+                                    class="w-full bg-black/30 border border-white/10 rounded-lg text-white text-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Height
+                                    (px)</label>
+                                <input type="number" id="imgHeight" value="600" min="10" max="4000"
+                                    class="w-full bg-black/30 border border-white/10 rounded-lg text-white text-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2">
+                            </div>
+                        </div>
+
+                        <!-- Colors -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label
+                                    class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Fundo</label>
+                                <div
+                                    class="flex items-center gap-2 bg-black/30 border border-white/10 rounded-lg p-1.5 focus-within:border-indigo-500">
+                                    <input type="color" id="bgColor" value="#1E293B"
+                                        class="w-8 h-8 rounded border-0 p-0 bg-transparent cursor-pointer shrink-0">
+                                    <input type="text" id="bgHex" value="#1E293B"
+                                        class="w-full bg-transparent border-none text-white text-xs uppercase focus:ring-0 p-0">
+                                </div>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Text
+                                    Color</label>
+                                <div
+                                    class="flex items-center gap-2 bg-black/30 border border-white/10 rounded-lg p-1.5 focus-within:border-indigo-500">
+                                    <input type="color" id="textColor" value="#94A3B8"
+                                        class="w-8 h-8 rounded border-0 p-0 bg-transparent cursor-pointer shrink-0">
+                                    <input type="text" id="textHex" value="#94A3B8"
+                                        class="w-full bg-transparent border-none text-white text-xs uppercase focus:ring-0 p-0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Customization -->
+                        <div class="mb-6">
+                            <label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Custom
+                                Text (Optional)</label>
+                            <input type="text" id="customText" placeholder="e.g. Hero Image"
+                                class="w-full bg-black/30 border border-white/10 rounded-lg text-white text-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2">
+                            <p class="text-[10px] text-slate-500 mt-1 pl-1">Leave empty to show dimensions automatically
+                            </p>
+                        </div>
+
+                        <!-- Font Size -->
+                        <div class="mb-2">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-medium text-slate-400 uppercase tracking-wider">Font Size
+                                    Multiplier</label>
+                                <span id="fontScaleVal" class="text-xs font-mono text-indigo-400">1.0x</span>
+                            </div>
+                            <input type="range" id="fontScale" min="0.5" max="3" step="0.1" value="1.0" class="">
+                        </div>
+                    </div>
+
+                    <button id="downloadBtn"
+                        class="w-full py-3.5 px-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/25 transition-all transform hover:-translate-y-0.5 focus:outline-none flex justify-center items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Download Image (PNG)
+                    </button>
+                    <button id="downloadSvgBtn"
+                        class="w-full py-3 px-4 bg-white/5 hover:bg-white/10 text-slate-300 font-medium rounded-xl border border-white/10 transition-colors focus:outline-none flex justify-center items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        Download Vector (SVG)
+                    </button>
+                </div>
+
+                <!-- Right Preview & Code -->
+                <div class="lg:col-span-8 flex flex-col gap-6">
+
+                    <!-- Preview Area -->
+                    <div class="glass-panel p-2 flex-grow flex flex-col min-h-[400px]">
+                        <div
+                            class="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                            <h3 class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                Canvas Preview (Scaled down)
+                            </h3>
+                            <div class="text-xs text-slate-500 font-mono" id="realDimBadge">800 &times; 600 px</div>
+                        </div>
+                        <div
+                            class="flex-grow rounded-b-[0.9rem] flex items-center justify-center preview-bg p-6 overflow-hidden">
+                            <!-- SVG container rendering -->
+                            <div id="svgContainer"
+                                class="shadow-2xl ring-1 ring-white/10 select-none max-w-full max-h-full object-contain flex items-center justify-center transition-all bg-black/50"
+                                style="aspect-ratio: 800/600;">
+                                <!-- The raw SVG goes here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Output -->
+                    <div class="glass-panel p-6">
+                        <h3 class="text-sm font-medium text-slate-300 mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"></path>
+                            </svg>
+                            Data URI (Base64 SVG)
+                        </h3>
+                        <div class="flex gap-2">
+                            <div class="relative flex-grow">
+                                <input type="text" id="dataUriOutput" readonly
+                                    class="w-full bg-black/40 border border-white/10 rounded-lg text-slate-400 font-mono text-xs focus:ring-0 px-3 py-2.5 outline-none custom-scrollbar">
+                            </div>
+                            <button id="copyUriBtn"
+                                class="shrink-0 px-4 py-2 text-xs font-medium bg-white/5 hover:bg-white/10 text-white rounded-lg transition-colors border border-white/10 focus:outline-none flex items-center gap-1.5">
+                                Copy
+                            </button>
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-2">Paste this directly into an `img src="..."` attribute
+                            or CSS `background-image: url(...)`</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SEO Explanatory Content -->
+            <article class="mt-20">
+                <div class="glass-panel p-8 md:p-12">
+                    <h2
+                        class="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-6">
+                        Create Custom Dummy Images</h2>
+                    <div class="text-slate-400 leading-relaxed mb-10 space-y-6">
+                        <p>
+                            When developing websites, drafting wireframes, or building UI prototypes, you often need
+                            images of specific dimensions before the final assets are ready. Our Image Placeholder
+                            Generator creates these dummy images instantly.
+                        </p>
+                        <p>
+                            Unlike traditional placeholder services (like Placehold.it or DummyImage) that require
+                            network requests every time the page loads, this tool generates the actual image file or a
+                            Base64 SVG string <strong class="text-white">directly inside your browser</strong>. This
+                            means zero HTTP request latency, offline compatibility, and complete privacy for your
+                            internal mocks.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mt-12 mb-8">Frequently Asked Questions</h3>
+                    <div class="space-y-6">
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex flex-row items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                Why use an SVG Data URI instead of PNG?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5">
+                                An SVG Data URI is just a string of text representing the vector shapes. For a simple
+                                rectangle with text, an SVG string is dramatically smaller (often under 200 bytes) than
+                                a binary PNG image (which can be several kilobytes). This makes your prototypes load
+                                instantly and keeps your code repositories clean of temp image files.
+                            </p>
+                        </div>
+
+                        <div class="border border-white/10 bg-white/5 rounded-xl p-6 transition-all hover:bg-white/10">
+                            <h4 class="text-white font-medium mb-3 flex flex-row items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                How do I use the Data URI?
+                            </h4>
+                            <p class="text-slate-400 text-sm leading-relaxed pl-3.5 flex flex-col gap-2">
+                                <span>Copy the string generated above and paste it directly into your HTML:</span>
+                                <code
+                                    class="bg-black/50 p-2 rounded text-indigo-300 block text-xs border border-white/5 font-mono overflow-x-auto whitespace-nowrap">&lt;img src="data:image/svg+xml;base64,PHN2ZyB4b..." alt="Placeholder"/&gt;</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="mt-auto py-8 text-center text-xs text-slate-500 border-t border-white/5">
+        <p>&copy; 2026 StudioLimb. Built for the Modern Web.</p>
+    </footer>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+    </script>
+
+    <script>
+        // DOM Elements
+        const inputs = {
+            width: document.getElementById('imgWidth'),
+            height: document.getElementById('imgHeight'),
+            bgColor: document.getElementById('bgColor'),
+            bgHex: document.getElementById('bgHex'),
+            textColor: document.getElementById('textColor'),
+            textHex: document.getElementById('textHex'),
+            text: document.getElementById('customText'),
+            scale: document.getElementById('fontScale')
+        };
+
+        const previewEl = document.getElementById('svgContainer');
+        const badge = document.getElementById('realDimBadge');
+        const scaleVal = document.getElementById('fontScaleVal');
+        const uriOutput = document.getElementById('dataUriOutput');
+
+        const downloadPngBtn = document.getElementById('downloadBtn');
+        const downloadSvgBtn = document.getElementById('downloadSvgBtn');
+        const copyUriBtn = document.getElementById('copyUriBtn');
+
+        let currentSvgString = "";
+
+        // Core Generation
+        function generateSVG() {
+            let w = parseInt(inputs.width.value) || 300;
+            let h = parseInt(inputs.height.value) || 150;
+
+            // Limit bounds to avoid crashing canvas rendering later
+            w = Math.max(10, Math.min(w, 4000));
+            h = Math.max(10, Math.min(h, 4000));
+
+            const bg = inputs.bgColor.value;
+            const fg = inputs.textColor.value;
+            const textRaw = inputs.text.value.trim();
+            const text = textRaw ? textRaw : `${w} × ${h}`;
+
+            const scale = parseFloat(inputs.scale.value);
+
+            // Base font size is 1/10th of the smaller dimension, but bounded
+            const minDim = Math.min(w, h);
+            let fontSize = Math.max(12, Math.floor(minDim * 0.1));
+            fontSize = Math.floor(fontSize * scale);
+
+            // Create SVG String
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+                <rect width="${w}" height="${h}" fill="${bg}"/>
+                <text x="50%" y="50%" fill="${fg}" font-family="system-ui, -apple-system, sans-serif" font-size="${fontSize}px" font-weight="bold" text-anchor="middle" dominant-baseline="central">${text}</text>
+            </svg>`;
+
+            currentSvgString = svg;
+            return { svg, w, h };
+        }
+
+        function updateUI() {
+            const { svg, w, h } = generateSVG();
+
+            // Update Preview DOM
+            previewEl.style.aspectRatio = `${w}/${h}`;
+            previewEl.innerHTML = svg;
+            badge.innerHTML = `${w} &times; ${h} px`;
+            scaleVal.textContent = parseFloat(inputs.scale.value).toFixed(1) + 'x';
+
+            // Sync color hex inputs internally without triggering recursive loops if typed
+            if (document.activeElement !== inputs.bgHex) inputs.bgHex.value = inputs.bgColor.value.toUpperCase();
+            if (document.activeElement !== inputs.textHex) inputs.textHex.value = inputs.textColor.value.toUpperCase();
+
+            // Encode to Data URI safely
+            // Because SVG can contain characters that break in src strings, we base64 it
+            const b64 = btoa(unescape(encodeURIComponent(svg)));
+            const dataUri = `data:image/svg+xml;base64,${b64}`;
+
+            uriOutput.value = dataUri;
+        }
+
+        // --- Downloading Logic ---
+
+        function triggerDownload(dataUrl, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        downloadSvgBtn.addEventListener('click', () => {
+            const { w, h } = generateSVG();
+            const b64 = btoa(unescape(encodeURIComponent(currentSvgString)));
+            triggerDownload(`data:image/svg+xml;base64,${b64}`, `placeholder_${w}x${h}.svg`);
+        });
+
+        downloadPngBtn.addEventListener('click', () => {
+            const { w, h } = generateSVG();
+            const b64 = btoa(unescape(encodeURIComponent(currentSvgString)));
+            const dataUri = `data:image/svg+xml;base64,${b64}`;
+
+            const img = new Image();
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const pngDataUri = canvas.toDataURL('image/png');
+                triggerDownload(pngDataUri, `placeholder_${w}x${h}.png`);
+            };
+            img.src = dataUri;
+        });
+
+        copyUriBtn.addEventListener('click', () => {
+            const val = uriOutput.value;
+            if (!val) return;
+
+            uriOutput.select();
+            navigator.clipboard.writeText(val).then(() => {
+                const original = copyUriBtn.innerHTML;
+                copyUriBtn.innerHTML = "Copiado!";
+                copyUriBtn.classList.replace('text-white', 'text-emerald-400');
+                copyUriBtn.classList.add('border-emerald-400', 'bg-emerald-500/10');
+
+                setTimeout(() => {
+                    copyUriBtn.innerHTML = original;
+                    copyUriBtn.classList.replace('text-emerald-400', 'text-white');
+                    copyUriBtn.classList.remove('border-emerald-400', 'bg-emerald-500/10');
+                }, 2000);
+            });
+        });
+
+        // --- Event Listeners ---
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updateUI);
+            // Handle hex typing specifically
+            if (input.type === 'text' && input.id.includes('Hex')) {
+                input.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    const regex = /^#([0-9A-F]{3}){1,2}$/i;
+                    if (regex.test(val)) {
+                        if (input.id === 'bgHex') inputs.bgColor.value = val;
+                        if (input.id === 'textHex') inputs.textColor.value = val;
+                        updateUI();
+                    }
+                });
+            }
+        });
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+
+</html>

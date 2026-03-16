@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Premier — StudioLimb</title>
+    <meta name="description" content="Generador premium de texto de prueba para diseñadores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050508;
+            --bg-surface: #0f0f14;
+            --bg-card: rgba(26, 26, 36, 0.6);
+            --accent: #7c5cfc;
+            --accent-glow: rgba(124, 92, 252, 0.4);
+            --text-main: #f0f0f5;
+            --text-dim: #9999aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ambient Background Effect */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(124, 92, 252, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 24px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Bento Sidebar Controls */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bento-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .brand p {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: white;
+            padding: 12px 16px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: var(--accent);
+            background: rgba(124, 92, 252, 0.05);
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .toggle-row:hover {
+            border-color: var(--border);
+        }
+
+        .toggle-row span {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Output Viewport */
+        .viewport {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        .stats {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+        }
+
+        .output-box {
+            position: relative;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            min-height: 500px;
+            padding: 40px;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .output-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .output-text.code-mode {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: #a855f7;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--text-dim);
+        }
+
+        /* Custom Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: var(--text-dim);
+            padding-bottom: 20px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/lorem-ipsum-generator.html">
+</head>
+
+<body>
+    <div class="ambient-bg"></div>
+    <div class="noise"></div>
+
+    <div class="main-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar">
+            <div class="bento-card brand">
+                <h1>Lorem Ipsum Premier</h1>
+                <p>Generador de texto visual.</p>
+            </div>
+
+            <div class="bento-card">
+                <div class="control-group">
+                    <label class="label">Estructura</label>
+                    <select id="typeSelect" onchange="generate()">
+                        <option value="words">Palabras Sueltas</option>
+                        <option value="sentences">Oraciones Breves</option>
+                        <option value="paragraphs" selected>Párrafos Completos</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="label">Cantidad</label>
+                    <input type="number" id="qtyInput" value="3" min="1" max="100" oninput="generate()">
+                </div>
+
+                <div class="control-group">
+                    <label class="label">Estilo de Vocabulario</label>
+                    <select id="styleSelect" onchange="generate()">
+                        <option value="classic">🏛️ Classic Latin</option>
+                        <option value="tech">💻 System & Tech</option>
+                        <option value="design">🎨 Studio & Creative</option>
+                        <option value="business">👔 Corporate / SaaS</option>
+                        <option value="cyber">⚡ Cyberpunk / Data</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="bento-card">
+                <div class="control-group">
+                    <div class="toggle-row" onclick="cycleToggle('htmlCheck')">
+                        <span>Modo Etiquetas HTML</span>
+                        <input type="checkbox" id="htmlCheck" style="display:none" onchange="generate()">
+                        <div id="htmlBadge"
+                            style="font-size:10px; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.05); color:var(--text-dim)">
+                            OFF</div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="toggle-row" onclick="cycleToggle('startCheck')">
+                        <span>Lead with Standard</span>
+                        <input type="checkbox" id="startCheck" checked style="display:none" onchange="generate()">
+                        <div id="startBadge"
+                            style="font-size:10px; padding:2px 8px; border-radius:10px; background:var(--accent); color:white">
+                            ON</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="generate()">Generar Texto</button>
+        </aside>
+
+        <!-- Main Viewport -->
+        <main class="viewport">
+            <div class="output-header">
+                <div class="stats" id="stats">0 words · 0 chars</div>
+                <div style="font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px">Preview
+                    Area</div>
+            </div>
+
+            <div class="output-box">
+                <div class="output-text" id="outputText"></div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-secondary" onclick="copyText()">Copiar Todo</button>
+                <button class="btn btn-secondary" id="downloadBtn" onclick="downloadText()">Exportar Archivo</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            Crafted for excellence by <a href="https://studiolimb.com">StudioLimb</a>.
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">¡Copiado al portapapeles!</div>
+
+    <script>
+        const styles = {
+            classic: ["lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore", "magna", "aliqua", "enim", "ad", "minim", "veniam", "quis", "nostrud", "exercitation", "ullamco", "laboris", "nisi", "ut", "aliquip", "ex", "ea", "commodo", "consequat", "duis", "aute", "irure", "dolor", "in", "reprehenderit", "in", "voluptate", "velit", "esse", "cillum", "dolore", "eu", "fugiat", "nulla", "pariatur"],
+            tech: ["scaling", "latency", "deployment", "microservices", "infrastructure", "backend", "frontend", "api", "bandwidth", "encryption", "database", "algorithm", "serverless", "containerization", "kubernetes", "cloud", "automation", "workflow", "integration", "dashboard", "binary", "protocol", "caching", "async", "await", "runtime", "compiler", "debugging"],
+            design: ["aesthetic", "minimalism", "contrast", "typography", "palette", "wireframe", "prototype", "interaction", "usability", "bezel", "gradient", "texture", "hierarchy", "kerning", "leading", "vibrant", "interface", "experience", "branding", "layout", "visual", "composition", "harmony", "hue", "saturation"],
+            business: ["synergy", "paradigm", "scalability", "leverage", "optimization", "holistic", "bandwidth", "alignment", "monetization", "retention", "conversion", "metrics", "roi", "kpi", "ecosystem", "stakeholder", "engagement", "roadmap", "deliverables", "benchmark", "agile", "strategic", "velocity", "acquisition"],
+            cyber: ["mainframe", "encrypted", "neural", "link", "uplink", "glitch", "neon", "grid", "protocol", "signal", "ghost", "shell", "proxy", "node", "nexus", "pulse", "static", "vector", "matrix", "cypher", "override", "bypass", "encrypted", "synthetic"]
+        };
+
+        function cycleToggle(id) {
+            const check = document.getElementById(id);
+            check.checked = !check.checked;
+            const badge = document.getElementById(id === 'htmlCheck' ? 'htmlBadge' : 'startBadge');
+            if (check.checked) {
+                badge.innerText = 'ON';
+                badge.style.background = 'var(--accent)';
+                badge.style.color = 'white';
+            } else {
+                badge.innerText = 'OFF';
+                badge.style.background = 'rgba(255,255,255,0.05)';
+                badge.style.color = 'var(--text-dim)';
+            }
+            generate();
+        }
+
+        function generate() {
+            const type = document.getElementById('typeSelect').value;
+            const qty = Math.max(1, parseInt(document.getElementById('qtyInput').value) || 1);
+            const style = document.getElementById('styleSelect').value;
+            const useHtml = document.getElementById('htmlCheck').checked;
+            const startWithStandard = document.getElementById('startCheck').checked;
+            const words = styles[style];
+
+            const out = document.getElementById('outputText');
+            out.classList.toggle('code-mode', useHtml);
+
+            let result = "";
+            const stdPrefix = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
+
+            if (type === 'paragraphs') {
+                for (let i = 0; i < qty; i++) {
+                    let p = createSentence(words, 5 + Math.floor(Math.random() * 4), true);
+                    if (i === 0 && startWithStandard) p = stdPrefix + p;
+                    result += useHtml ? `<p>${p}</p>\n\n` : `${p}\n\n`;
+                }
+            } else if (type === 'sentences') {
+                for (let i = 0; i < qty; i++) {
+                    let s = createSentence(words, 8 + Math.floor(Math.random() * 10), i === 0 && startWithStandard);
+                    result += useHtml ? `<li>${s}</li>\n` : `${s}\n`;
+                }
+                if (useHtml) result = `<ul>\n${result}</ul>`;
+            } else {
+                let w = "";
+                if (startWithStandard) w = "Lorem ipsum ";
+                for (let i = 0; i < qty; i++) w += words[Math.floor(Math.random() * words.length)] + " ";
+                result = useHtml ? `<span>${w.trim()}</span>` : w.trim();
+            }
+
+            out.innerText = result.trim();
+            updateStats(out.innerText);
+        }
+
+        function createSentence(words, count, isFirst) {
+            let s = [];
+            for (let i = 0; i < count; i++) s.push(words[Math.floor(Math.random() * words.length)]);
+            let str = s.join(" ");
+            return str.charAt(0).toUpperCase() + str.slice(1) + ".";
+        }
+
+        function updateStats(text) {
+            const words = text.split(/\s+/).filter(w => w.length > 0).length;
+            const chars = text.length;
+            document.getElementById('stats').innerText = `${words} words · ${chars} chars`;
+        }
+
+        function copyText() {
+            const text = document.getElementById('outputText').innerText;
+            navigator.clipboard.writeText(text).then(() => showToast());
+        }
+
+        function showToast() {
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function downloadText() {
+            const text = document.getElementById('outputText').innerText;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `studiolimb-lorem-${new Date().getTime()}.txt`;
+            a.click();
+        }
+
+        generate();
+    </script>
+</body>
+
+</html>

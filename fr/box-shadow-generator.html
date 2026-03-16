@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Shadow Generator — StudioLimb</title>
+    <meta name="description" content="Concevez de manière interactive des ombres complexes en couches.">
+    <meta property="og:title" content="CSS Box Shadow Generator — StudioLimb">
+    <meta property="og:description"
+        content="Create beautiful CSS box shadows visually. Adjust offset, blur, spread, and color with live preview.">
+    <meta property="og:url" content="https://studiolimb.com/box-shadow-generator">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #0f0f14;
+            --bg-secondary: #1a1a24;
+            --bg-card: #22222f;
+            --bg-input: #2a2a3a;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9999aa;
+            --text-muted: #666677;
+            --accent: #7c5cfc;
+            --accent-hover: #6a48e8;
+            --accent-glow: rgba(124, 92, 252, 0.25);
+            --green: #34d399;
+            --green-glow: rgba(52, 211, 153, 0.2);
+            --border: #333344;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header__badge {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #f0f0f5 0%, #7c5cfc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Main Layout */
+        .app {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+
+        .card__title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Preview */
+        .preview-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(124, 92, 252, 0.04) 0%, transparent 70%),
+                repeating-conic-gradient(var(--bg-input) 0% 25%, var(--bg-secondary) 0% 50%) 50% / 24px 24px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .preview-box {
+            width: 180px;
+            height: 180px;
+            background: #ffffff;
+            border-radius: var(--radius);
+            transition: box-shadow var(--transition);
+        }
+
+        /* Layers */
+        .layers {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .layer {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            transition: border-color var(--transition);
+        }
+
+        .layer:hover {
+            border-color: var(--accent);
+        }
+
+        .layer__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .layer__label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .layer__actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .layer__btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all var(--transition);
+        }
+
+        .layer__btn:hover {
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        .layer__btn--delete:hover {
+            border-color: #f87171;
+            color: #f87171;
+        }
+
+        /* Controls grid */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .control {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .control--full {
+            grid-column: 1 / -1;
+        }
+
+        .control__label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .control__value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .control input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--bg-input);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--accent-glow);
+            transition: transform 0.15s ease;
+        }
+
+        .control input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .control input[type="color"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-input);
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .control input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .control input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        /* Ombre Interne toggle */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .toggle-row__label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle__slider {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-input);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+
+        .toggle__slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all var(--transition);
+        }
+
+        .toggle input:checked+.toggle__slider {
+            background: var(--accent);
+        }
+
+        .toggle input:checked+.toggle__slider::before {
+            transform: translateX(20px);
+            background: white;
+        }
+
+        /* Add Couche d'Ombre Button */
+        .btn-add {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-add:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Code Code CSS */
+        .code-output {
+            margin-top: 24px;
+        }
+
+        .code-block {
+            position: relative;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-x: auto;
+        }
+
+        .code-block .prop {
+            color: #7c5cfc;
+        }
+
+        .code-block .val {
+            color: #34d399;
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 8px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-copy--copied {
+            background: var(--green) !important;
+        }
+
+        /* Presets */
+        .presets {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            padding: 8px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/box-shadow-generator.html">
+</head>
+
+<body>
+    <div class="container">
+        <div style="margin-bottom: 24px; padding-left: 8px;">
+            <h1 style="font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px;">Box Shadow Generator</h1>
+            <p style="font-size: 14px; color: var(--text-secondary);">Design shadows visually and copy the CSS code.</p>
+        </div>
+
+        <div class="app">
+            <!-- Left: Preview + Code -->
+            <div>
+                <div class="card">
+                    <div class="card__title">Live Preview</div>
+                    <div class="preview-area">
+                        <div class="preview-box" id="previewBox"></div>
+                    </div>
+
+                    <!-- Presets -->
+                    <div class="card__title" style="margin-top:4px;">Quick Presets</div>
+                    <div class="presets">
+                        <button class="preset-btn" data-preset="subtle">Subtle</button>
+                        <button class="preset-btn" data-preset="medium">Medium</button>
+                        <button class="preset-btn" data-preset="bold">Bold</button>
+                        <button class="preset-btn" data-preset="sharp">Sharp</button>
+                        <button class="preset-btn" data-preset="dreamy">Dreamy</button>
+                        <button class="preset-btn" data-preset="layered">Layered</button>
+                        <button class="preset-btn" data-preset="neon">Neon</button>
+                        <button class="preset-btn" data-preset="inset">Ombre Interne</button>
+                    </div>
+                </div>
+
+                <!-- Code Code CSS -->
+                <div class="card code-output">
+                    <div class="card__title">CSS Code</div>
+                    <div class="code-block" id="codeOutput">
+                        <button class="btn-copy" id="btnCopy" onclick="copyCode()">Copier CSS</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Controls -->
+            <div>
+                <div class="card">
+                    <div class="card__title">Shadow Layers</div>
+                    <div class="layers" id="layersContainer"></div>
+                    <button class="btn-add" id="btnAdd" onclick="addLayer()">+ Add Shadow Layer</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Built with ❤️ by <a href="https://studiolimb.com">StudioLimb</a> — Free design tools for creators.
+        </footer>
+    </div>
+
+    <script>
+        // ===== STATE =====
+        let layers = [];
+        let nextId = 0;
+
+        // Helper: convert hex color + alpha (0-1) to rgba string
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // Helper: parse rgba string back to {hex, alpha}
+        function parseColor(color) {
+            if (color.startsWith('rgba')) {
+                const m = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+                if (m) {
+                    const hex = '#' + [m[1], m[2], m[3]].map(v => parseInt(v).toString(16).padStart(2, '0')).join('');
+                    return { hex, alpha: parseFloat(m[4]) };
+                }
+            }
+            return { hex: color.substring(0, 7), alpha: 1 };
+        }
+
+        const presets = {
+            subtle: [{ x: 0, y: 1, blur: 3, spread: 0, color: 'rgba(0, 0, 0, 0.1)', inset: false }],
+            medium: [{ x: 0, y: 4, blur: 16, spread: -2, color: 'rgba(0, 0, 0, 0.15)', inset: false }],
+            bold: [{ x: 0, y: 10, blur: 40, spread: -6, color: 'rgba(0, 0, 0, 0.35)', inset: false }],
+            sharp: [{ x: 6, y: 6, blur: 0, spread: 0, color: 'rgba(0, 0, 0, 0.25)', inset: false }],
+            dreamy: [
+                { x: 0, y: 4, blur: 6, spread: -1, color: 'rgba(0, 0, 0, 0.1)', inset: false },
+                { x: 0, y: 10, blur: 30, spread: -5, color: 'rgba(124, 92, 252, 0.2)', inset: false }
+            ],
+            layered: [
+                { x: 0, y: 1, blur: 2, spread: 0, color: 'rgba(0, 0, 0, 0.05)', inset: false },
+                { x: 0, y: 2, blur: 4, spread: 0, color: 'rgba(0, 0, 0, 0.05)', inset: false },
+                { x: 0, y: 4, blur: 8, spread: 0, color: 'rgba(0, 0, 0, 0.05)', inset: false },
+                { x: 0, y: 8, blur: 16, spread: 0, color: 'rgba(0, 0, 0, 0.05)', inset: false }
+            ],
+            neon: [
+                { x: 0, y: 0, blur: 20, spread: 2, color: 'rgba(124, 92, 252, 0.4)', inset: false },
+                { x: 0, y: 0, blur: 60, spread: 8, color: 'rgba(124, 92, 252, 0.15)', inset: false }
+            ],
+            inset: [
+                { x: 0, y: 2, blur: 8, spread: 0, color: 'rgba(0, 0, 0, 0.25)', inset: true },
+                { x: 0, y: -2, blur: 6, spread: 0, color: 'rgba(255, 255, 255, 0.05)', inset: true }
+            ]
+        };
+
+        // ===== INIT =====
+        function init() {
+            addLayer({ x: 0, y: 4, blur: 16, spread: -2, color: 'rgba(0, 0, 0, 0.15)', alpha: 0.15, inset: false });
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+            });
+        }
+
+        // ===== ADD / REMOVE LAYERS =====
+        function addLayer(defaults = null) {
+            const id = nextId++;
+            const data = defaults || { x: 0, y: 4, blur: 12, spread: 0, color: 'rgba(0, 0, 0, 0.2)', alpha: 0.2, inset: false };
+            if (data.alpha === undefined) {
+                const parsed = parseColor(data.color);
+                data.alpha = parsed.alpha;
+            }
+            data.id = id;
+            layers.push(data);
+            renderLayers();
+            updatePreview();
+        }
+
+        function removeLayer(id) {
+            layers = layers.filter(l => l.id !== id);
+            renderLayers();
+            updatePreview();
+        }
+
+        function duplicateLayer(id) {
+            const src = layers.find(l => l.id === id);
+            if (src) addLayer({ ...src, id: undefined });
+        }
+
+        // ===== RENDER =====
+        function renderLayers() {
+            const container = document.getElementById('layersContainer');
+            container.innerHTML = '';
+
+            layers.forEach((layer, index) => {
+                const el = document.createElement('div');
+                el.className = 'layer';
+                const parsed = parseColor(layer.color);
+                el.innerHTML = `
+                    <div class="layer__header">
+                        <span class="layer__label">Shadow ${index + 1}</span>
+                        <div class="layer__actions">
+                            <button class="layer__btn" onclick="duplicateLayer(${layer.id})" title="Duplicate">⧉</button>
+                            <button class="layer__btn layer__btn--delete" onclick="removeLayer(${layer.id})" title="Remove">✕</button>
+                        </div>
+                    </div>
+                    <div class="controls-grid">
+                        <div class="control">
+                            <label class="control__label">
+                                <span>Offset X</span>
+                                <span class="control__value" id="valX${layer.id}">${layer.x}px</span>
+                            </label>
+                            <input type="range" min="-50" max="50" value="${layer.x}"
+                                oninput="updateLayer(${layer.id},'x',this.value)">
+                        </div>
+                        <div class="control">
+                            <label class="control__label">
+                                <span>Offset Y</span>
+                                <span class="control__value" id="valY${layer.id}">${layer.y}px</span>
+                            </label>
+                            <input type="range" min="-50" max="50" value="${layer.y}"
+                                oninput="updateLayer(${layer.id},'y',this.value)">
+                        </div>
+                        <div class="control">
+                            <label class="control__label">
+                                <span>Flou</span>
+                                <span class="control__value" id="valBlur${layer.id}">${layer.blur}px</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="${layer.blur}"
+                                oninput="updateLayer(${layer.id},'blur',this.value)">
+                        </div>
+                        <div class="control">
+                            <label class="control__label">
+                                <span>Étalement</span>
+                                <span class="control__value" id="valSpread${layer.id}">${layer.spread}px</span>
+                            </label>
+                            <input type="range" min="-50" max="50" value="${layer.spread}"
+                                oninput="updateLayer(${layer.id},'spread',this.value)">
+                        </div>
+                        <div class="control">
+                            <label class="control__label">
+                                <span>Couleur</span>
+                            </label>
+                            <input type="color" value="${parsed.hex}"
+                                oninput="updateLayer(${layer.id},'color',this.value)">
+                        </div>
+                        <div class="control">
+                            <label class="control__label">
+                                <span>Opacity</span>
+                                <span class="control__value" id="valAlpha${layer.id}">${Math.round((layer.alpha || 1) * 100)}%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="${Math.round((layer.alpha || 1) * 100)}"
+                                oninput="updateLayer(${layer.id},'alpha',this.value)">
+                        </div>
+                    </div>
+                    <div class="toggle-row">
+                        <span class="toggle-row__label">Inset shadow</span>
+                        <label class="toggle">
+                            <input type="checkbox" ${layer.inset ? 'checked' : ''}
+                                onchange="updateLayer(${layer.id},'inset',this.checked)">
+                            <span class="toggle__slider"></span>
+                        </label>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        // ===== UPDATE =====
+        function updateLayer(id, prop, value) {
+            const layer = layers.find(l => l.id === id);
+            if (!layer) return;
+
+            if (prop === 'inset') {
+                layer.inset = value;
+            } else if (prop === 'color') {
+                // Update color keeping current alpha
+                layer.color = hexToRgba(value, layer.alpha || 1);
+            } else if (prop === 'alpha') {
+                layer.alpha = parseInt(value) / 100;
+                const parsed = parseColor(layer.color);
+                layer.color = hexToRgba(parsed.hex, layer.alpha);
+                const el = document.getElementById(`valAlpha${id}`);
+                if (el) el.textContent = value + '%';
+            } else {
+                layer[prop] = parseInt(value);
+            }
+
+            // Update displayed value
+            const labelMap = { x: 'X', y: 'Y', blur: 'Blur', spread: 'Spread' };
+            if (labelMap[prop]) {
+                const el = document.getElementById(`val${labelMap[prop]}${id}`);
+                if (el) el.textContent = value + 'px';
+            }
+
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const shadowStr = generateShadowCSS();
+            document.getElementById('previewBox').style.boxShadow = shadowStr;
+
+            // Update code block
+            const codeEl = document.getElementById('codeOutput');
+            const copyBtn = document.getElementById('btnCopy');
+            codeEl.innerHTML = '';
+
+            const code = document.createElement('span');
+            code.innerHTML = `<span class="prop">box-shadow</span>: <span class="val">${shadowStr}</span>;`;
+            codeEl.appendChild(code);
+            codeEl.appendChild(copyBtn);
+        }
+
+        function generateShadowCSS() {
+            return layers.map(l => {
+                const parts = [];
+                if (l.inset) parts.push('inset');
+                parts.push(`${l.x}px`);
+                parts.push(`${l.y}px`);
+                parts.push(`${l.blur}px`);
+                parts.push(`${l.spread}px`);
+                parts.push(l.color);
+                return parts.join(' ');
+            }).join(',\n                ');
+        }
+
+        // ===== PRESETS =====
+        function applyPreset(name) {
+            const preset = presets[name];
+            if (!preset) return;
+            layers = [];
+            nextId = 0;
+            preset.forEach(p => addLayer({ ...p }));
+        }
+
+        // ===== COPY =====
+        function copyCode() {
+            const css = `box-shadow: ${generateShadowCSS()};`;
+            navigator.clipboard.writeText(css).then(() => {
+                const btn = document.getElementById('btnCopy');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('btn-copy--copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.classList.remove('btn-copy--copied');
+                }, 2000);
+            });
+        }
+
+        // ===== START =====
+        init();
+    </script>
+</body>
+
+</html>

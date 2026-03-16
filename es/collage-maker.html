@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb | Creador de Collages de Fotos</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- SortableJS for drag and drop reordering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+    <!-- html2canvas to render DOM elements as an image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .checkered-bg {
+            background-color: #050508;
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        #collageContainer {
+            box-sizing: content-box;
+            background-color: white;
+            /* Default border color */
+            transition: all 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            aspect-ratio: 1/1;
+            /* Default to square collage */
+        }
+
+        .layout-btn.active {
+            border-color: #7c5cfc;
+            color: #7c5cfc;
+        }
+
+        .photo-slot {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .photo-slot:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* This makes the image fill the slot without distortion */
+            pointer-events: none;
+        }
+
+        .photo-slot .placeholder-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 2rem;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .photo-slot.has-image .placeholder-icon {
+            opacity: 0;
+        }
+
+        .photo-slot .remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: auto;
+        }
+
+        .photo-slot.has-image:hover .remove-btn {
+            opacity: 1;
+        }
+
+        /* Sortable ghost styling */
+        .sortable-ghost {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+
+        /* Range Sliders */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #7c5cfc;
+            cursor: pointer;
+            margin-top: -6px;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/collage-maker.html">
+    <meta name="description" content="Combina múltiples fotos en hermosos layouts de cuadrículas configurables.">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased h-screen overflow-hidden flex flex-col">
+    <!-- Top Navigation -->
+    <header
+        class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl shrink-0">
+        <div class="flex items-center gap-3">
+            <a href="index.html"
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <span class="material-symbols-outlined">grid_on</span>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold leading-tight tracking-tight">Collage Maker</h2>
+                <p class="text-[10px] uppercase tracking-widest font-semibold text-slate-400">StudioLimb Tools</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="btnDownload" onclick="downloadCollage()"
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25 hover:opacity-90 transition-all gap-2">
+                <span class="material-symbols-outlined text-[18px]">download</span> Exportar Imagen
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+        <!-- Sidebar Controls -->
+        <div class="flex w-80 flex-col gap-4 h-full shrink-0">
+            <div class="flex flex-col flex-1 glass-panel p-5 rounded-xl overflow-y-auto scrollbar-hide">
+                <div class="space-y-6">
+
+                    <!-- Layout Selection -->
+                    <div>
+                        <label class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-3">Grid
+                            Layout</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <!-- 2x2 Grid -->
+                            <button onclick="setLayout('grid-cols-2 grid-rows-2', 4, this)"
+                                class="layout-btn active aspect-square rounded-lg border-2 border-primary text-primary flex items-center justify-center bg-white/5 transition-all">
+                                <span class="material-symbols-outlined font-light text-3xl">grid_view</span>
+                            </button>
+                            <!-- 1x2 Grid (Split H) -->
+                            <button onclick="setLayout('grid-rows-2', 2, this)"
+                                class="layout-btn aspect-square rounded-lg border-2 border-white/10 text-slate-400 hover:border-white/30 flex items-center justify-center bg-white/5 transition-all">
+                                <div class="w-2/3 h-2/3 flex flex-col gap-1">
+                                    <div class="bg-current rounded-sm flex-1"></div>
+                                    <div class="bg-current rounded-sm flex-1"></div>
+                                </div>
+                            </button>
+                            <!-- 2x1 Grid (Split V) -->
+                            <button onclick="setLayout('grid-cols-2', 2, this)"
+                                class="layout-btn aspect-square rounded-lg border-2 border-white/10 text-slate-400 hover:border-white/30 flex items-center justify-center bg-white/5 transition-all">
+                                <div class="w-2/3 h-2/3 flex gap-1">
+                                    <div class="bg-current rounded-sm flex-1"></div>
+                                    <div class="bg-current rounded-sm flex-1"></div>
+                                </div>
+                            </button>
+                            <!-- 2 Top, 1 Bottom (Colspan) -->
+                            <button onclick="setLayout('grid-cols-2', 3, this, [0,1, 'col-span-2'])"
+                                title="2 on top, 1 wide on bottom"
+                                class="layout-btn aspect-square rounded-lg border-2 border-white/10 text-slate-400 hover:border-white/30 flex items-center justify-center bg-white/5 transition-all">
+                                <div class="w-2/3 h-2/3 flex flex-col gap-1">
+                                    <div class="flex gap-1 flex-1">
+                                        <div class="bg-current rounded-sm flex-1"></div>
+                                        <div class="bg-current rounded-sm flex-1"></div>
+                                    </div>
+                                    <div class="bg-current rounded-sm flex-1"></div>
+                                </div>
+                            </button>
+                            <!-- 3x3 Grid -->
+                            <button onclick="setLayout('grid-cols-3 grid-rows-3', 9, this)"
+                                class="layout-btn aspect-square rounded-lg border-2 border-white/10 text-slate-400 hover:border-white/30 flex items-center justify-center bg-white/5 transition-all">
+                                <span class="material-symbols-outlined font-light text-3xl">apps</span>
+                            </button>
+                            <!-- 1 left, 2 right (Rowspan) -->
+                            <button onclick="setLayout('grid-cols-2 grid-rows-2', 3, this, ['row-span-2', 1, 2])"
+                                title="1 tall on left, 2 stacked on right"
+                                class="layout-btn aspect-square rounded-lg border-2 border-white/10 text-slate-400 hover:border-white/30 flex items-center justify-center bg-white/5 transition-all">
+                                <div class="w-2/3 h-2/3 flex gap-1">
+                                    <div class="bg-current rounded-sm flex-1"></div>
+                                    <div class="flex flex-col gap-1 flex-1">
+                                        <div class="bg-current rounded-sm flex-1"></div>
+                                        <div class="bg-current rounded-sm flex-1"></div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Aspect Ratio -->
+                    <div class="pt-4 border-t border-white/5">
+                        <label class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-3">Overall
+                            Shape (Ratio)</label>
+                        <div class="flex bg-black/40 p-1 rounded-lg border border-white/5">
+                            <button onclick="setCollageRatio('1/1', this)"
+                                class="ratio-btn active flex-1 py-1.5 text-xs font-bold rounded-md bg-white/10 text-white transition-all">1:1</button>
+                            <button onclick="setCollageRatio('4/5', this)"
+                                class="ratio-btn flex-1 py-1.5 text-xs font-bold rounded-md text-slate-400 hover:text-white transition-all">4:5</button>
+                            <button onclick="setCollageRatio('16/9', this)"
+                                class="ratio-btn flex-1 py-1.5 text-xs font-bold rounded-md text-slate-400 hover:text-white transition-all">16:9</button>
+                        </div>
+                    </div>
+
+                    <!-- Border Customization -->
+                    <div class="pt-4 border-t border-white/5 space-y-5">
+                        <label class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-2">Border
+                            Styling</label>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-slate-300">Grosor (Espaciado)</span>
+                                <span class="text-xs font-mono text-primary" id="gapVal">8px</span>
+                            </div>
+                            <input type="range" id="gapSize" min="0" max="40" value="8" oninput="updateBorders()">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-slate-300">Radio de Borde</span>
+                                <span class="text-xs font-mono text-primary" id="radiusVal">0px</span>
+                            </div>
+                            <input type="range" id="radiusSize" min="0" max="50" value="0" oninput="updateBorders()">
+                        </div>
+
+                        <div>
+                            <span class="text-xs text-slate-300 block mb-2">Color del Borde</span>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="setBorderColor('#ffffff')"
+                                    class="w-6 h-6 rounded-full bg-white border-2 border-black focus:outline-none focus:ring-2 focus:ring-white transition-transform scale-110 shadow-lg shadow-white/20"
+                                    id="cc-white"></button>
+                                <button onclick="setBorderColor('#000000')"
+                                    class="w-6 h-6 rounded-full bg-black border-2 border-white/20 focus:outline-none focus:ring-2 focus:ring-white transition-transform"
+                                    id="cc-black"></button>
+                                <button onclick="setBorderColor('#f3f4f6')"
+                                    class="w-6 h-6 rounded-full bg-gray-100 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-white transition-transform"
+                                    id="cc-gray"></button>
+                                <button onclick="setBorderColor('#7c5cfc')"
+                                    class="w-6 h-6 rounded-full bg-primary border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-primary transition-transform"
+                                    id="cc-primary"></button>
+                                <button onclick="setBorderColor('transparent')"
+                                    class="w-6 h-6 rounded-full overflow-hidden border-2 border-white/20 focus:outline-none focus:ring-2 focus:ring-white transition-transform relative"
+                                    id="cc-trans">
+                                    <!-- Checkerboard for transparent -->
+                                    <div class="absolute inset-0"
+                                        style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 8px 8px; background-position: 0 0, 0 4px, 4px -4px, -4px 0px;">
+                                    </div>
+                                </button>
+                                <input type="color" id="customColor" onchange="setBorderColor(this.value)"
+                                    class="w-6 h-6 rounded cursor-pointer border-0 p-0 bg-transparent flex-shrink-0"
+                                    title="Custom color">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="pt-4 border-t border-white/5">
+                        <p class="text-[10px] font-medium text-slate-500 leading-relaxed text-center">
+                            Click any empty slot to upload an image. Drag and drop images to reorder them. Click the 'X'
+                            to remove an image.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Work Area -->
+        <div
+            class="flex-1 glass-panel rounded-xl flex items-center justify-center overflow-hidden relative checkered-bg p-8">
+
+            <!-- Hidden file input for clicking slots -->
+            <input type="file" id="slotFileInput" accept="image/*" class="hidden" onchange="handleSlotUpload(event)">
+
+            <div id="captureArea" class="w-full h-full max-w-2xl max-h-[800px] flex items-center justify-center p-4">
+                <!-- The actual collage grid -->
+                <div id="collageContainer" class="w-full h-full grid gap-2 p-2 grid-cols-2 grid-rows-2">
+                    <!-- Slots will be injected here by JS -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const container = document.getElementById('collageContainer');
+        let currentSlotCount = 4;
+        let activeSlotItem = null; // Tracks which slot was clicked for upload
+        let customClassesArray = []; // To handle spans (row-span, col-span)
+
+        // Initialize Sortable logic
+        let sortableInstance = null;
+
+        function initSortable() {
+            if (sortableInstance) {
+                sortableInstance.destroy();
+            }
+            sortableInstance = new Sortable(container, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                // Keep the span classes associated with their index position, NOT the DOM element moving
+                // We actually want images to swap contents, not DOM nodes moving, because of grid-area spanning.
+                // SortableJS standard moves the DOM element. To fix this with irregular grids, we intercept the end event.
+                onEnd: function (evt) {
+                    if (customClassesArray.length > 0) {
+                        // If we have irregular grids (spans), DOM reordering messes up the grid template.
+                        // So we cancel the DOM move, and just swap the innerHTML/backgrounds manually.
+
+                        // BUT, to keep things simple and robust entirely on client-side, 
+                        // It's safer to re-apply classes based on children index.
+                        const children = Array.from(container.children);
+                        children.forEach((child, index) => {
+                            // Strip old spans
+                            child.className = child.className.replace(/col-span-\d/g, '').replace(/row-span-\d/g, '');
+                            // Re-apply if defined
+                            if (customClassesArray[index] && typeof customClassesArray[index] === 'string') {
+                                child.className += ' ' + customClassesArray[index];
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        // Layout Engine
+        function setLayout(gridClasses, slotCount, btnElement, optionalClasses = []) {
+            // Update UI
+            document.querySelectorAll('.layout-btn').forEach(b => {
+                b.classList.remove('active', 'border-primary', 'text-primary');
+                b.classList.add('border-white/10', 'text-slate-400');
+            });
+            btnElement.classList.remove('border-white/10', 'text-slate-400');
+            btnElement.classList.add('active', 'border-primary', 'text-primary');
+
+            // Save state
+            currentSlotCount = slotCount;
+            customClassesArray = optionalClasses;
+
+            // Strip existing grid-cols/rows
+            container.className = container.className.replace(/grid-cols-\d/g, '').replace(/grid-rows-\d/g, '');
+            // Apply new
+            container.className += ' ' + gridClasses;
+
+            // Generate slots, preserving as many images as possible
+            const existingImages = [];
+            Array.from(container.children).forEach(slot => {
+                if (slot.classList.contains('has-image')) {
+                    const img = slot.querySelector('img');
+                    if (img && img.src) existingImages.push(img.src);
+                }
+            });
+
+            container.innerHTML = '';
+            for (let i = 0; i < currentSlotCount; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'photo-slot rounded-sm'; // base class
+
+                // Add specific span classes if defined for this Layout
+                if (customClassesArray[i] && typeof customClassesArray[i] === 'string') {
+                    slot.className += ' ' + customClassesArray[i];
+                }
+
+                // Inner content
+                const icon = document.createElement('span');
+                icon.className = 'material-symbols-outlined placeholder-icon';
+                icon.textContent = 'add_photo_alternate';
+
+                const closeBtn = document.createElement('div');
+                closeBtn.className = 'remove-btn text-white text-[14px] material-symbols-outlined';
+                closeBtn.textContent = 'close';
+                closeBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    removeImage(slot);
+                };
+
+                slot.appendChild(icon);
+                slot.appendChild(closeBtn);
+
+                // Re-apply old images if we have them
+                if (i < existingImages.length) {
+                    const img = document.createElement('img');
+                    img.src = existingImages[i];
+                    slot.appendChild(img);
+                    slot.classList.add('has-image');
+                }
+
+                // Click to upload
+                slot.onclick = () => {
+                    if (!slot.classList.contains('has-image')) {
+                        activeSlotItem = slot;
+                        document.getElementById('slotFileInput').click();
+                    }
+                };
+
+                container.appendChild(slot);
+            }
+
+            // Sync border radius immediately so new slots get the rounded corners
+            updateBorders();
+            initSortable();
+        }
+
+        // Image Handling
+        function handleSlotUpload(event) {
+            const file = event.target.files[0];
+            if (!file || !activeSlotItem) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                activeSlotItem.appendChild(img);
+                activeSlotItem.classList.add('has-image');
+                activeSlotItem = null; // reset
+                event.target.value = ''; // clear input
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(slotNode) {
+            const img = slotNode.querySelector('img');
+            if (img) {
+                slotNode.removeChild(img);
+                slotNode.classList.remove('has-image');
+            }
+        }
+
+        // Ratio Controls
+        function setCollageRatio(ratio, btnElement) {
+            container.style.aspectRatio = ratio;
+
+            document.querySelectorAll('.ratio-btn').forEach(b => {
+                b.classList.remove('bg-white/10', 'text-white');
+                b.classList.add('text-slate-400');
+            });
+            btnElement.classList.add('bg-white/10', 'text-white');
+            btnElement.classList.remove('text-slate-400');
+        }
+
+        // Styling Controls
+        function updateBorders() {
+            const gap = document.getElementById('gapSize').value;
+            const radius = document.getElementById('radiusSize').value;
+
+            document.getElementById('gapVal').textContent = gap + 'px';
+            document.getElementById('radiusVal').textContent = radius + 'px';
+
+            container.style.gap = `${gap}px`;
+            container.style.padding = `${gap}px`;
+            container.style.borderRadius = `${(radius * 1.5)}px`; // slightly larger outer radius
+
+            // Inner slots radius
+            Array.from(container.children).forEach(slot => {
+                slot.style.borderRadius = `${radius}px`;
+            });
+        }
+
+        function setBorderColor(color) {
+            if (color === 'transparent') {
+                container.style.backgroundColor = 'transparent';
+            } else {
+                container.style.backgroundColor = color;
+            }
+
+            // UI update for swatches
+            const swatches = ['cc-white', 'cc-black', 'cc-gray', 'cc-primary', 'cc-trans'];
+            swatches.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.remove('scale-110', 'shadow-lg');
+                    el.blur(); // remove focus ring
+                }
+            });
+
+            // If it matches a swatch, highlight it
+            let activeId = null;
+            if (color === '#ffffff') activeId = 'cc-white';
+            else if (color === '#000000') activeId = 'cc-black';
+            else if (color === '#f3f4f6') activeId = 'cc-gray';
+            else if (color === '#7c5cfc') activeId = 'cc-primary';
+            else if (color === 'transparent') activeId = 'cc-trans';
+
+            if (activeId) {
+                const el = document.getElementById(activeId);
+                el.classList.add('scale-110', 'shadow-lg');
+                el.focus();
+            }
+        }
+
+        // Export Function using html2canvas
+        function downloadCollage() {
+            // Verify at least one image exists
+            const hasImages = Array.from(container.children).some(slot => slot.classList.contains('has-image'));
+            if (!hasImages) {
+                alert("Please add at least one image to export your collage.");
+                return;
+            }
+
+            const btn = document.getElementById('btnDownload');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">refresh</span> Generating...`;
+            btn.disabled = true;
+
+            // Temporarily hide close buttons and placeholders
+            const closeBtns = document.querySelectorAll('.remove-btn');
+            const icons = document.querySelectorAll('.placeholder-icon');
+            closeBtns.forEach(el => el.style.display = 'none');
+            icons.forEach(el => el.style.display = 'none');
+
+            // To ensure high quality, scale up the canvas rendering
+            container.style.boxShadow = 'none'; // remove shadow for export
+
+            html2canvas(container, {
+                scale: 3, // High resolution
+                useCORS: true,
+                backgroundColor: null, // respect transparency
+                logging: false,
+                onclone: function (clonedDoc) {
+                    // Fix iOS safari glitch where flex items might collapse
+                    const clonedContainer = clonedDoc.getElementById('collageContainer');
+                    clonedContainer.style.width = container.offsetWidth + 'px';
+                    clonedContainer.style.height = container.offsetHeight + 'px';
+                }
+            }).then(canvas => {
+                // Restore UI
+                closeBtns.forEach(el => el.style.display = '');
+                icons.forEach(el => el.style.display = '');
+                container.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                // Download
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `studiolimb-collage.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/png', 1.0);
+            }).catch(err => {
+                console.error(err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert("An error occurred during export.");
+            });
+        }
+
+        // Initialize default view
+        window.addEventListener('DOMContentLoaded', () => {
+            // Force the first button click to setup DOM
+            document.querySelector('.layout-btn.active').click();
+        });
+
+    </script>
+</body>
+
+</html>

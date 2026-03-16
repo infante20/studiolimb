@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="dark" lang="hi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>फ़ॉन्ट पेयरिंग | StudioLimb</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link id="fontLink"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .canvas-container {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+        }
+
+        .editable-area {
+            outline: none;
+        }
+
+        .pairing-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .pairing-card:hover {
+            border-color: #7c5cfc;
+            transform: translateX(4px);
+        }
+
+        .pairing-card.active {
+            border-color: #7c5cfc;
+            background: rgba(124, 92, 252, 0.05);
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/font-pairing.html">
+    <meta name="description" content="Google फ़ॉन्ट संयोजनों की खोज और पूर्वावलोकन करें।">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
+    <div class="relative flex h-screen w-full flex-col">
+        <!-- Main Background Canvas -->
+        <div class="absolute inset-0 z-0 canvas-container"></div>
+
+        <!-- Top Navigation Bar -->
+        <header class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined">font_download</span>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight">StudioLimb</h2>
+                    <p class="text-[10px] uppercase tracking-widest font-semibold opacity-60">Typography Suite</p>
+                </div>
+            </div>
+            <button
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-bold transition-all border border-white/10"
+                onclick="copyCode()">
+                <span class="material-symbols-outlined text-[18px] mr-2">content_copy</span> Copy CSS
+            </button>
+        </header>
+
+        <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+            <!-- Sidebar Controls -->
+            <div class="flex w-[380px] flex-col gap-4 h-full">
+                <!-- Filters -->
+                <div class="flex flex-col gap-3 glass-panel p-5 rounded-xl">
+                    <h1 class="text-xl font-bold">Font Pairing</h1>
+                    <p class="text-xs text-slate-400 font-medium">Click a preset below to preview it dynamically. Texts
+                        in the main area are editable.</p>
+
+                    <div class="flex gap-2 overflow-x-auto scrollbar-hide mt-2 pb-1" id="tabs">
+                        <button
+                            class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-primary text-white transition-all shadow-md tab-button"
+                            onclick="filterCategory('modern', this)">Modern</button>
+                        <button
+                            class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-white/5 text-slate-400 hover:text-white transition-all border border-white/10 tab-button"
+                            onclick="filterCategory('classic', this)">Classic</button>
+                        <button
+                            class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-white/5 text-slate-400 hover:text-white transition-all border border-white/10 tab-button"
+                            onclick="filterCategory('playful', this)">Playful</button>
+                        <button
+                            class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-white/5 text-slate-400 hover:text-white transition-all border border-white/10 tab-button"
+                            onclick="filterCategory('elegant', this)">Elegant</button>
+                    </div>
+                </div>
+
+                <!-- List -->
+                <div class="flex flex-1 flex-col glass-panel p-3 rounded-xl overflow-y-auto scrollbar-hide space-y-2"
+                    id="pairingList">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+
+            <!-- Central Content Stage -->
+            <div class="flex-1 glass-panel rounded-xl flex flex-col relative overflow-hidden bg-[#0a0a0f]/80">
+                <div class="flex-1 overflow-y-auto p-12 md:p-20 relative z-10">
+                    <div class="max-w-3xl editable-area space-y-8">
+                        <h2 class="text-5xl md:text-6xl font-black leading-tight tracking-tight focus:outline-white/20 rounded-lg p-2 -ml-2"
+                            id="headingView" contenteditable="true" spellcheck="false">Elevate your digital vision with
+                            StudioLimb.</h2>
+                        <p class="text-xl md:text-2xl leading-relaxed text-slate-300 focus:outline-white/20 rounded-lg p-2 -ml-2"
+                            id="bodyView" contenteditable="true" spellcheck="false">Combining high-end aesthetics with
+                            powerful conversion tools. Explore our suite of micro-tools designed for the modern creator,
+                            offering precision and ease of use in every single interaction.</p>
+
+                        <div class="pt-4">
+                            <button
+                                class="h-14 px-8 rounded-xl bg-primary text-white text-lg font-bold shadow-xl shadow-primary/20 hover:opacity-90 transition-all border border-primary/50"
+                                id="ctaView">Get Started Today</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#050508]/80 backdrop-blur-md p-6 border-t border-white/10">
+                    <p class="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-3">CSS Import &
+                        Implementation</p>
+                    <div
+                        class="bg-black/50 border border-white/5 rounded-lg p-4 font-mono text-sm text-sky-300 overflow-x-auto">
+                        <pre id="codeOutput" class="whitespace-pre-wrap">@import url('...');</pre>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const pairings = [
+            { id: 1, category: 'modern', heading: 'Inter', body: 'Inter', hWeight: 800, bWeight: 400, desc: 'Geometric & Clean' },
+            { id: 2, category: 'modern', heading: 'Outfit', body: 'Inter', hWeight: 800, bWeight: 400, desc: 'Tech & Modern' },
+            { id: 3, category: 'classic', heading: 'Playfair Display', body: 'Source Sans 3', hWeight: 700, bWeight: 400, desc: 'Sophisticated Serif' },
+            { id: 4, category: 'playful', heading: 'Space Grotesk', body: 'Outfit', hWeight: 700, bWeight: 400, desc: 'Quirky & Bold' },
+            { id: 5, category: 'elegant', heading: 'Cormorant Garamond', body: 'Montserrat', hWeight: 700, bWeight: 400, desc: 'Luxury & Timeless' },
+            { id: 6, category: 'modern', heading: 'Plus Jakarta Sans', body: 'Plus Jakarta Sans', hWeight: 800, bWeight: 500, desc: 'Startup Aesthetic' },
+            { id: 7, category: 'classic', heading: 'Libre Baskerville', body: 'Work Sans', hWeight: 700, bWeight: 400, desc: 'Editorial & Clear' },
+            { id: 8, category: 'elegant', heading: 'Fraunces', body: 'Manrope', hWeight: 700, bWeight: 500, desc: 'Organic & Soft' }
+        ];
+
+        let activeId = 1;
+        let activeCategory = 'modern';
+
+        function init() {
+            renderPairings();
+            applyPairing(1);
+        }
+
+        function filterCategory(cat, btnElement) {
+            activeCategory = cat;
+
+            // UI classes for tabs
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.className = 'px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-white/5 text-slate-400 hover:text-white transition-all border border-white/10 tab-button';
+            });
+            btnElement.className = 'px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-primary text-white transition-all shadow-md tab-button';
+
+            renderPairings();
+        }
+
+        function renderPairings() {
+            const list = document.getElementById('pairingList');
+            list.innerHTML = '';
+            const filtered = pairings.filter(p => p.category === activeCategory);
+
+            filtered.forEach(p => {
+                const isActive = p.id === activeId;
+                const card = document.createElement('div');
+                card.className = `pairing-card p-4 rounded-xl border ${isActive ? 'active' : 'border-white/5 bg-[#050508]/50'}`;
+                card.onclick = () => applyPairing(p.id);
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-bold text-slate-200">${p.heading} <span class="text-slate-500 font-normal">+ ${p.body}</span></div>
+                        ${isActive ? '<span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>' : ''}
+                    </div>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-3">${p.desc}</div>
+                    <div class="text-xl" style="font-family: '${p.heading}', sans-serif; font-weight: ${p.hWeight}; color: ${isActive ? '#fff' : '#cbd5e1'}">Ag</div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function applyPairing(id) {
+            activeId = id;
+            const p = pairings.find(x => x.id === id);
+
+            const fontLink = document.getElementById('fontLink');
+            const families = [p.heading, p.body].map(f => f.replace(/ /g, '+') + ':wght@400;500;700;800').join('&family=');
+            fontLink.href = `https://fonts.googleapis.com/css2?family=${families}&display=swap`;
+
+            document.getElementById('headingView').style.fontFamily = `'${p.heading}', serif`;
+            document.getElementById('headingView').style.fontWeight = p.hWeight;
+            document.getElementById('bodyView').style.fontFamily = `'${p.body}', sans-serif`;
+            document.getElementById('bodyView').style.fontWeight = p.bWeight;
+            document.getElementById('ctaView').style.fontFamily = `'${p.body}', sans-serif`;
+
+            const code = `@import url('https://fonts.googleapis.com/css2?family=${families}&display=swap');\n\nh1, h2, h3 { font-family: '${p.heading}'; font-weight: ${p.hWeight}; }\np, a, span { font-family: '${p.body}'; font-weight: ${p.bWeight}; }`;
+            document.getElementById('codeOutput').innerText = code;
+
+            renderPairings();
+        }
+
+        function copyCode() {
+            const text = document.getElementById('codeOutput').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('header button');
+                const origHTML = btn.innerHTML;
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px] mr-2">check</span> Copied!';
+                btn.classList.add('bg-green-500/20', 'text-green-400', 'border-green-500/30');
+                setTimeout(() => {
+                    btn.innerHTML = origHTML;
+                    btn.classList.remove('bg-green-500/20', 'text-green-400', 'border-green-500/30');
+                }, 2000);
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>

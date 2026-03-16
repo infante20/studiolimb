@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html class="dark overflow-x-hidden" lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <!-- SEO Meta Tags -->
+    <title>StudioLimb | Outils Essentiels de Design et Développement Web</title>
+    <meta name="description"
+        content="Découvrez StudioLimb : Une suite premium et gratuite de plus de 30 micro-outils web modernes. Générateurs CSS, flexbox, grille, compression d'images et optimisation SVG." />
+    <meta name="keywords"
+        content="web design tools, css generators, flexbox playground, image compressor, svg optimizer, web development tools, glassmorphism generator, gradient generator" />
+    <meta name="author" content="StudioLimb" />
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="StudioLimb | Essential Web Design & Development Tools" />
+    <meta property="og:description"
+        content="Découvrez StudioLimb : Une suite premium et gratuite de plus de 30 micro-outils web modernes. Générateurs CSS, flexbox, grille, compression d'images et optimisation SVG." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://studiolimb.com" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://studiolimb.com/" />
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="apple-touch-icon" href="../icons/icon-192x192.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "StudioLimb",
+      "description": "A free, premium suite of modern web micro-tools for designers and developers.",
+      "url": "https://studiolimb.com",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "primary-hover": "#6545ea",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050508;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(124, 92, 252, 0.05), transparent 25%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(124, 92, 252, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(124, 92, 252, 0.2);
+        }
+
+        /* Abstract glowing blobs for background */
+        .bg-shape {
+            position: absolute;
+            filter: blur(90px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Subtle grid background pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050508;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 92, 252, 0.5);
+        /* Glassmorphism Language Selector Tooltip */
+        .lang-selector { position: relative; z-index: 100; }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem; font-weight: 500; cursor: pointer;
+            display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;
+        }
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .lang-dropdown {
+            position: absolute; top: calc(100% + 0.5rem); right: 0;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 0.5rem; min-width: 140px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s;
+            display: flex; flex-direction: column; gap: 0.25rem;
+        }
+        .lang-selector:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .lang-option {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem;
+            color: #94a3b8; text-decoration: none; font-size: 0.85rem; border-radius: 6px; transition: all 0.2s; font-weight: 500;
+        }
+        .lang-option:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+        .lang-option.active { color: #10b981; background: rgba(16, 185, 129, 0.15); } 
+        .lang-flag { font-size: 1rem; }
+    </style>
+</head>
+
+<body
+    class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Background decorative elements -->
+    <div class="fixed inset-0 z-[-1] bg-grid pointer-events-none"></div>
+    <div class="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div
+            class="bg-shape bg-primary w-96 h-96 rounded-full top-[-100px] left-[-100px] animate-blob mix-blend-screen">
+        </div>
+        <div
+            class="bg-shape bg-indigo-600 w-96 h-96 rounded-full top-[20%] right-[-100px] animate-blob animation-delay-2000 mix-blend-screen">
+        </div>
+        <div
+            class="bg-shape bg-fuchsia-600 w-80 h-80 rounded-full bottom-[-100px] left-[20%] animate-blob animation-delay-4000 mix-blend-screen">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 px-6 py-6 max-w-7xl mx-auto w-full flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                <div
+                    class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white shadow-[0_0_20px_rgba(124,92,252,0.4)]">
+                    <span class="material-symbols-outlined text-[28px]">token</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold leading-none tracking-tight">StudioLimb</h1>
+                    <p class="text-[10px] uppercase tracking-widest font-bold text-primary opacity-80 mt-1">Creative Suite
+                    </p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Language Selector -->
+                <div class="lang-selector">
+            <button class="lang-btn">
+                <span class="lang-flag">🇫🇷</span> FR
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="lang-dropdown">
+                <a href="../index.html" class="lang-option "><span class="lang-flag">🇺🇸</span> English</a>
+                <a href="../es/index.html" class="lang-option "><span class="lang-flag">🇪🇸</span> Español</a>
+                <a href="index.html" class="lang-option active"><span class="lang-flag">🇫🇷</span> Français</a>
+                <a href="../hi/index.html" class="lang-option "><span class="lang-flag">🇮🇳</span> हिन्दी</a>
+                <a href="../pt/index.html" class="lang-option "><span class="lang-flag">🇧🇷</span> Português</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header
+        class="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 pb-32 max-w-5xl mx-auto">
+        <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 shadow-[0_0_15px_rgba(124,92,252,0.15)]">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            30+ Outils Gratuits
+        </div>
+
+        <h2
+            class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
+            Le Kit Ultime pour <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-fuchsia-500">les Créateurs Web Modernes</span>
+        </h2>
+
+        <p class="text-lg md:text-xl text-slate-400 max-w-2xl font-medium mb-12 leading-relaxed">
+            Améliorez votre flux de travail avec notre suite premium de micro-outils. Générez des propriétés CSS, optimisez les ressources et concevez des mises en page plus rapidement que jamais. 100% gratuit, toujours rapide.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <a href="#tools"
+                class="flex h-14 px-8 items-center justify-center rounded-xl bg-primary text-white text-base font-bold shadow-[0_0_30px_rgba(124,92,252,0.4)] hover:shadow-[0_0_40px_rgba(124,92,252,0.6)] hover:bg-primary-hover transition-all gap-2 transform hover:-translate-y-1">
+                <span class="material-symbols-outlined">bolt</span> Commencer la Création
+            </a>
+            <button
+                class="flex h-14 px-8 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white text-base font-bold hover:bg-white/10 transition-all gap-2">
+                <span class="material-symbols-outlined">bookmark</span> Ajouter aux Favoris (Ctrl+D)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Tools Directory -->
+    <main id="tools" class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 pb-24">
+
+        <div class="flex items-end justify-between mb-10 border-b border-white/10 pb-6">
+            <div>
+                <h3 class="text-3xl font-bold tracking-tight mb-2">Annuaire des Outils</h3>
+                <p class="text-slate-400 text-sm">Tout ce dont vous avez besoin, directement dans votre navigateur.</p>
+            </div>
+
+            <!-- AdSense Placeholder (Top) -->
+            <div
+                class="hidden lg:flex w-[468px] h-[60px] bg-white/5 border border-dashed border-white/20 rounded-lg items-center justify-center text-xs text-slate-500 font-mono">
+                [AdSense Banner Space: 468x60]
+            </div>
+        </div>
+
+        <!-- Générateurs CSS -->
+        <h4 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined">css</span> Générateurs CSS
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="gradient-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-white text-xl">palette</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Gén. de Dégradés</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Créez de superbes dégradés CSS linéaires et radiaux pour les arrière-plans.</p>
+            </a>
+
+            <a href="css-triangle-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/50 flex items-center justify-center shadow-lg">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6l8 12H4l8-12z"></path>
+                        </svg>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Triangle CSS</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Générez instantanément des triangles purs en CSS pour les info-bulles et les flèches.</p>
+            </a>
+
+            <a href="glassmorphism-generator.html"
+                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-white text-xl">layers</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Glassmorphism</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Générez des composants parfaits en verre dépoli pour vos interfaces.</p>
+            </a>
+
+            <a href="box-shadow-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-[#2a2a35] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.8)] border border-white/5 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">content_copy</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Ombre de Boîte</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Concevez visuellement des ombres superposées pour donner de la profondeur et de l'élévation.</p>
+            </a>
+
+            <a href="border-radius-visualizer.html"
+                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 !rounded-[10px_20px_5px_15px] bg-[#334155] border-2 border-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">rounded_corner</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Rayon de Bordure</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Visualisez et générez des valeurs complexes de border-radius à 8 points en CSS.</p>
+            </a>
+
+            <a href="snowfall-premier.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30">
+                        <span class="material-symbols-outlined text-xl">ac_unit</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Effet Neige</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Générateur interactif d'effets de neige de particules CSS.</p>
+            </a>
+
+        </div>
+
+        <!-- Typographie et Mise en Page -->
+        <h4 class="text-xl font-bold mb-6 text-emerald-400 flex items-center gap-2">
+            <span class="material-symbols-outlined">text_fields</span> Typographie et Mise en Page
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="flexbox-playground.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                        <span class="material-symbols-outlined text-xl">view_column</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Playground Flexbox</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Maîtrisez visuellement CSS Flexbox avec des contrôles interactifs.
+                </p>
+            </a>
+
+            <a href="grid-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                        <span class="material-symbols-outlined text-xl">grid_4x4</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Gén. de Grille CSS</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Construisez des mises en page complexes CSS Grid en quelques secondes, faites glisser les grilles visuellement.</p>
+            </a>
+
+            <a href="font-pairing.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
+                        <span class="material-symbols-outlined text-xl">match_case</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Associer Polices</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Découvrez et prévisualisez des combinaisons harmonieuses de Google Fonts.
+                </p>
+            </a>
+
+            <a href="type-scale-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
+                        <span class="material-symbols-outlined text-xl">format_size</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Échelle Typographique</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Générez des échelles typographiques modulaires parfaites en utilisant des ratios mathématiques.</p>
+            </a>
+
+            <a href="lorem-ipsum-premier.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-slate-500/20 text-slate-300 flex items-center justify-center border border-slate-500/30">
+                        <span class="material-symbols-outlined text-xl">subject</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Lorem Ipsum</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Générez instantanément du faux texte avec des contrôles de paragraphes et de mots.</p>
+            </a>
+
+        </div>
+
+        <!-- Image & Asset Utilities -->
+        <h4 class="text-xl font-bold mb-6 text-fuchsia-400 flex items-center gap-2">
+            <span class="material-symbols-outlined">image</span> Images et Ressources
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="image-compressor.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
+                        <span class="material-symbols-outlined text-xl">compress</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Compresseur d'Images</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Réduisez la taille des images instantanément et entièrement dans votre navigateur.</p>
+            </a>
+
+            <a href="image-placeholder.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center border border-pink-500/30">
+                        <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Espace Rempl. d'Image</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Créez des fausses images personnalisées pour les maquettes et exportez-les en SVG ou PNG.</p>
+            </a>
+
+            <a href="image-format-converter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
+                        <span class="material-symbols-outlined text-xl">transform</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Convertisseur de Format</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Convertissez entre WebP, PNG et JPG tout en préservant la transparence.</p>
+            </a>
+
+            <a href="image-resizer.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
+                        <span class="material-symbols-outlined text-xl">crop</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Redimensionner Image</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Redimensionnez les images avec précision tout en conservant les proportions.
+                </p>
+            </a>
+
+            <a href="bg-remover.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30">
+                        <span class="material-symbols-outlined text-xl">person_cancel</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Suppresseur de Fond</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Supprimez les fonds d'images instantanément et en privé en utilisant l'IA sur l'appareil.</p>
+            </a>
+
+            <a href="image-cropper.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center border border-pink-500/30">
+                        <span class="material-symbols-outlined text-xl">crop_free</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Recadrer Image</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Recadrez les images selon des proportions spécifiques ou des dimensions personnalisées.</p>
+            </a>
+
+            <a href="photo-filters.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                        <span class="material-symbols-outlined text-xl">auto_fix_high</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Filtres Photos</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Appliquez des filtres de style Instagram et ajustez les paramètres de l'image.</p>
+            </a>
+
+            <a href="watermark-creator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center border border-violet-500/30">
+                        <span class="material-symbols-outlined text-xl">branding_watermark</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Créateur de Filigrane</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Protégez vos images en superposant du texte ou des logos en filigrane.</p>
+            </a>
+
+            <a href="collage-maker.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center border border-teal-500/30">
+                        <span class="material-symbols-outlined text-xl">dashboard_customize</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Créateur de Collages</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Combinez plusieurs photos en de superbes grilles personnalisables.</p>
+            </a>
+
+            <a href="svg-optimizer.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
+                        <span class="material-symbols-outlined text-xl">cleaning_services</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Optimiseur SVG</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Nettoyez et réduisez le code SVG pour les environnements de production.
+                </p>
+            </a>
+
+            <a href="svg-wave-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
+                        <span class="material-symbols-outlined text-xl">water</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Gén. de Vagues SVG</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Générez de magnifiques séparateurs de sections courbes et des vagues vectorielles.</p>
+            </a>
+
+            <a href="qr-code-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
+                        <span class="material-symbols-outlined text-xl">qr_code_2</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Générateur Code QR</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Créez des codes QR haute résolution personnalisés avec incorporation de logo.</p>
+            </a>
+
+        </div>
+
+        <!-- Utilitaires pour Dévs -->
+        <h4 class="text-xl font-bold mb-6 text-indigo-400 flex items-center gap-2 mt-16">
+            <span class="material-symbols-outlined">terminal</span> Utilitaires pour Dévs
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
+
+            <a href="regex-tester.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Testeur Regex</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Testez, déboguez et comprenez les expressions régulières avec mise en surbrillance en temps réel.</p>
+            </a>
+
+            <a href="json-formatter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Formateur JSON</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Embellissez, validez et minifiez les données JSON en toute sécurité dans votre navigateur.</p>
+            </a>
+
+            <a href="base64-encode-decode.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Encodeur Base64</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Encodez et décodez instantanément du texte ou des fichiers au format Base64.</p>
+            </a>
+
+            <a href="url-encode-decode.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"></path>
+                        </svg>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Encodeur URL</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Encodez vos URL en toute sécurité ou décodez les paramètres de requête.</p>
+            </a>
+
+        </div>
+
+        <!-- Utilities & Color -->
+        <h4 class="text-xl font-bold mb-6 text-sky-400 flex items-center gap-2">
+            <span class="material-symbols-outlined">build</span> Couleur et Utilitaires
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+
+            <a href="color-palette-generator.html"
+                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-500 flex items-center justify-center border border-yellow-500/30">
+                        <span class="material-symbols-outlined text-xl">color_lens</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Palette de Couleurs</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Extrayez et générez automatiquement des combinaisons de couleurs.
+                </p>
+            </a>
+
+            <a href="contrast-checker.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center border border-white/30">
+                        <span class="material-symbols-outlined text-xl">contrast</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Vérificateur. Contraste</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Assurez l'accessibilité en vérifiant les ratios de contraste de couleurs WCAG.</p>
+            </a>
+
+            <a href="px-rem-converter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-slate-500/20 text-slate-300 flex items-center justify-center border border-slate-500/30">
+                        <span class="material-symbols-outlined text-xl">calculate</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">PX en REM</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Convertissez rapidement les valeurs de pixels en rem pour des CSS évolutives.</p>
+            </a>
+
+            <a href="social-media-sizes.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+                        <span class="material-symbols-outlined text-xl">share</span>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-white transition-colors">arrow_outward</span>
+                </div>
+                <h5 class="text-lg font-bold mb-2">Tailles Réf. Sociaux</h5>
+                <p class="text-sm text-slate-400 line-clamp-2">Fiche de référence à jour pour les dimensions des images sur toutes les plateformes.</p>
+            </a>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom AdSense Banner -->
+    <div class="w-full flex justify-center pb-12">
+        <div
+            class="w-full max-w-[728px] h-[90px] bg-white/5 border border-dashed border-white/20 rounded-lg flex flex-col items-center justify-center text-xs text-slate-500 font-mono">
+            <span>[AdSense Banner Space: 728x90]</span>
+            <span class="text-[10px] opacity-70 mt-1">Ready for monetization script</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-white/10 bg-[#020205] pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-primary text-xl">token</span>
+                    <span class="text-lg font-bold text-white">StudioLimb</span>
+                </div>
+                <p class="text-slate-400 text-sm max-w-xs mb-4">
+                    The ultimate destination for modern web design tools. Built for speed, precision, and aesthetics.
+                </p>
+                <!-- Affiliate placeholder link example -->
+                <a href="#" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300">
+                    <span class="material-symbols-outlined text-[14px]">sell</span> Recommended Web Hosting
+                </a>
+            </div>
+
+            <div>
+                <h6 class="text-white font-bold mb-4">Tools Index</h6>
+                <ul class="text-sm text-slate-400 space-y-2">
+                    <li><a href="gradient-generator.html" class="hover:text-primary transition-colors">CSS Gradients</a>
+                    </li>
+                    <li><a href="svg-optimizer.html" class="hover:text-primary transition-colors">SVG Optimization</a>
+                    </li>
+                    <li><a href="image-compressor.html" class="hover:text-primary transition-colors">Image
+                            Compression</a></li>
+                    <li><a href="flexbox-playground.html" class="hover:text-primary transition-colors">CSS Layout
+                            Guides</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="text-white font-bold mb-4">Legal</h6>
+                <ul class="text-sm text-slate-400 space-y-2">
+                    <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <p class="mt-2 md:mt-0 font-medium">Built for the Modern Web.</p>
+        </div>
+    </footer>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('../sw.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

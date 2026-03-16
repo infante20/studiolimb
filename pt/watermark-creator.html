@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Criador Marca d'Água | StudioLimb</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .checkered-bg {
+            background-color: #050508;
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        /* Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #7c5cfc;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(124, 92, 252, 0.5);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        #previewCanvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            user-select: none;
+        }
+
+        .tab-btn.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/watermark-creator.html">
+    <meta name="description" content="Adicione marcas d'água de texto ou logotipo às suas imagens.">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased h-screen overflow-hidden flex flex-col">
+    <!-- Top Navigation -->
+    <header
+        class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl shrink-0">
+        <div class="flex items-center gap-3">
+            <a href="index.html"
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                <span class="material-symbols-outlined">branding_watermark</span>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold leading-tight tracking-tight">Criador Marca d'Água</h2>
+                <p class="text-[10px] uppercase tracking-widest font-semibold text-slate-400">StudioLimb Tools</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="btnDownload" onclick="downloadImage()" disabled
+                class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25 hover:opacity-90 transition-all gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-[18px]">download</span> Export Image
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+        <!-- Sidebar Controls -->
+        <div class="flex w-80 flex-col gap-4 h-full shrink-0">
+            <div class="flex flex-col flex-1 glass-panel p-5 rounded-xl overflow-y-auto scrollbar-hide">
+                <div class="space-y-6">
+
+                    <!-- Upload Base Image -->
+                    <div id="uploadSection" class="relative group cursor-pointer"
+                        onclick="document.getElementById('fileInput').click()">
+                        <div
+                            class="absolute inset-0 bg-primary/20 rounded-xl blur-xl group-hover:bg-primary/30 transition-all">
+                        </div>
+                        <div
+                            class="relative flex flex-col items-center justify-center py-6 px-4 border-2 border-dashed border-primary/50 rounded-xl bg-[#050508] text-center hover:border-primary transition-colors">
+                            <span
+                                class="material-symbols-outlined text-3xl text-primary mb-1">add_photo_alternate</span>
+                            <span class="text-xs font-bold text-slate-200">Upload Base Image</span>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*" class="hidden"
+                            onchange="handleImageUpload(event)">
+                    </div>
+
+                    <div id="controlsSection" class="opacity-50 pointer-events-none transition-opacity space-y-6">
+
+                        <!-- Watermark Type Tabs -->
+                        <div class="flex gap-1 bg-black/40 p-1 rounded-lg border border-white/5">
+                            <button onclick="switchTab('text')" id="tabText"
+                                class="tab-btn active flex-1 py-1.5 text-xs font-bold rounded-md text-slate-400 hover:text-white transition-all">Texto</button>
+                            <button onclick="switchTab('image')" id="tabImage"
+                                class="tab-btn flex-1 py-1.5 text-xs font-bold rounded-md text-slate-400 hover:text-white transition-all">Logo/Image</button>
+                        </div>
+
+                        <!-- Text Setup -->
+                        <div id="panelText" class="space-y-4">
+                            <div>
+                                <label
+                                    class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-2">Watermark
+                                    Texto</label>
+                                <input type="text" id="watermarkText" value="© StudioLimb" oninput="drawCanvas()"
+                                    class="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label
+                                        class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-2">Color</label>
+                                    <div
+                                        class="flex items-center gap-2 bg-black/40 border border-white/10 rounded-lg p-1.5">
+                                        <input type="color" id="textColor" value="#ffffff" oninput="drawCanvas()"
+                                            class="w-6 h-6 rounded cursor-pointer border-0 p-0 bg-transparent">
+                                        <span class="text-xs text-slate-300 font-mono" id="colorVal">#ffffff</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label
+                                        class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-2">Tamanho</label>
+                                    <input type="number" id="textSize" value="48" min="10" max="500"
+                                        oninput="drawCanvas()"
+                                        class="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image/Logo Setup -->
+                        <div id="panelImage" class="hidden space-y-4">
+                            <button onclick="document.getElementById('logoInput').click()"
+                                class="w-full py-3 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-bold text-slate-300 flex items-center justify-center gap-2 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">upload</span> Upload Logo (PNG)
+                            </button>
+                            <input type="file" id="logoInput" accept="image/png, image/svg+xml" class="hidden"
+                                onchange="handleLogoUpload(event)">
+
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Logo
+                                        Scale</label>
+                                    <span class="text-xs font-mono text-primary" id="scaleVal">25%</span>
+                                </div>
+                                <input type="range" id="logoScale" min="0.05" max="2" step="0.01" value="0.25"
+                                    oninput="updateScaleLabel(); drawCanvas()">
+                            </div>
+                        </div>
+
+                        <!-- Shared Controls (Opacity & Position) -->
+                        <div class="border-t border-white/5 pt-5 space-y-5">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label
+                                        class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Opacidade</label>
+                                    <span class="text-xs font-mono text-primary" id="opacityVal">70%</span>
+                                </div>
+                                <input type="range" id="opacity" min="0" max="1" step="0.05" value="0.7"
+                                    oninput="updateOpacityLabel(); drawCanvas()">
+                            </div>
+
+                            <div>
+                                <label
+                                    class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-3">Position</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setPosition('top-left')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px] transform rotate-180">south_east</span></button>
+                                    <button onclick="setPosition('top-center')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px]">north</span></button>
+                                    <button onclick="setPosition('top-right')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px] transform rotate-180">south_west</span></button>
+
+                                    <button onclick="setPosition('center-left')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px]">west</span></button>
+                                    <button onclick="setPosition('center')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10 text-primary border-primary"><span
+                                            class="material-symbols-outlined text-[20px]">filter_center_focus</span></button>
+                                    <button onclick="setPosition('center-right')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px]">east</span></button>
+
+                                    <button onclick="setPosition('bottom-left')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px]">south_west</span></button>
+                                    <button onclick="setPosition('bottom-center')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px]">south</span></button>
+                                    <button onclick="setPosition('bottom-right')"
+                                        class="pos-btn p-2 rounded bg-white/5 hover:bg-white/10 border border-white/10"><span
+                                            class="material-symbols-outlined text-[20px]">south_east</span></button>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2 mt-2">
+                                <input type="checkbox" id="tilePattern" onchange="drawCanvas()"
+                                    class="rounded border-white/20 bg-black/40 text-primary focus:ring-primary focus:ring-offset-0">
+                                <label for="tilePattern" class="text-xs text-slate-300">Padrão de Mosaico (Repetido)</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Work Area -->
+        <div
+            class="flex-1 glass-panel rounded-xl flex items-center justify-center overflow-hidden relative checkered-bg p-4">
+            <div id="editorPlaceholder" class="flex flex-col items-center text-slate-500 gap-4">
+                <span class="material-symbols-outlined text-6xl opacity-20">fingerprint</span>
+                <p class="text-sm">Upload an image to start watermarking</p>
+            </div>
+            <canvas id="previewCanvas" class="hidden shadow-2xl rounded"></canvas>
+        </div>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('previewCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // State
+        let baseImage = null;
+        let logoImage = null;
+        let originalFileName = 'watermarked';
+        let originalFileType = 'image/jpeg';
+        let currentMode = 'text'; // 'text' or 'image'
+        let currentPosition = 'center';
+
+        // UI Listeners
+        document.getElementById('textColor').addEventListener('input', e => {
+            document.getElementById('colorVal').textContent = e.target.value;
+        });
+
+        function switchTab(mode) {
+            currentMode = mode;
+            document.getElementById('tabText').classList.toggle('active', mode === 'text');
+            document.getElementById('tabImage').classList.toggle('active', mode === 'image');
+
+            if (mode === 'text') {
+                document.getElementById('panelText').classList.remove('hidden');
+                document.getElementById('panelImage').classList.add('hidden');
+            } else {
+                document.getElementById('panelText').classList.add('hidden');
+                document.getElementById('panelImage').classList.remove('hidden');
+            }
+            drawCanvas();
+        }
+
+        function updateOpacityLabel() {
+            document.getElementById('opacityVal').textContent = Math.round(document.getElementById('opacity').value * 100) + '%';
+        }
+
+        function updateScaleLabel() {
+            document.getElementById('logoScale').textContent = Math.round(document.getElementById('logoScale').value * 100) + '%';
+            document.getElementById('scaleVal').textContent = Math.round(document.getElementById('logoScale').value * 100) + '%';
+        }
+
+        function setPosition(pos) {
+            currentPosition = pos;
+
+            // Update UI buttons
+            const btns = document.querySelectorAll('.pos-btn');
+            btns.forEach(b => {
+                b.classList.remove('text-primary', 'border-primary');
+            });
+            event.currentTarget.classList.add('text-primary', 'border-primary');
+
+            drawCanvas();
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            originalFileName = file.name.split('.')[0];
+            originalFileType = file.type;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    baseImage = img;
+                    initWorkspace();
+                    drawCanvas();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    logoImage = img;
+                    drawCanvas();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function initWorkspace() {
+            document.getElementById('editorPlaceholder').classList.add('hidden');
+            canvas.classList.remove('hidden');
+            document.getElementById('controlsSection').classList.remove('opacity-50', 'pointer-events-none');
+            document.getElementById('btnDownload').disabled = false;
+        }
+
+        function drawCanvas() {
+            if (!baseImage) return;
+
+            // Set canvas size to match logic image size
+            canvas.width = baseImage.width;
+            canvas.height = baseImage.height;
+
+            // Draw base image
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.globalAlpha = 1.0;
+            ctx.drawImage(baseImage, 0, 0);
+
+            // Setup watermark settings
+            const opacity = parseFloat(document.getElementById('opacity').value);
+            const isTile = document.getElementById('tilePattern').checked;
+            ctx.globalAlpha = opacity;
+
+            if (currentMode === 'text') {
+                drawTextWatermark(isTile);
+            } else if (currentMode === 'image' && logoImage) {
+                drawImageWatermark(isTile);
+            }
+
+            // Reset alpha
+            ctx.globalAlpha = 1.0;
+        }
+
+        function getCoords(itemWidth, itemHeight, padding = 40) {
+            let x = 0, y = 0;
+            switch (currentPosition) {
+                case 'top-left': x = padding; y = padding; break;
+                case 'top-center': x = (canvas.width - itemWidth) / 2; y = padding; break;
+                case 'top-right': x = canvas.width - itemWidth - padding; y = padding; break;
+
+                case 'center-left': x = padding; y = (canvas.height - itemHeight) / 2; break;
+                case 'center': x = (canvas.width - itemWidth) / 2; y = (canvas.height - itemHeight) / 2; break;
+                case 'center-right': x = canvas.width - itemWidth - padding; y = (canvas.height - itemHeight) / 2; break;
+
+                case 'bottom-left': x = padding; y = canvas.height - itemHeight - padding; break;
+                case 'bottom-center': x = (canvas.width - itemWidth) / 2; y = canvas.height - itemHeight - padding; break;
+                case 'bottom-right': x = canvas.width - itemWidth - padding; y = canvas.height - itemHeight - padding; break;
+            }
+            return { x, y };
+        }
+
+        function drawTextWatermark(isTile) {
+            const text = document.getElementById('watermarkText').value;
+            if (!text) return;
+
+            const size = parseInt(document.getElementById('textSize').value);
+            const color = document.getElementById('textColor').value;
+
+            ctx.font = `bold ${size}px "Public Sans", sans-serif`;
+            ctx.fillStyle = color;
+            ctx.textBaseline = 'top';
+
+            const metrics = ctx.measureText(text);
+            const tWidth = metrics.width;
+            const tHeight = size; // rough approx
+
+            if (isTile) {
+                drawTiled(text, tWidth, tHeight * 1.5, true);
+            } else {
+                const { x, y } = getCoords(tWidth, tHeight);
+                // Optional: small drop shadow for visibility
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = size / 10;
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
+
+                ctx.fillText(text, x, y);
+
+                // reset shadow
+                ctx.shadowColor = "transparent";
+            }
+        }
+
+        function drawImageWatermark(isTile) {
+            const scale = parseFloat(document.getElementById('logoScale').value);
+
+            // Calculate scaled dimensions based on base image size
+            // We'll treat scale 1.0 as the logo taking up 1/3 of the base image width
+            const targetWidth = baseImage.width * 0.33 * scale;
+            const ratio = logoImage.height / logoImage.width;
+            const targetHeight = targetWidth * ratio;
+
+            if (isTile) {
+                drawTiled(logoImage, targetWidth, targetHeight, false);
+            } else {
+                const { x, y } = getCoords(targetWidth, targetHeight);
+                ctx.drawImage(logoImage, x, y, targetWidth, targetHeight);
+            }
+        }
+
+        function drawTiled(content, w, h, isText) {
+            const spacingX = w * 1.5;
+            const spacingY = h * 3;
+
+            // Enable rotations for tiled pattern
+            ctx.save();
+            ctx.rotate(-Math.PI / 6); // -30 degrees
+
+            // Because we rotated, we need to draw over a much larger area to cover the canvas corners
+            const diag = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
+            const startX = -diag;
+            const endX = diag;
+            const startY = -diag;
+            const endY = diag;
+
+            for (let x = startX; x < endX; x += spacingX) {
+                // Offset every other row
+                let isOffset = false;
+                for (let y = startY; y < endY; y += spacingY) {
+                    const finalX = isOffset ? x + (spacingX / 2) : x;
+                    if (isText) {
+                        ctx.fillText(content, finalX, y);
+                    } else {
+                        ctx.drawImage(content, finalX, y, w, h);
+                    }
+                    isOffset = !isOffset;
+                }
+            }
+            ctx.restore();
+        }
+
+        function downloadImage() {
+            if (!baseImage) return;
+
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${originalFileName}-watermarked.${originalFileType.split('/')[1]}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, originalFileType, 0.95);
+        }
+
+    </script>
+</body>
+
+</html>

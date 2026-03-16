@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb | Comprobador de Contraste</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                        "success": "#34d399",
+                        "error": "#f87171",
+                        "warning": "#fbbf24",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .canvas-container {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 6px;
+        }
+
+        .preview-box {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/contrast-checker.html">
+    <meta name="description" content="Asegura la accesibilidad con analizador de contraste WCAG en tiempo real.">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
+    <div class="relative flex h-screen w-full flex-col">
+        <!-- Main Background Canvas -->
+        <div class="absolute inset-0 z-0 canvas-container"></div>
+
+        <!-- Top Navigation Bar -->
+        <header class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined">contrast</span>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight">StudioLimb</h2>
+                    <p class="text-[10px] uppercase tracking-widest font-semibold opacity-60">Creative Suite</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div
+                    class="text-[10px] uppercase tracking-widest font-bold text-slate-400 bg-white/5 py-1 px-3 rounded-full border border-white/10">
+                    WCAG 2.1 Compliant</div>
+            </div>
+        </header>
+
+        <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+            <!-- Sidebar Controls -->
+            <div class="flex w-[420px] flex-col gap-4 h-full">
+                <div class="flex flex-col gap-4 glass-panel p-5 rounded-xl">
+                    <div>
+                        <h1 class="text-xl font-bold">Contrast Checker</h1>
+                        <p class="text-sm font-medium text-slate-400">Accessibility Tool <span
+                                class="text-primary">Premier</span></p>
+                    </div>
+                </div>
+
+                <div class="flex flex-1 flex-col glass-panel p-5 rounded-xl overflow-y-auto scrollbar-hide space-y-6">
+
+                    <!-- Color Inputs -->
+                    <div class="space-y-4 relative">
+                        <!-- Swap Button -->
+                        <button
+                            class="absolute top-[40px] left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shadow-lg border-2 border-[#1a1a2e] z-10 hover:scale-110 hover:rotate-180 transition-all duration-300"
+                            id="swapBtn" title="Swap Colors">
+                            <span class="material-symbols-outlined text-[16px]">swap_vert</span>
+                        </button>
+
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <label class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-2">Text
+                                Color</label>
+                            <div class="flex gap-3">
+                                <input type="color" id="textColorPicker" value="#1a1a2e"
+                                    class="w-12 h-10 bg-transparent border-0 p-0 cursor-pointer">
+                                <input type="text" id="textHexInput" value="#1A1A2E" maxlength="7" spellcheck="false"
+                                    class="flex-1 bg-[#050508] border border-white/10 rounded-lg px-3 uppercase font-mono text-sm text-slate-200 outline-none focus:border-primary">
+                            </div>
+                        </div>
+
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <label
+                                class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-2">Background
+                                Color</label>
+                            <div class="flex gap-3">
+                                <input type="color" id="bgColorPicker" value="#f0f0f5"
+                                    class="w-12 h-10 bg-transparent border-0 p-0 cursor-pointer">
+                                <input type="text" id="bgHexInput" value="#F0F0F5" maxlength="7" spellcheck="false"
+                                    class="flex-1 bg-[#050508] border border-white/10 rounded-lg px-3 uppercase font-mono text-sm text-slate-200 outline-none focus:border-primary">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ratio Display -->
+                    <div class="flex flex-col items-center justify-center p-6 bg-white/5 rounded-xl border border-white/10 border-t-2"
+                        id="ratioPanel">
+                        <div class="text-[64px] font-black leading-none tracking-tighter" id="ratioNumber">12.63</div>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2">Contrast Ratio
+                        </div>
+                    </div>
+
+                    <!-- WCAG Results -->
+                    <div class="space-y-3" id="wcagGrid">
+                        <!-- Filled by JS -->
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Central Content Stage -->
+            <div class="flex-1 glass-panel rounded-xl flex flex-col relative overflow-hidden">
+
+                <div class="flex-1 flex flex-col items-center justify-center p-12 preview-box" id="previewArea">
+                    <div class="max-w-2xl text-center space-y-8">
+                        <div>
+                            <p class="text-xs uppercase tracking-widest font-bold opacity-60 mb-2">Large Text Preview
+                                (18pt+)</p>
+                            <h2 class="text-5xl font-bold leading-tight tracking-tight">Design requires contrast to
+                                convey meaning clearly.</h2>
+                        </div>
+                        <div class="w-24 h-px bg-current opacity-20 mx-auto"></div>
+                        <div>
+                            <p class="text-xs uppercase tracking-widest font-bold opacity-60 mb-3">Normal Text Preview
+                                (Base Size)</p>
+                            <p class="text-lg leading-relaxed opacity-90">In order to be accessible, text must have a
+                                high enough contrast ratio against its background. The WCAG 2.1 guidelines specify
+                                algorithms to calculate this ratio and determine if it meets AA or AAA standards.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suggestions Panel (Floating) -->
+                <div id="suggestionsCard"
+                    class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#0b0b12]/95 backdrop-blur-xl border border-red-500/30 rounded-xl p-5 shadow-2xl min-w-[500px]"
+                    style="display: none;">
+                    <div class="flex items-center gap-2 text-red-400 font-bold text-sm mb-4">
+                        <span class="material-symbols-outlined text-[18px]">warning</span> Fix Contrast Issues
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-2">Auto-adjust
+                                Text Color</p>
+                            <div class="flex flex-wrap gap-2" id="textSuggestions"></div>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-2">Auto-adjust
+                                Background</p>
+                            <div class="flex flex-wrap gap-2" id="bgSuggestions"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const textColorPicker = document.getElementById('textColorPicker');
+        const bgColorPicker = document.getElementById('bgColorPicker');
+        const textHexInput = document.getElementById('textHexInput');
+        const bgHexInput = document.getElementById('bgHexInput');
+        const previewArea = document.getElementById('previewArea');
+        const ratioNumber = document.getElementById('ratioNumber');
+        const ratioPanel = document.getElementById('ratioPanel');
+        const wcagGrid = document.getElementById('wcagGrid');
+        const swapBtn = document.getElementById('swapBtn');
+        const suggestionsCard = document.getElementById('suggestionsCard');
+        const textSuggestions = document.getElementById('textSuggestions');
+        const bgSuggestions = document.getElementById('bgSuggestions');
+
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+            return { r: parseInt(hex.substring(0, 2), 16), g: parseInt(hex.substring(2, 4), 16), b: parseInt(hex.substring(4, 6), 16) };
+        }
+
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+        }
+
+        function relativeLuminance(hex) {
+            const { r, g, b } = hexToRgb(hex);
+            const srgb = [r, g, b].map(c => {
+                c /= 255;
+                return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+        }
+
+        function contrastRatio(hex1, hex2) {
+            const l1 = relativeLuminance(hex1);
+            const l2 = relativeLuminance(hex2);
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        function isValidHex(hex) { return /^#[0-9a-fA-F]{6}$/.test(hex) || /^#[0-9a-fA-F]{3}$/.test(hex); }
+
+        const wcagLevels = [
+            { id: 'aa-normal', label: 'AA Regular Text', req: 4.5 },
+            { id: 'aa-large', label: 'AA Large Text', req: 3 },
+            { id: 'aaa-normal', label: 'AAA Regular Text', req: 7 },
+            { id: 'aaa-large', label: 'AAA Large Text', req: 4.5 }
+        ];
+
+        function update() {
+            const textColor = textColorPicker.value;
+            const bgColor = bgColorPicker.value;
+            const ratio = contrastRatio(textColor, bgColor);
+
+            previewArea.style.backgroundColor = bgColor;
+            previewArea.style.color = textColor;
+            ratioNumber.textContent = ratio.toFixed(2);
+
+            let colorVars = { text: 'text-error', border: 'border-error' };
+            if (ratio >= 7) { colorVars = { text: 'text-success', border: 'border-success' }; }
+            else if (ratio >= 4.5) { colorVars = { text: 'text-warning', border: 'border-warning' }; }
+
+            ratioPanel.className = `flex flex-col items-center justify-center p-6 bg-white/5 rounded-xl border border-white/10 border-t-4 transition-colors ${colorVars.border}`;
+            ratioNumber.className = `text-[64px] font-black leading-none tracking-tighter transition-colors ${colorVars.text}`;
+
+            let allPass = true;
+            wcagGrid.innerHTML = wcagLevels.map(level => {
+                const pass = ratio >= level.req;
+                if (!pass) allPass = false;
+
+                const badgeClass = pass ? 'bg-success/20 text-success border-success/30' : 'bg-error/20 text-error border-error/30';
+                const icon = pass ? 'check_circle' : 'cancel';
+                const bgClass = pass ? 'bg-success/5 border-success/20' : 'bg-error/5 border-error/20';
+
+                return `
+                    <div class="flex items-center justify-between p-3 rounded-lg border ${bgClass} transition-colors">
+                        <span class="text-sm font-bold text-slate-300">${level.label}</span>
+                        <div class="flex items-center gap-2 ${badgeClass} border px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-widest">
+                            <span class="material-symbols-outlined text-[14px]">${icon}</span>
+                            ${pass ? 'Pass' : 'Fail'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if (!allPass) {
+                suggestionsCard.style.display = 'block';
+                generateSuggestions(textColor, bgColor);
+            } else {
+                suggestionsCard.style.display = 'none';
+            }
+        }
+
+        function generateSuggestions(textColor, bgColor) {
+            const textRgb = hexToRgb(textColor);
+            const bgRgb = hexToRgb(bgColor);
+
+            const findFixes = (baseRgb, compareHex, isFindingText) => {
+                const arr = [];
+                for (let i = 1; i <= 10; i++) {
+                    const factor = 1 - i * 0.1;
+                    const hex = rgbToHex(baseRgb.r * factor, baseRgb.g * factor, baseRgb.b * factor);
+                    const r = isFindingText ? contrastRatio(hex, compareHex) : contrastRatio(compareHex, hex);
+                    if (r >= 4.5) { arr.push({ hex, ratio: r }); break; }
+                }
+                for (let i = 1; i <= 10; i++) {
+                    const factor = i * 0.1;
+                    const hex = rgbToHex(
+                        baseRgb.r + (255 - baseRgb.r) * factor,
+                        baseRgb.g + (255 - baseRgb.g) * factor,
+                        baseRgb.b + (255 - baseRgb.b) * factor
+                    );
+                    const r = isFindingText ? contrastRatio(hex, compareHex) : contrastRatio(compareHex, hex);
+                    if (r >= 4.5) { arr.push({ hex, ratio: r }); break; }
+                }
+                const bR = isFindingText ? contrastRatio('#000000', compareHex) : contrastRatio(compareHex, '#000000');
+                const wR = isFindingText ? contrastRatio('#ffffff', compareHex) : contrastRatio(compareHex, '#ffffff');
+                if (bR >= 4.5) arr.push({ hex: '#000000', ratio: bR });
+                if (wR >= 4.5) arr.push({ hex: '#ffffff', ratio: wR });
+                return arr.slice(0, 3);
+            };
+
+            const tFixes = findFixes(textRgb, bgColor, true);
+            const bFixes = findFixes(bgRgb, textColor, false);
+
+            const renderChips = (fixes, onClickStr) => fixes.map(s => `
+                <button class="flex items-center gap-2 bg-[#050508] border border-white/10 hover:border-primary px-3 py-1.5 rounded-lg text-xs font-mono transition-colors" onclick="${onClickStr}('${s.hex}')">
+                    <span class="w-3 h-3 rounded-full border border-white/20" style="background:${s.hex}"></span>
+                    ${s.hex.toUpperCase()}
+                    <span class="text-success font-bold ml-1">${s.ratio.toFixed(1)}</span>
+                </button>
+            `).join('') || '<span class="text-xs text-slate-500">No close matches</span>';
+
+            textSuggestions.innerHTML = renderChips(tFixes, 'applyTextColor');
+            bgSuggestions.innerHTML = renderChips(bFixes, 'applyBgColor');
+        }
+
+        function applyTextColor(hex) { textColorPicker.value = hex; textHexInput.value = hex.toUpperCase(); update(); }
+        function applyBgColor(hex) { bgColorPicker.value = hex; bgHexInput.value = hex.toUpperCase(); update(); }
+
+        textColorPicker.addEventListener('input', () => { textHexInput.value = textColorPicker.value.toUpperCase(); update(); });
+        bgColorPicker.addEventListener('input', () => { bgHexInput.value = bgColorPicker.value.toUpperCase(); update(); });
+
+        textHexInput.addEventListener('input', () => {
+            let val = textHexInput.value;
+            if (!val.startsWith('#')) val = '#' + val;
+            if (isValidHex(val)) {
+                textColorPicker.value = val.length === 4 ? '#' + val[1] + val[1] + val[2] + val[2] + val[3] + val[3] : val;
+                update();
+            }
+        });
+
+        bgHexInput.addEventListener('input', () => {
+            let val = bgHexInput.value;
+            if (!val.startsWith('#')) val = '#' + val;
+            if (isValidHex(val)) {
+                bgColorPicker.value = val.length === 4 ? '#' + val[1] + val[1] + val[2] + val[2] + val[3] + val[3] : val;
+                update();
+            }
+        });
+
+        swapBtn.addEventListener('click', () => {
+            const tc = textColorPicker.value, th = textHexInput.value;
+            textColorPicker.value = bgColorPicker.value; textHexInput.value = bgHexInput.value;
+            bgColorPicker.value = tc; bgHexInput.value = th;
+            update();
+        });
+
+        update();
+    </script>
+</body>
+
+</html>

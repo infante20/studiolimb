@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb | Gradient Gen Premier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c5cfc",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#050508",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .canvas-container {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #7c5cfc;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(124, 92, 252, 0.5);
+            transition: transform 0.1s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .gradient-bar {
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: copy;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .stop-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 24px;
+            background: #fff;
+            border: 2px solid #050508;
+            border-radius: 4px;
+            cursor: grab;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            transition: transform 0.1s;
+        }
+
+        .stop-handle:active {
+            cursor: grabbing;
+            border-color: #7c5cfc;
+        }
+
+        .stop-handle--active {
+            border-color: #7c5cfc;
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 15px rgba(124, 92, 252, 0.6);
+            z-index: 20;
+        }
+
+        .stop-handle__preview {
+            width: 100%;
+            height: 100%;
+            border-radius: 1px;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        /* Checkered background for live preview */
+        .checkered-bg {
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+    </style>
+    <link rel="canonical" href="https://studiolimb.com/gradient-generator.html">
+    <meta name="description" content="Crea hermosos degradados CSS lineales y radiales con nuestra herramienta visual interactiva.">
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
+    <div class="relative flex h-screen w-full flex-col">
+        <!-- Main Background Canvas -->
+        <div class="absolute inset-0 z-0 bg-[#050508]" id="mainBgPreview"></div>
+
+        <!-- Top Navigation Bar -->
+        <header class="relative z-20 flex items-center justify-between px-6 py-4 glass-panel m-4 rounded-xl shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined">palette</span>
+                </div>
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">Herramienta de Degradado CSS visual</h2>
+                    <p class="text-[10px] uppercase tracking-widest font-semibold opacity-60">Creative Suite</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="btnCopy"
+                    class="flex h-10 px-6 items-center justify-center rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25 hover:opacity-90 transition-all gap-2"
+                    onclick="copyCode()">
+                    <span class="material-symbols-outlined text-[18px]">content_copy</span> Copiar CSS
+                </button>
+            </div>
+        </header>
+
+        <main class="relative z-10 flex flex-1 overflow-hidden px-4 pb-4 gap-6">
+
+            <!-- Sidebar Controls -->
+            <div class="flex w-96 flex-col gap-4 h-full">
+                <div class="flex flex-col gap-4 glass-panel p-5 rounded-xl">
+                    <div>
+                        <h1 class="text-xl font-bold">Gradient Gen</h1>
+                        <p class="text-sm font-medium text-slate-400">CSS Backgrounds <span
+                                class="text-primary">Premier</span></p>
+                    </div>
+                </div>
+
+                <div class="flex flex-1 flex-col glass-panel p-5 rounded-xl overflow-y-auto scrollbar-hide">
+
+                    <div class="space-y-6">
+                        <!-- Settings -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Tipo</label>
+                                <select id="gradType" onchange="updateGradient()"
+                                    class="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-sm text-slate-200 outline-none focus:border-primary">
+                                    <option value="linear" class="bg-[#050508]">Lineal</option>
+                                    <option value="radial" class="bg-[#050508]">Radial</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2" id="angleControl">
+                                <div class="flex justify-between"><label
+                                        class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Angle</label><span
+                                        id="angleVal" class="text-xs font-mono text-primary">135°</span></div>
+                                <input type="range" id="gradAngle" min="0" max="360" value="135" class="mt-2"
+                                    oninput="updateGradient()">
+                            </div>
+                        </div>
+
+                        <!-- Gradient Bar Editor -->
+                        <div class="pt-4 border-t border-white/5">
+                            <label
+                                class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-4">Color
+                                Stops</label>
+
+                            <div class="relative px-2 mb-6">
+                                <div class="gradient-bar" id="gradientBar" onclick="handleBarClick(event)">
+                                    <!-- Handles go here -->
+                                </div>
+                            </div>
+
+                            <p class="text-[10px] text-slate-500 text-center mb-4">Click bar to add. Drag handles to
+                                move.</p>
+
+                            <!-- Active Stop Editor -->
+                            <div id="stopEditor"
+                                class="bg-white/5 border border-white/10 rounded-xl p-4 transition-all">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-bold text-slate-300">Active Stop</span>
+                                    <button class="text-red-400 hover:text-red-300 text-xs font-bold transition-colors"
+                                        onclick="deleteActiveStop()">Delete</button>
+                                </div>
+                                <div class="grid grid-cols-[36px_1fr_60px] gap-3 items-center">
+                                    <input type="color" id="stopColorPicker"
+                                        class="w-full h-8 bg-transparent border-0 p-0 cursor-pointer"
+                                        oninput="updateActiveStop()">
+                                    <input type="text" id="stopHexInput"
+                                        class="w-full bg-[#050508] border border-white/10 rounded-md p-1.5 text-xs font-mono text-slate-300 outline-none focus:border-primary"
+                                        spellcheck="false" oninput="updateActiveStop()">
+                                    <div
+                                        class="flex items-center gap-1 bg-[#050508] border border-white/10 rounded-md p-1.5 focus-within:border-primary transition-colors">
+                                        <input type="number" id="stopPosInput" min="0" max="100"
+                                            class="w-full bg-transparent border-0 p-0 text-xs font-mono text-slate-300 outline-none"
+                                            oninput="updateActiveStop()">
+                                        <span class="text-[10px] text-slate-500">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Presets -->
+                        <div class="pt-4 border-t border-white/5">
+                            <label
+                                class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block mb-3">Quick
+                                Presets</label>
+                            <div class="grid grid-cols-4 gap-2" id="presetsGrid">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Content Stage -->
+            <div class="flex-1 flex flex-col justify-end relative">
+                <!-- Floating code view at bottom of stage -->
+                <div
+                    class="glass-panel rounded-xl p-4 font-mono text-sm shadow-2xl z-20 w-fit self-center mb-8 backdrop-blur-3xl text-slate-300">
+                    <span class="text-primary">background</span>: <span id="codeVal" class="text-emerald-400"></span>;
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // State
+        let stops = [
+            { id: 1, pos: 0, color: '#7c5cfc' },
+            { id: 2, pos: 100, color: '#34d399' }
+        ];
+        let activeStopId = 1;
+        let nextId = 3;
+
+        const presets = [
+            { type: 'linear', angle: 135, stops: [{ pos: 0, color: '#7c5cfc' }, { pos: 100, color: '#34d399' }] },
+            { type: 'linear', angle: 45, stops: [{ pos: 0, color: '#f87171' }, { pos: 100, color: '#fbbf24' }] },
+            { type: 'radial', angle: 0, stops: [{ pos: 0, color: '#6366f1' }, { pos: 100, color: '#a855f7' }] },
+            { type: 'linear', angle: 180, stops: [{ pos: 0, color: '#2dd4bf' }, { pos: 100, color: '#3b82f6' }] },
+            { type: 'linear', angle: 90, stops: [{ pos: 0, color: '#0ea5e9' }, { pos: 50, color: '#d946ef' }, { pos: 100, color: '#fb7185' }] },
+            { type: 'radial', angle: 0, stops: [{ pos: 0, color: '#1a1a2e' }, { pos: 100, color: '#050508' }] },
+            { type: 'linear', angle: 135, stops: [{ pos: 0, color: '#333344' }, { pos: 100, color: '#0f0f14' }] },
+            { type: 'linear', angle: 315, stops: [{ pos: 0, color: '#ec4899' }, { pos: 50, color: '#8b5cf6' }, { pos: 100, color: '#06b6d4' }] }
+        ];
+
+        window.onload = () => {
+            renderPresets();
+            renderStops();
+            updateGradient();
+        };
+
+        function renderPresets() {
+            const container = document.getElementById('presetsGrid');
+            presets.forEach((p) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full aspect-square rounded-lg border-2 border-transparent hover:border-primary/50 transition-all shadow-lg hover:-translate-y-1';
+                btn.style.background = generateCSS(p);
+                btn.onclick = () => applyPreset(p);
+                container.appendChild(btn);
+            });
+        }
+
+        function applyPreset(p) {
+            stops = JSON.parse(JSON.stringify(p.stops)).map((s, i) => ({ ...s, id: i + 1 }));
+            nextId = stops.length + 1;
+            document.getElementById('gradType').value = p.type;
+            document.getElementById('gradAngle').value = p.angle || 0;
+            activeStopId = stops[0].id;
+            renderStops();
+            updateGradient();
+        }
+
+        function renderStops() {
+            const bar = document.getElementById('gradientBar');
+            bar.querySelectorAll('.stop-handle').forEach(e => e.remove());
+
+            stops.forEach(s => {
+                const handle = document.createElement('div');
+                handle.className = `stop-handle ${s.id === activeStopId ? 'stop-handle--active' : ''}`;
+                handle.style.left = `${s.pos}%`;
+                handle.innerHTML = `<div class="stop-handle__preview" style="background:${s.color}"></div>`;
+                handle.onmousedown = (e) => startDrag(e, s.id);
+                handle.ontouchstart = (e) => startDrag(e, s.id);
+                handle.onclick = (e) => { e.stopPropagation(); setActiveStop(s.id); };
+                bar.appendChild(handle);
+            });
+
+            const sorted = [...stops].sort((a, b) => a.pos - b.pos);
+            const stopsStr = sorted.map(s => `${s.color} ${s.pos}%`).join(', ');
+            bar.style.background = `linear-gradient(90deg, ${stopsStr})`;
+
+            const active = stops.find(s => s.id === activeStopId);
+            if (active) {
+                document.getElementById('stopEditor').style.opacity = '1';
+                document.getElementById('stopEditor').style.pointerEvents = 'auto';
+                document.getElementById('stopColorPicker').value = active.color.substring(0, 7);
+                document.getElementById('stopHexInput').value = active.color.toUpperCase();
+                document.getElementById('stopPosInput').value = active.pos;
+            }
+        }
+
+        function setActiveStop(id) {
+            activeStopId = id;
+            renderStops();
+        }
+
+        function updateGradient() {
+            const type = document.getElementById('gradType').value;
+            const angle = document.getElementById('gradAngle').value;
+
+            document.getElementById('angleControl').style.display = type === 'linear' ? 'block' : 'none';
+            document.getElementById('angleVal').textContent = `${angle}°`;
+
+            const css = generateCSS({ type, angle, stops });
+            document.getElementById('mainBgPreview').style.background = css;
+            document.getElementById('codeVal').textContent = css;
+        }
+
+        function generateCSS({ type, angle, stops }) {
+            const sorted = [...stops].sort((a, b) => a.pos - b.pos);
+            const stopsStr = sorted.map(s => `${s.color} ${s.pos}%`).join(', ');
+            if (type === 'linear') {
+                return `linear-gradient(${angle}deg, ${stopsStr})`;
+            } else {
+                return `radial-gradient(circle at center, ${stopsStr})`;
+            }
+        }
+
+        function handleBarClick(e) {
+            if (e.target !== document.getElementById('gradientBar')) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const pos = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+
+            const sorted = [...stops].sort((a, b) => a.pos - b.pos);
+            let color = '#ffffff';
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (pos >= sorted[i].pos && pos <= sorted[i + 1].pos) {
+                    color = sorted[i].color;
+                    break;
+                }
+            }
+            if (pos < sorted[0].pos) color = sorted[0].color;
+            if (pos > sorted[sorted.length - 1].pos) color = sorted[sorted.length - 1].color;
+
+            const newStop = { id: nextId++, pos, color };
+            stops.push(newStop);
+            activeStopId = newStop.id;
+            renderStops();
+            updateGradient();
+        }
+
+        function startDrag(e, id) {
+            e.stopPropagation();
+            setActiveStop(id);
+            const isTouch = e.type === 'touchstart';
+            const bar = document.getElementById('gradientBar');
+            const rect = bar.getBoundingClientRect();
+
+            const onMove = (moveEvent) => {
+                const clientX = isTouch ? moveEvent.touches[0].clientX : moveEvent.clientX;
+                let pos = Math.round(((clientX - rect.left) / rect.width) * 100);
+                pos = Math.max(0, Math.min(100, pos));
+                const stop = stops.find(s => s.id === id);
+                if (stop) {
+                    stop.pos = pos;
+                    renderStops();
+                    updateGradient();
+                }
+            };
+
+            const onEnd = () => {
+                window.removeEventListener(isTouch ? 'touchmove' : 'mousemove', onMove);
+                window.removeEventListener(isTouch ? 'touchend' : 'mouseup', onEnd);
+            };
+
+            window.addEventListener(isTouch ? 'touchmove' : 'mousemove', onMove);
+            window.addEventListener(isTouch ? 'touchend' : 'mouseup', onEnd);
+        }
+
+        function updateActiveStop() {
+            const active = stops.find(s => s.id === activeStopId);
+            if (!active) return;
+
+            let color = document.getElementById('stopHexInput').value;
+            if (!color.startsWith('#')) color = '#' + color;
+            if (/^#[0-9a-fA-F]{3,6}$/.test(color)) {
+                active.color = color;
+                document.getElementById('stopColorPicker').value = color.length === 4
+                    ? '#' + color[1] + color[1] + color[2] + color[2] + color[3] + color[3]
+                    : color;
+            } else {
+                active.color = document.getElementById('stopColorPicker').value;
+                document.getElementById('stopHexInput').value = active.color.toUpperCase();
+            }
+
+            let pos = parseInt(document.getElementById('stopPosInput').value);
+            if (!isNaN(pos)) active.pos = Math.max(0, Math.min(100, pos));
+
+            renderStops();
+            updateGradient();
+        }
+
+        function deleteActiveStop() {
+            if (stops.length <= 2) {
+                alert("Gradient needs at least 2 color stops.");
+                return;
+            }
+            stops = stops.filter(s => s.id !== activeStopId);
+            activeStopId = stops[0].id;
+            renderStops();
+            updateGradient();
+        }
+
+        function copyCode() {
+            const cssStr = document.getElementById('codeVal').textContent;
+            const css = `background: ${cssStr};`;
+            navigator.clipboard.writeText(css).then(() => {
+                const btn = document.getElementById('btnCopy');
+                const origHtml = btn.innerHTML;
+                btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">check</span> Copied!`;
+                btn.classList.add('bg-emerald-500', 'shadow-emerald-500/25');
+                btn.classList.remove('bg-primary', 'shadow-primary/25');
+                setTimeout(() => {
+                    btn.innerHTML = origHtml;
+                    btn.classList.remove('bg-emerald-500', 'shadow-emerald-500/25');
+                    btn.classList.add('bg-primary', 'shadow-primary/25');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
