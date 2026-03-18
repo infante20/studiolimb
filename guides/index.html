@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>StudioLimb Guides | Professional Web Design Tutorials</title>
+    <meta name="description" content="Learn modern web design and development with StudioLimb guides. Expert tutorials on CSS, performance, and UI/UX." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        body { background-color: #050508; color: #f8f6f6; font-family: 'Public Sans', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-panel:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(124, 92, 252, 0.3); transform: translateY(-4px); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <nav class="px-6 py-6 max-w-7xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#7c5cfc] text-white">
+                <span class="material-symbols-outlined">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb <span class="text-[#7c5cfc]">Guides</span></span>
+        </a>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-12 flex-1 w-full">
+        <header class="mb-16 text-center max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Expert Tutorials for <span class="text-[#7c5cfc]">Modern Creators</span></h1>
+            <p class="text-slate-400 text-lg">Master the art of web creation with our focused, easy-to-follow guides.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- First Guide -->
+            <a href="modern-web-design-essentials.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video bg-gradient-to-br from-indigo-600 to-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-white/50 group-hover:scale-110 transition-transform">article</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase">Design</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">March 2026</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Modern Web Design Essentials for 2026</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">Discover the key trends and tools that are shaping the future of high-performance web experiences.</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-12 bg-black/20 mt-24">
+        <div class="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
