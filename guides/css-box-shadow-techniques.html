@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CSS Box Shadow Techniques: Depth, Neumorphism & Glow Effects — StudioLimb</title>
+    <meta name="description" content="Master CSS box-shadow with real-world techniques: layered shadows, neumorphism, glow effects, inset shadows and performance tips. With live code examples." />
+    <link rel="canonical" href="https://studiolimb.com/guides/css-box-shadow-techniques.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="CSS Box Shadow Techniques: Depth, Neumorphism & Glow Effects" />
+    <meta property="og:description" content="Master CSS box-shadow: layered shadows, neumorphism, glow effects and performance tips with live code examples." />
+    <meta property="og:url" content="https://studiolimb.com/guides/css-box-shadow-techniques.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "CSS Box Shadow Techniques: Depth, Neumorphism & Glow Effects",
+      "description": "Master CSS box-shadow with layered shadows, neumorphism, glow effects and performance tips.",
+      "url": "https://studiolimb.com/guides/css-box-shadow-techniques.html",
+      "datePublished": "2026-04-07",
+      "dateModified": "2026-04-07",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem; overflow-x: auto; font-size: 0.85rem; }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+        .shadow-demo { width: 120px; height: 80px; border-radius: 16px; background: #1e1b4b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #94a3b8; text-align: center; padding: 0.5rem; }
+        .shadow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 2rem; padding: 2rem; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-bold uppercase">CSS Effects</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 8 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">CSS Box Shadow Techniques: Beyond the Basics</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">A single box-shadow creates a generic look. Layered, colored, and inset shadows create sophisticated depth and personality. Here's how professionals do it.</p>
+        </div>
+
+        <!-- Shadow demos -->
+        <div class="shadow-grid mb-10 not-prose">
+            <div class="flex flex-col items-center gap-3">
+                <div class="shadow-demo" style="box-shadow:0 4px 6px rgba(0,0,0,0.5);">Simple</div>
+                <p class="text-xs text-slate-500 text-center">Basic</p>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+                <div class="shadow-demo" style="box-shadow:0 1px 2px rgba(0,0,0,0.4),0 8px 16px rgba(0,0,0,0.4),0 24px 40px rgba(0,0,0,0.3);">Layered</div>
+                <p class="text-xs text-slate-500 text-center">Layered (3 layers)</p>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+                <div class="shadow-demo" style="box-shadow:0 0 20px rgba(124,92,252,0.6),0 0 60px rgba(124,92,252,0.2);">Glow</div>
+                <p class="text-xs text-slate-500 text-center">Purple Glow</p>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+                <div class="shadow-demo" style="background:#18181b;box-shadow:8px 8px 16px #0a0a0d,-8px -8px 16px #262629;">Neumorphic</div>
+                <p class="text-xs text-slate-500 text-center">Neumorphism</p>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+                <div class="shadow-demo" style="box-shadow:inset 0 2px 4px rgba(0,0,0,0.8),inset 0 -1px 0 rgba(255,255,255,0.05);">Inset</div>
+                <p class="text-xs text-slate-500 text-center">Inset / Pressed</p>
+            </div>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary">
+
+            <h2>The box-shadow Syntax</h2>
+            <pre><code>box-shadow: [inset] offset-x offset-y [blur] [spread] color;</code></pre>
+            <ul>
+                <li><strong>offset-x / offset-y</strong>: Shadow position. Positive x goes right, positive y goes down.</li>
+                <li><strong>blur</strong>: How soft the shadow is. 0 = hard edge.</li>
+                <li><strong>spread</strong>: How much the shadow expands beyond the element. Can be negative.</li>
+                <li><strong>inset</strong>: Moves the shadow inside the element.</li>
+                <li>You can stack multiple shadows separated by commas.</li>
+            </ul>
+
+            <h2>Technique 1: Layered Shadows for Real Depth</h2>
+            <p>A single shadow looks flat and generic. Layering 2–3 shadows at different blur radii and opacities produces the depth you see in professional design systems:</p>
+            <pre><code class="language-css">/* Material Design-inspired elevation */
+.card--elevated {
+  box-shadow:
+    0 1px 2px  rgba(0, 0, 0, 0.30),
+    0 4px 8px  rgba(0, 0, 0, 0.25),
+    0 16px 32px rgba(0, 0, 0, 0.20);
+}</code></pre>
+            <p>The smallest shadow adds the crisp edge detail; the largest creates the ambient shadow. Together they feel physically convincing.</p>
+
+            <h2>Technique 2: Colored Glow Effects</h2>
+            <p>Using a colored shadow with no offset creates a glow. Pair it with a spread for extra intensity:</p>
+            <pre><code class="language-css">/* Purple glow for a primary button */
+.btn-primary {
+  background: #7c5cfc;
+  box-shadow:
+    0 0 0 0 transparent,           /* ring-offset */
+    0 8px 24px rgba(124,92,252,0.45),  /* ambient glow */
+    0 0 60px rgba(124,92,252,0.15);    /* distant halo */
+  transition: box-shadow 0.3s ease;
+}
+.btn-primary:hover {
+  box-shadow:
+    0 0 0 0 transparent,
+    0 12px 32px rgba(124,92,252,0.65),
+    0 0 80px rgba(124,92,252,0.25);
+}</code></pre>
+
+            <h2>Technique 3: Neumorphism (Soft UI)</h2>
+            <p>Neumorphism creates an extruded-from-surface look using two shadows — one light, one dark — offset in opposite directions. The element's background must match the container background exactly:</p>
+            <pre><code class="language-css">:root { --bg: #e0e5ec; }
+
+.neomorphic {
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow:
+     8px  8px 16px #b8bec7,   /* dark shadow (bottom-right) */
+    -8px -8px 16px #ffffff;   /* light shadow (top-left) */
+}
+
+/* Pressed/active state */
+.neomorphic:active {
+  box-shadow:
+    inset  6px  6px 12px #b8bec7,
+    inset -6px -6px 12px #ffffff;
+}</code></pre>
+            <p><strong>Accessibility warning:</strong> Neumorphism often produces very low contrast between the element and background. Always verify your contrast ratios pass WCAG AA — use StudioLimb's <a href="../contrast-checker.html">Contrast Checker</a>.</p>
+
+            <h2>Technique 4: Inset Shadows for Depth</h2>
+            <p>Inset shadows create a sunken or engraved appearance, great for input fields, wells, and pressed button states:</p>
+            <pre><code class="language-css">/* Dark mode input field */
+.input {
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.input:focus {
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.6),
+    0 0 0 2px rgba(124, 92, 252, 0.6);
+}</code></pre>
+
+            <h2>Technique 5: Negative Spread for Tight Shadows</h2>
+            <p>A negative spread radius shrinks the shadow, letting you create a shadow that only appears below the element (like it's floating above a surface) without spreading to the sides:</p>
+            <pre><code class="language-css">/* Shadow appears only below, not on sides */
+.floating {
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  /*                        ^^^  negative spread */
+}</code></pre>
+
+            <h2>Performance: box-shadow vs filter: drop-shadow()</h2>
+            <p><code>box-shadow</code> is GPU-accelerated in all modern browsers and is the right choice for most cases. <code>filter: drop-shadow()</code> follows the element's alpha channel (including transparent PNG cutouts) but is more expensive and shouldn't be used on animating elements. Stick with <code>box-shadow</code> unless you specifically need the shape-following behavior.</p>
+
+            <h2>Transition Tip</h2>
+            <p>Avoid animating <code>box-shadow</code> on scroll or hover for many elements simultaneously. Instead, animate <code>opacity</code> on a pseudo-element that has the target shadow — this is GPU-composited and far smoother.</p>
+
+        </article>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="../box-shadow-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">shadow</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Box Shadow Generator</p>
+                    <p class="text-sm text-slate-400">Build layered shadows visually</p>
+                </div>
+            </a>
+            <a href="../contrast-checker.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">contrast</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Contrast Checker</p>
+                    <p class="text-sm text-slate-400">Verify neumorphism accessibility</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

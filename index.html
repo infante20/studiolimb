@@ -87,10 +87,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
     <!-- Tailwind Configuration -->
     <script id="tailwind-config">
@@ -306,7 +303,7 @@
     <!-- Main Tools Directory -->
     <main id="tools" class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 pb-24">
 
-        <div class="flex items-end justify-between mb-10 border-b border-white/10 pb-6">
+        <div class="flex items-end justify-between mb-6 border-b border-white/10 pb-6">
             <div>
                 <h3 class="text-3xl font-bold tracking-tight mb-2">Tool Directory</h3>
                 <p class="text-slate-400 text-sm">Everything you need, directly in your browser.</p>
@@ -319,13 +316,39 @@
             </div>
         </div>
 
+        <!-- Search + Filter Bar -->
+        <div class="flex flex-col sm:flex-row gap-3 mb-8">
+            <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px] pointer-events-none">search</span>
+                <input
+                    id="tool-search"
+                    type="search"
+                    placeholder="Search tools… (e.g. gradient, compressor, regex)"
+                    autocomplete="off"
+                    class="w-full h-11 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-primary/60 focus:bg-white/8 transition-all"
+                />
+            </div>
+            <button
+                id="fav-toggle"
+                type="button"
+                class="flex items-center gap-2 h-11 px-5 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-semibold hover:bg-white/10 transition-all"
+                title="Show favourites only">
+                <span class="material-symbols-outlined text-[18px]" id="fav-icon">bookmark</span>
+                <span id="fav-label">Favourites</span>
+                <span id="fav-count" class="hidden text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold"></span>
+            </button>
+        </div>
+
+        <!-- No-results message -->
+        <p id="no-results" class="hidden text-slate-400 text-sm mb-8">No tools match your search. Try a different keyword.</p>
+
         <!-- CSS Generators -->
         <h4 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
             <span class="material-symbols-outlined">css</span> CSS Generators
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
 
-            <a href="gradient-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="gradient-generator.html" data-tool="gradient-generator" data-cat="css" data-name="Gradient Gen"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
@@ -339,7 +362,7 @@
                     gradients.</p>
             </a>
 
-            <a href="css-triangle-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="css-triangle-generator.html" data-tool="css-triangle-generator" data-cat="css" data-name="CSS Triangle"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/50 flex items-center justify-center shadow-lg">
@@ -356,8 +379,7 @@
                     arrows.</p>
             </a>
 
-            <a href="glassmorphism-generator.html"
-                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="glassmorphism-generator.html" data-tool="glassmorphism-generator" data-cat="css" data-name="Glassmorphism"                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg">
@@ -371,7 +393,7 @@
                     interfaces.</p>
             </a>
 
-            <a href="box-shadow-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="box-shadow-generator.html" data-tool="box-shadow-generator" data-cat="css" data-name="Box Shadow"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-[#2a2a35] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.8)] border border-white/5 flex items-center justify-center">
@@ -385,8 +407,7 @@
                     elevation.</p>
             </a>
 
-            <a href="border-radius-visualizer.html"
-                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="border-radius-visualizer.html" data-tool="border-radius-visualizer" data-cat="css" data-name="Border Radius"                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 !rounded-[10px_20px_5px_15px] bg-[#334155] border-2 border-primary flex items-center justify-center">
@@ -400,7 +421,7 @@
                     values.</p>
             </a>
 
-            <a href="snowfall-premier.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="snowfall-premier.html" data-tool="snowfall-premier" data-cat="css" data-name="Snowfall Effect"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30">
@@ -421,7 +442,7 @@
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
 
-            <a href="flexbox-playground.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="flexbox-playground.html" data-tool="flexbox-playground" data-cat="layout" data-name="Flexbox Playground"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
@@ -435,7 +456,7 @@
                 </p>
             </a>
 
-            <a href="grid-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="grid-generator.html" data-tool="grid-generator" data-cat="layout" data-name="CSS Grid Gen"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
@@ -449,7 +470,7 @@
                     grids visually.</p>
             </a>
 
-            <a href="font-pairing.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="font-pairing.html" data-tool="font-pairing" data-cat="layout" data-name="Font Pairing"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
@@ -463,7 +484,7 @@
                 </p>
             </a>
 
-            <a href="type-scale-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="type-scale-generator.html" data-tool="type-scale-generator" data-cat="layout" data-name="Type Scale"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
@@ -477,7 +498,7 @@
                     mathematical ratios.</p>
             </a>
 
-            <a href="lorem-ipsum-premier.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="lorem-ipsum-premier.html" data-tool="lorem-ipsum-premier" data-cat="layout" data-name="Lorem Ipsum"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-slate-500/20 text-slate-300 flex items-center justify-center border border-slate-500/30">
@@ -499,7 +520,7 @@
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
 
-            <a href="image-compressor.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="image-compressor.html" data-tool="image-compressor" data-cat="image" data-name="Image Compressor"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
@@ -513,7 +534,7 @@
                     browser.</p>
             </a>
 
-            <a href="image-placeholder.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="image-placeholder.html" data-tool="image-placeholder" data-cat="image" data-name="Image Placeholder"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center border border-pink-500/30">
@@ -531,7 +552,7 @@
                     SVG or PNG.</p>
             </a>
 
-            <a href="image-format-converter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="image-format-converter.html" data-tool="image-format-converter" data-cat="image" data-name="Format Converter"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
@@ -545,7 +566,7 @@
                     transparency.</p>
             </a>
 
-            <a href="image-resizer.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="image-resizer.html" data-tool="image-resizer" data-cat="image" data-name="Image Resizer"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center border border-fuchsia-500/30">
@@ -559,7 +580,7 @@
                 </p>
             </a>
 
-            <a href="bg-remover.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="bg-remover.html" data-tool="bg-remover" data-cat="image" data-name="BG Remover"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30">
@@ -573,7 +594,7 @@
                     on-device AI.</p>
             </a>
 
-            <a href="image-cropper.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="image-cropper.html" data-tool="image-cropper" data-cat="image" data-name="Image Cropper"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center border border-pink-500/30">
@@ -587,7 +608,7 @@
                     dimensions seamlessly.</p>
             </a>
 
-            <a href="photo-filters.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="photo-filters.html" data-tool="photo-filters" data-cat="image" data-name="Photo Filters"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
@@ -601,7 +622,7 @@
                     adjustments.</p>
             </a>
 
-            <a href="watermark-creator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="watermark-creator.html" data-tool="watermark-creator" data-cat="image" data-name="Watermark Creator"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center border border-violet-500/30">
@@ -615,7 +636,7 @@
                     watermarks.</p>
             </a>
 
-            <a href="collage-maker.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="collage-maker.html" data-tool="collage-maker" data-cat="image" data-name="Collage Maker"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center border border-teal-500/30">
@@ -629,7 +650,7 @@
                     layouts.</p>
             </a>
 
-            <a href="svg-optimizer.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="svg-optimizer.html" data-tool="svg-optimizer" data-cat="image" data-name="SVG Optimizer"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
@@ -643,7 +664,7 @@
                 </p>
             </a>
 
-            <a href="svg-wave-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="svg-wave-generator.html" data-tool="svg-wave-generator" data-cat="image" data-name="SVG Waves"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
@@ -657,7 +678,7 @@
                     shapes.</p>
             </a>
 
-            <a href="qr-code-generator.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="qr-code-generator.html" data-tool="qr-code-generator" data-cat="image" data-name="QR Code Gen"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center border border-white/20">
@@ -679,7 +700,7 @@
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-16">
 
-            <a href="regex-tester.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="regex-tester.html" data-tool="regex-tester" data-cat="developer" data-name="Regex Tester"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
@@ -696,7 +717,7 @@
                     real-time highlighting.</p>
             </a>
 
-            <a href="json-formatter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="json-formatter.html" data-tool="json-formatter" data-cat="developer" data-name="JSON Formatter"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
@@ -713,7 +734,7 @@
                     browser.</p>
             </a>
 
-            <a href="base64-encode-decode.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="base64-encode-decode.html" data-tool="base64-encode-decode" data-cat="developer" data-name="Base64 Encoder"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
@@ -731,7 +752,7 @@
                     instantly.</p>
             </a>
 
-            <a href="url-encode-decode.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="url-encode-decode.html" data-tool="url-encode-decode" data-cat="developer" data-name="URL Encoder"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
@@ -755,8 +776,7 @@
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
 
-            <a href="color-palette-generator.html"
-                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="color-palette-generator.html" data-tool="color-palette-generator" data-cat="color" data-name="Color Palette"                class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-500 flex items-center justify-center border border-yellow-500/30">
@@ -770,7 +790,7 @@
                 </p>
             </a>
 
-            <a href="contrast-checker.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="contrast-checker.html" data-tool="contrast-checker" data-cat="color" data-name="Contrast Checker"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center border border-white/30">
@@ -784,7 +804,7 @@
                     ratios.</p>
             </a>
 
-            <a href="px-rem-converter.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="px-rem-converter.html" data-tool="px-rem-converter" data-cat="color" data-name="PX to REM"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-slate-500/20 text-slate-300 flex items-center justify-center border border-slate-500/30">
@@ -797,7 +817,7 @@
                 <p class="text-sm text-slate-400 line-clamp-2">Quickly convert pixel values to rem for scalable CSS.</p>
             </a>
 
-            <a href="social-media-sizes.html" class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
+            <a href="social-media-sizes.html" data-tool="social-media-sizes" data-cat="color" data-name="Social Sizes List"class="glass-panel rounded-2xl p-6 group flex flex-col min-h-[160px]">
                 <div class="flex items-center justify-between mb-4">
                     <div
                         class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
@@ -908,8 +928,7 @@
                 <p class="text-slate-400 text-sm max-w-xs mb-4">
                     The ultimate destination for modern web design tools. Built for speed, precision, and aesthetics.
                 </p>
-                <!-- Affiliate placeholder link example -->
-                <a href="#" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300">
+                <a href="https://hostinger.com/?REFERRALCODE=STUDIOLIMB" rel="noopener sponsored" target="_blank" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 transition-colors">
                     <span class="material-symbols-outlined text-[14px]">sell</span> Recommended Web Hosting
                 </a>
             </div>
@@ -917,13 +936,13 @@
             <div>
                 <h6 class="text-white font-bold mb-4">Tools Index</h6>
                 <ul class="text-sm text-slate-400 space-y-2">
-                    <li><a href="gradient-generator.html" class="hover:text-primary transition-colors">CSS Gradients</a>
+                    <li><a href="gradient-generator.html" data-tool="gradient-generator" data-cat="css" data-name="Gradient Gen"class="hover:text-primary transition-colors">CSS Gradients</a>
                     </li>
-                    <li><a href="svg-optimizer.html" class="hover:text-primary transition-colors">SVG Optimization</a>
+                    <li><a href="svg-optimizer.html" data-tool="svg-optimizer" data-cat="image" data-name="SVG Optimizer"class="hover:text-primary transition-colors">SVG Optimization</a>
                     </li>
-                    <li><a href="image-compressor.html" class="hover:text-primary transition-colors">Image
+                    <li><a href="image-compressor.html" data-tool="image-compressor" data-cat="image" data-name="Image Compressor"class="hover:text-primary transition-colors">Image
                             Compression</a></li>
-                    <li><a href="flexbox-playground.html" class="hover:text-primary transition-colors">CSS Layout
+                    <li><a href="flexbox-playground.html" data-tool="flexbox-playground" data-cat="layout" data-name="Flexbox Playground"class="hover:text-primary transition-colors">CSS Layout
                              Guides</a></li>
                     <li><a href="guides/index.html" class="font-bold text-emerald-400 hover:text-emerald-300 transition-colors">Design Blog & Tutorials</a></li>
                 </ul>
@@ -932,9 +951,9 @@
             <div>
                 <h6 class="text-white font-bold mb-4">Legal</h6>
                 <ul class="text-sm text-slate-400 space-y-2">
-                    <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                    <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact Us</a></li>
                 </ul>
             </div>
         </div>
@@ -956,6 +975,134 @@
                 });
             });
         }
+    </script>
+
+    <!-- Search, Favourites & Section Visibility -->
+    <script>
+    (function () {
+        var FAV_KEY = 'sl_favourites';
+        var favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+
+        var searchInput  = document.getElementById('tool-search');
+        var favToggle    = document.getElementById('fav-toggle');
+        var favIcon      = document.getElementById('fav-icon');
+        var favLabel     = document.getElementById('fav-label');
+        var favCount     = document.getElementById('fav-count');
+        var noResults    = document.getElementById('no-results');
+        var showingFavsOnly = false;
+
+        // All tool card anchors
+        var cards = Array.from(document.querySelectorAll('a[data-tool]'));
+        // Section headers + grid containers (h4 + next div)
+        var sections = Array.from(document.querySelectorAll('#tools h4'));
+
+        // ── Inject bookmark button into each card ──────────────────────────
+        cards.forEach(function (card) {
+            var slug = card.dataset.tool;
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'sl-fav-btn';
+            btn.setAttribute('aria-label', 'Add to favourites');
+            btn.setAttribute('aria-pressed', favs.has(slug) ? 'true' : 'false');
+            btn.style.cssText = [
+                'position:absolute;top:12px;right:12px;',
+                'background:none;border:none;cursor:pointer;padding:4px;',
+                'color:' + (favs.has(slug) ? '#7c5cfc' : '#475569') + ';',
+                'transition:color 0.2s,transform 0.15s;',
+                'font-family:"Material Symbols Outlined";font-size:18px;',
+                'line-height:1;font-weight:300;z-index:10;',
+            ].join('');
+            btn.textContent = favs.has(slug) ? 'bookmark' : 'bookmark';
+            btn.style.fontVariationSettings = favs.has(slug) ? '"FILL" 1' : '"FILL" 0';
+
+            // Make card position:relative so button can be absolute
+            card.style.position = 'relative';
+
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (favs.has(slug)) {
+                    favs.delete(slug);
+                    btn.style.color = '#475569';
+                    btn.style.fontVariationSettings = '"FILL" 0';
+                    btn.setAttribute('aria-pressed', 'false');
+                } else {
+                    favs.add(slug);
+                    btn.style.color = '#7c5cfc';
+                    btn.style.fontVariationSettings = '"FILL" 1';
+                    btn.setAttribute('aria-pressed', 'true');
+                    btn.style.transform = 'scale(1.3)';
+                    setTimeout(function () { btn.style.transform = ''; }, 200);
+                }
+                localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(favs)));
+                updateFavCount();
+                if (showingFavsOnly) applyFilters();
+            });
+
+            card.appendChild(btn);
+        });
+
+        // ── Utility ───────────────────────────────────────────────────────
+        function updateFavCount() {
+            var n = favs.size;
+            if (n > 0) {
+                favCount.textContent = n;
+                favCount.classList.remove('hidden');
+            } else {
+                favCount.classList.add('hidden');
+            }
+        }
+
+        function applyFilters() {
+            var query = searchInput.value.trim().toLowerCase();
+            var visibleCount = 0;
+
+            cards.forEach(function (card) {
+                var slug = card.dataset.tool || '';
+                var name = (card.dataset.name || '').toLowerCase();
+                var desc = (card.querySelector('p') || {}).textContent || '';
+                var text = (slug + ' ' + name + ' ' + desc).toLowerCase();
+
+                var matchSearch = !query || text.includes(query);
+                var matchFav   = !showingFavsOnly || favs.has(card.dataset.tool);
+                var visible    = matchSearch && matchFav;
+
+                card.style.display = visible ? '' : 'none';
+                if (visible) visibleCount++;
+            });
+
+            // Show/hide section headers based on visible cards in each grid
+            sections.forEach(function (h4) {
+                var grid = h4.nextElementSibling;
+                if (!grid) return;
+                var anyVisible = Array.from(grid.querySelectorAll('a[data-tool]'))
+                    .some(function (c) { return c.style.display !== 'none'; });
+                h4.style.display = anyVisible ? '' : 'none';
+                grid.style.display = anyVisible ? '' : 'none';
+            });
+
+            noResults.classList.toggle('hidden', visibleCount > 0);
+        }
+
+        // ── Event listeners ───────────────────────────────────────────────
+        searchInput.addEventListener('input', applyFilters);
+
+        favToggle.addEventListener('click', function () {
+            showingFavsOnly = !showingFavsOnly;
+            if (showingFavsOnly) {
+                favToggle.classList.add('border-primary/40', 'bg-primary/10', 'text-primary');
+                favIcon.style.fontVariationSettings = '"FILL" 1';
+                favLabel.textContent = 'Favourites';
+            } else {
+                favToggle.classList.remove('border-primary/40', 'bg-primary/10', 'text-primary');
+                favIcon.style.fontVariationSettings = '';
+                favLabel.textContent = 'Favourites';
+            }
+            applyFilters();
+        });
+
+        updateFavCount();
+    }());
     </script>
 </body>
 

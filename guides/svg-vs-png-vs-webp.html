@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SVG vs PNG vs WebP: Which Image Format Should You Use? — StudioLimb</title>
+    <meta name="description" content="Definitive guide to choosing between SVG, PNG, WebP, AVIF and JPG for web projects. File sizes, browser support, transparency, and performance compared." />
+    <link rel="canonical" href="https://studiolimb.com/guides/svg-vs-png-vs-webp.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="SVG vs PNG vs WebP: Which Image Format Should You Use?" />
+    <meta property="og:description" content="Definitive guide to SVG, PNG, WebP, AVIF and JPG for web: when to use each format, file sizes, and browser support." />
+    <meta property="og:url" content="https://studiolimb.com/guides/svg-vs-png-vs-webp.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "SVG vs PNG vs WebP: Which Image Format Should You Use?",
+      "description": "Complete comparison of web image formats: SVG, PNG, WebP, AVIF and JPG — when to use each one.",
+      "url": "https://studiolimb.com/guides/svg-vs-png-vs-webp.html",
+      "datePublished": "2026-04-07",
+      "dateModified": "2026-04-07",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold uppercase">Images</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 8 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">SVG vs PNG vs WebP: Which Format Should You Use?</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">The wrong image format can double your page size. Here's the definitive guide to choosing the right format for every use case in 2026.</p>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary">
+
+            <h2>The Quick Answer</h2>
+            <ul>
+                <li><strong>Icons, logos, illustrations</strong> → SVG</li>
+                <li><strong>Photographs, complex images</strong> → WebP (with AVIF for modern browsers)</li>
+                <li><strong>Screenshots, pixel art, lossless UI</strong> → PNG (or WebP lossless)</li>
+                <li><strong>Legacy compatibility only</strong> → JPG</li>
+            </ul>
+
+            <h2>SVG: The Vector Format</h2>
+            <p>SVG (Scalable Vector Graphics) stores images as mathematical descriptions of shapes rather than a grid of pixels. This means:</p>
+            <ul>
+                <li><strong>Infinitely scalable</strong> — looks perfect at any size, from 16px favicon to 4K display</li>
+                <li><strong>Tiny file sizes</strong> for simple graphics (a simple icon can be under 1KB)</li>
+                <li><strong>CSS-styleable</strong> — you can change colors, animate, and interact with parts of the SVG using CSS and JavaScript</li>
+                <li><strong>Accessible</strong> — SVG content is readable by screen readers</li>
+            </ul>
+            <p><strong>When NOT to use SVG:</strong> Photographs and complex images with millions of color variations. SVG is only practical for graphics that can be described as geometric paths, not photographic content.</p>
+            <p><strong>Critical:</strong> Always run SVG through an optimizer before deploying. Design tools export SVG with enormous amounts of unnecessary markup. StudioLimb's <a href="../svg-optimizer.html">SVG Optimizer</a> typically removes 40–70% of the file size.</p>
+
+            <h2>WebP: Your New Default for Everything Else</h2>
+            <p>WebP was developed by Google as a universal replacement for both JPG and PNG. It supports:</p>
+            <ul>
+                <li>Lossy compression (like JPG, for photographs)</li>
+                <li>Lossless compression (like PNG, for UI and screenshots)</li>
+                <li>Transparency (alpha channel, like PNG)</li>
+                <li>Animation (like GIF, but far more efficient)</li>
+            </ul>
+            <p>WebP consistently produces <strong>25–35% smaller files</strong> than JPG or PNG at equivalent visual quality. Browser support hit 97%+ in 2024 and is now universal for practical purposes.</p>
+            <p>Convert your existing PNG and JPG assets to WebP using StudioLimb's <a href="../image-format-converter.html">Format Converter</a>.</p>
+
+            <h2>AVIF: The Next Generation</h2>
+            <p>AVIF (AV1 Image File Format) is the newest format on this list and offers <strong>another 20–30% size reduction over WebP</strong> at equivalent quality. Browser support is at ~94% globally as of 2026.</p>
+            <p>The recommended 2026 approach: serve AVIF with WebP fallback using the <code>&lt;picture&gt;</code> element:</p>
+            <pre><code class="language-html">&lt;picture&gt;
+  &lt;source srcset="photo.avif" type="image/avif"&gt;
+  &lt;source srcset="photo.webp" type="image/webp"&gt;
+  &lt;img src="photo.jpg" alt="Description" loading="lazy"&gt;
+&lt;/picture&gt;</code></pre>
+
+            <h2>PNG: When You Need Pixel-Perfect Lossless</h2>
+            <p>PNG produces larger files than WebP but is the right choice when:</p>
+            <ul>
+                <li>You need absolutely lossless quality (scientific images, medical imaging)</li>
+                <li>You're working with screenshots that contain text (compression artifacts would make text look blurry)</li>
+                <li>You need transparency and your target environment doesn't support WebP (increasingly rare)</li>
+            </ul>
+            <p><strong>Note:</strong> WebP lossless is typically 26% smaller than PNG. Unless you have a specific reason for PNG, WebP lossless is the better choice.</p>
+
+            <h2>JPG: Legacy Format, Avoid When Possible</h2>
+            <p>JPG's main advantage in 2026 is its universal support, including ancient browsers and software. For new web projects targeting modern browsers, WebP strictly outperforms JPG in both quality and file size. Keep using JPG when:</p>
+            <ul>
+                <li>You're serving files that users will download and use in other software</li>
+                <li>You need compatibility with very old systems</li>
+            </ul>
+
+            <h2>Complete Format Comparison</h2>
+
+            <table>
+                <thead>
+                    <tr><th>Format</th><th>Lossy?</th><th>Lossless?</th><th>Transparency</th><th>Animation</th><th>Browser Support</th><th>Best For</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>SVG</td><td>N/A</td><td>N/A (vector)</td><td>✅</td><td>✅ (CSS/SMIL)</td><td>99%+</td><td>Icons, logos, illustrations</td></tr>
+                    <tr><td>WebP</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>97%+</td><td>Photos, UI images (default)</td></tr>
+                    <tr><td>AVIF</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>94%+</td><td>Photos (highest compression)</td></tr>
+                    <tr><td>PNG</td><td>❌</td><td>✅</td><td>✅</td><td>❌</td><td>99%+</td><td>Screenshots, lossless UI</td></tr>
+                    <tr><td>JPG</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>100%</td><td>Legacy / download files</td></tr>
+                    <tr><td>GIF</td><td>❌ (256 colors)</td><td>✅</td><td>✅ (1-bit)</td><td>✅</td><td>100%</td><td>Nothing — use WebP animation</td></tr>
+                </tbody>
+            </table>
+
+            <h2>The 2026 Decision Tree</h2>
+            <ol>
+                <li><strong>Is it a vector graphic (icon, logo, illustration)?</strong> → SVG. Optimize it.</li>
+                <li><strong>Is it a photograph or complex raster image?</strong> → WebP (+ AVIF via <code>&lt;picture&gt;</code>).</li>
+                <li><strong>Does it require absolute lossless quality?</strong> → PNG or WebP lossless.</li>
+                <li><strong>Does it need to animate?</strong> → WebP or AVIF (never GIF for new content).</li>
+                <li><strong>Nothing else applies?</strong> → WebP.</li>
+            </ol>
+
+        </article>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="../svg-optimizer.html" class="glass-panel rounded-2xl p-5 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-2xl">cleaning_services</span>
+                <div><p class="font-bold text-sm group-hover:text-primary transition-colors">SVG Optimizer</p><p class="text-xs text-slate-400">Remove SVG bloat</p></div>
+            </a>
+            <a href="../image-format-converter.html" class="glass-panel rounded-2xl p-5 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-2xl">transform</span>
+                <div><p class="font-bold text-sm group-hover:text-primary transition-colors">Format Converter</p><p class="text-xs text-slate-400">PNG/JPG → WebP</p></div>
+            </a>
+            <a href="../image-compressor.html" class="glass-panel rounded-2xl p-5 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-2xl">compress</span>
+                <div><p class="font-bold text-sm group-hover:text-primary transition-colors">Image Compressor</p><p class="text-xs text-slate-400">Reduce file size</p></div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="dark overflow-x-hidden" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Contact — StudioLimb</title>
+    <meta name="description" content="Contact StudioLimb. Report bugs, suggest new tools, or ask about advertising and partnerships." />
+    <link rel="canonical" href="https://studiolimb.com/contact.html" />
+    <meta name="robots" content="index, follow" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-72x72.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: { extend: { colors: { "primary": "#7c5cfc", "background-dark": "#050508" }, fontFamily: { "display": ["Public Sans", "sans-serif"] } } }
+        }
+    </script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <!-- Nav -->
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="/index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="/index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Tools
+        </a>
+    </nav>
+
+    <!-- Content -->
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-3">Get in Touch</h1>
+            <p class="text-slate-400 max-w-lg mx-auto">Bug report, tool suggestion, or partnership enquiry — we'd love to hear from you.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="glass-panel rounded-2xl p-6 text-center">
+                <span class="material-symbols-outlined text-primary text-3xl mb-3 block">bug_report</span>
+                <h3 class="font-bold mb-1">Report a Bug</h3>
+                <p class="text-slate-400 text-sm">Something broken? Describe the issue and the tool you were using.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 text-center">
+                <span class="material-symbols-outlined text-emerald-400 text-3xl mb-3 block">lightbulb</span>
+                <h3 class="font-bold mb-1">Suggest a Tool</h3>
+                <p class="text-slate-400 text-sm">Missing a tool from your workflow? Tell us and we'll consider adding it.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 text-center">
+                <span class="material-symbols-outlined text-fuchsia-400 text-3xl mb-3 block">handshake</span>
+                <h3 class="font-bold mb-1">Advertising</h3>
+                <p class="text-slate-400 text-sm">Interested in advertising or partnering with StudioLimb? Reach out below.</p>
+            </div>
+        </div>
+
+        <div class="glass-panel rounded-2xl p-8 md:p-10">
+            <form id="contact-form" class="space-y-5" onsubmit="handleSubmit(event)">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="name" class="block text-sm font-semibold mb-2 text-slate-300">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your name"
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-primary/60 transition-all" />
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-semibold mb-2 text-slate-300">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="you@example.com"
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-primary/60 transition-all" />
+                    </div>
+                </div>
+                <div>
+                    <label for="subject" class="block text-sm font-semibold mb-2 text-slate-300">Subject</label>
+                    <select id="subject" name="subject"
+                        class="w-full h-11 px-4 rounded-xl bg-[#0d0d1a] border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-primary/60 transition-all">
+                        <option value="bug">Bug Report</option>
+                        <option value="suggestion">Tool Suggestion</option>
+                        <option value="advertising">Advertising / Partnership</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-semibold mb-2 text-slate-300">Message</label>
+                    <textarea id="message" name="message" required rows="5" placeholder="Describe your request in detail…"
+                        class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-primary/60 transition-all resize-none"></textarea>
+                </div>
+                <button type="submit"
+                    class="flex h-12 px-8 items-center justify-center gap-2 rounded-xl bg-primary text-white text-sm font-bold shadow-lg hover:opacity-90 transition-all w-full sm:w-auto">
+                    <span class="material-symbols-outlined text-[18px]">send</span> Send Message
+                </button>
+                <p id="form-success" class="hidden text-emerald-400 text-sm font-semibold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                    Message sent! We'll get back to you within 48 hours.
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 mt-auto">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="/contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    function handleSubmit(e) {
+        e.preventDefault();
+        // In production, replace this with a real form handler (Formspree, Netlify Forms, etc.)
+        document.getElementById('contact-form').style.opacity = '0.4';
+        document.getElementById('contact-form').style.pointerEvents = 'none';
+        document.getElementById('form-success').classList.remove('hidden');
+        document.getElementById('form-success').style.display = 'flex';
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Glassmorphism CSS Tutorial: How to Create Frosted Glass UI (2026) — StudioLimb</title>
+    <meta name="description" content="Step-by-step glassmorphism CSS tutorial. Learn to create frosted glass cards, modals and nav bars with backdrop-filter, rgba backgrounds and CSS borders." />
+    <link rel="canonical" href="https://studiolimb.com/guides/glassmorphism-css-tutorial.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Glassmorphism CSS Tutorial: How to Create Frosted Glass UI" />
+    <meta property="og:description" content="Step-by-step guide to creating the glassmorphism effect with CSS backdrop-filter, rgba and borders." />
+    <meta property="og:url" content="https://studiolimb.com/guides/glassmorphism-css-tutorial.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Glassmorphism CSS Tutorial: How to Create Frosted Glass UI",
+      "description": "Learn to create the glassmorphism effect with CSS backdrop-filter, rgba backgrounds, and subtle borders.",
+      "url": "https://studiolimb.com/guides/glassmorphism-css-tutorial.html",
+      "datePublished": "2026-04-07",
+      "dateModified": "2026-04-07",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem; overflow-x: auto; font-size: 0.85rem; }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+        .glass-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-demo::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(255,200,100,0.3), transparent 50%),
+                        radial-gradient(circle at 70% 60%, rgba(100,200,255,0.2), transparent 50%);
+        }
+        .glass-card {
+            position: relative;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase">CSS Design</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 7 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">Glassmorphism CSS Tutorial: Frosted Glass UI</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">Glassmorphism is the design trend that gives UI elements a frosted glass appearance. Here's how to implement it perfectly with pure CSS.</p>
+        </div>
+
+        <!-- Live demo -->
+        <div class="glass-demo mb-10">
+            <div class="glass-card">
+                <h3 class="font-bold text-lg mb-1">Live Glassmorphism Demo</h3>
+                <p class="text-white/70 text-sm">This card uses <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;font-size:0.8em;">backdrop-filter: blur(16px)</code> — hover to feel the frosted glass effect.</p>
+            </div>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary">
+
+            <h2>What Is Glassmorphism?</h2>
+            <p>Glassmorphism is a UI design style characterized by:</p>
+            <ul>
+                <li>A semi-transparent background with frosted blur</li>
+                <li>A subtle border visible against the blurred background</li>
+                <li>A colorful, vibrant backdrop that shows through</li>
+            </ul>
+            <p>It was popularized by Apple's macOS Big Sur in 2020 and has since spread throughout web UI design.</p>
+
+            <h2>The Four CSS Properties That Create the Effect</h2>
+
+            <h3>1. backdrop-filter: blur()</h3>
+            <p>This is the core property. It applies a blur effect to everything <em>behind</em> the element, creating the frosted glass illusion:</p>
+            <pre><code class="language-css">backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px); /* Safari */</code></pre>
+            <p>Values between 8px and 24px produce the best results. Below 8px looks too sharp; above 24px looks muddy.</p>
+
+            <h3>2. Semi-transparent background</h3>
+            <p>The element itself needs a translucent background so the blurred content shows through:</p>
+            <pre><code class="language-css">background: rgba(255, 255, 255, 0.12); /* Light glass */
+/* or for dark glass: */
+background: rgba(0, 0, 0, 0.25);</code></pre>
+
+            <h3>3. Subtle border</h3>
+            <p>A thin, semi-transparent white border defines the glass edge against the background — this is what makes it look physically real:</p>
+            <pre><code class="language-css">border: 1px solid rgba(255, 255, 255, 0.2);</code></pre>
+
+            <h3>4. Border radius</h3>
+            <p>Glassmorphism almost always uses rounded corners. They soften the element and reinforce the "physical material" feeling:</p>
+            <pre><code class="language-css">border-radius: 16px;</code></pre>
+
+            <h2>The Complete Glassmorphism Card</h2>
+            <pre><code class="language-css">.glass-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+}</code></pre>
+
+            <h2>Critical Requirement: You Need a Colorful Background</h2>
+            <p>Glassmorphism only works when there's something interesting blurring behind the element. On a white or solid dark background, <code>backdrop-filter: blur()</code> has zero visible effect. You need:</p>
+            <ul>
+                <li>A colorful gradient background</li>
+                <li>Background blobs or shapes</li>
+                <li>A photograph or illustration</li>
+            </ul>
+            <pre><code class="language-css">/* Parent container needs a rich background */
+.glass-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* or with floating blobs */
+  position: relative;
+  overflow: hidden;
+}</code></pre>
+
+            <h2>Dark Mode Glassmorphism</h2>
+            <p>For dark interfaces, increase the white alpha slightly and add a colored tint:</p>
+            <pre><code class="language-css">.glass-card--dark {
+  background: rgba(15, 15, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}</code></pre>
+
+            <h2>Performance Considerations</h2>
+            <p><code>backdrop-filter</code> triggers compositing and can be expensive on low-end devices. Avoid using it on many simultaneous elements or elements that animate. Use <code>will-change: backdrop-filter</code> sparingly — only right before an animation begins.</p>
+
+            <h2>Browser Support</h2>
+            <p>As of 2026, <code>backdrop-filter</code> has 97%+ global browser support. The <code>-webkit-</code> prefix is still needed for Safari. You can safely use it in production with a graceful fallback for the rare unsupported case:</p>
+            <pre><code class="language-css">@supports not (backdrop-filter: blur(1px)) {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+  }
+}</code></pre>
+
+        </article>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="../glassmorphism-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">layers</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Glassmorphism Generator</p>
+                    <p class="text-sm text-slate-400">Generate perfect glass CSS instantly</p>
+                </div>
+            </a>
+            <a href="../gradient-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">palette</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Gradient Generator</p>
+                    <p class="text-sm text-slate-400">Create the colorful backgrounds glassmorphism needs</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

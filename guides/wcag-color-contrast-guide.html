@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WCAG Color Contrast Guide: Web Accessibility for Designers (2026) — StudioLimb</title>
+    <meta name="description" content="Complete WCAG 2.1 color contrast guide. Understand AA and AAA ratios, how to measure them, and how to fix failing contrast in your web design." />
+    <link rel="canonical" href="https://studiolimb.com/guides/wcag-color-contrast-guide.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="WCAG Color Contrast Guide: Web Accessibility for Designers" />
+    <meta property="og:description" content="Understand WCAG 2.1 contrast ratios, AA vs AAA, and how to fix failing contrast in your web design." />
+    <meta property="og:url" content="https://studiolimb.com/guides/wcag-color-contrast-guide.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "WCAG Color Contrast Guide: Web Accessibility for Designers",
+      "description": "Complete guide to WCAG 2.1 color contrast ratios, AA vs AAA compliance, and how to fix failing contrast.",
+      "url": "https://studiolimb.com/guides/wcag-color-contrast-guide.html",
+      "datePublished": "2026-04-07",
+      "dateModified": "2026-04-07",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+        .contrast-demo { border-radius: 12px; padding: 1rem 1.5rem; margin: 0.5rem 0; font-weight: 600; font-size: 0.95rem; }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 text-[10px] font-bold uppercase">Accessibility</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 9 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">WCAG Color Contrast Guide for Web Designers</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">Poor color contrast makes your site inaccessible to millions of users with visual impairments — and it's one of the most common and easiest-to-fix accessibility issues.</p>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary">
+
+            <h2>What Is Color Contrast and Why Does It Matter?</h2>
+            <p>Color contrast ratio measures the luminance difference between a text color and its background. A ratio of 1:1 means no contrast (same color); 21:1 is maximum contrast (black on white).</p>
+            <p>The Web Content Accessibility Guidelines (WCAG) define minimum contrast ratios to ensure readable text for users with low vision, color blindness, or who are using their device in bright sunlight.</p>
+            <p>Beyond ethics, poor contrast has legal implications — websites failing WCAG standards have faced lawsuits under the ADA in the US and equivalent laws in the EU and UK.</p>
+
+            <h2>WCAG 2.1 Contrast Requirements</h2>
+
+            <h3>Level AA (Minimum — What You Must Hit)</h3>
+            <ul>
+                <li><strong>Normal text</strong> (below 18pt / 14pt bold): contrast ratio of at least <strong>4.5:1</strong></li>
+                <li><strong>Large text</strong> (18pt+ / 14pt+ bold): contrast ratio of at least <strong>3:1</strong></li>
+                <li><strong>UI components and graphical objects</strong>: at least <strong>3:1</strong> against adjacent colors</li>
+            </ul>
+
+            <h3>Level AAA (Enhanced — Optional but Recommended)</h3>
+            <ul>
+                <li><strong>Normal text</strong>: contrast ratio of at least <strong>7:1</strong></li>
+                <li><strong>Large text</strong>: contrast ratio of at least <strong>4.5:1</strong></li>
+            </ul>
+
+            <!-- Live contrast demos -->
+            <div class="not-prose my-6 space-y-3">
+                <div class="contrast-demo" style="background:#ffffff;color:#767676;">⚠️ Gray text on white — 4.54:1 (barely AA for normal text)</div>
+                <div class="contrast-demo" style="background:#ffffff;color:#595959;">✅ Darker gray on white — 7.0:1 (AAA for normal text)</div>
+                <div class="contrast-demo" style="background:#1e40af;color:#ffffff;">✅ White on blue — 8.59:1 (AAA)</div>
+                <div class="contrast-demo" style="background:#fbbf24;color:#ffffff;">❌ White on yellow — 1.96:1 (fails AA)</div>
+                <div class="contrast-demo" style="background:#fbbf24;color:#1c1917;">✅ Dark text on yellow — 8.32:1 (AAA)</div>
+            </div>
+
+            <h2>Common Color Contrast Mistakes</h2>
+
+            <h3>Light gray text on white backgrounds</h3>
+            <p>Designers often use <code>#999</code> or <code>#aaa</code> for secondary text on white backgrounds because it looks elegant. These typically fail WCAG AA. The minimum gray that passes AA on white is approximately <code>#767676</code>.</p>
+
+            <h3>White text on pastel backgrounds</h3>
+            <p>Light blue, mint green, lavender — these backgrounds look good but make white text nearly invisible. Always test before using.</p>
+
+            <h3>Colored text on colored backgrounds</h3>
+            <p>Red text on orange, or blue on purple — these can feel like contrasting colors to sighted users but have poor luminance ratios. Color blindness also affects the perceived difference. Always measure luminance contrast, not just hue distance.</p>
+
+            <h3>Placeholder text</h3>
+            <p>Input placeholder text is frequently styled with very low contrast. It should still meet 4.5:1 — users need to read what to type.</p>
+
+            <h2>How to Measure Contrast</h2>
+            <p>Use StudioLimb's <a href="../contrast-checker.html">WCAG Contrast Checker</a> to measure any color pair instantly. Enter your text color and background color to see:</p>
+            <ul>
+                <li>The exact contrast ratio</li>
+                <li>Whether it passes AA and/or AAA for normal and large text</li>
+                <li>Suggested adjustments to reach compliance</li>
+            </ul>
+
+            <h2>Fixing Failing Contrast</h2>
+
+            <h3>Strategy 1: Darken the text color</h3>
+            <p>The most straightforward fix. If your secondary text uses <code>#9ca3af</code> on white, try <code>#6b7280</code> or <code>#4b5563</code> to reach AA compliance while maintaining the muted aesthetic.</p>
+
+            <h3>Strategy 2: Darken the background slightly</h3>
+            <p>If you're set on a specific text color, adding a subtle tint to the background can push the ratio over the threshold without disrupting the design.</p>
+
+            <h3>Strategy 3: Increase font size or weight</h3>
+            <p>Large or bold text has a lower contrast requirement (3:1 vs 4.5:1). If a decorative heading fails at 18px/regular, it may pass at 24px/regular or 18px/bold. Use this for headlines — never for body copy.</p>
+
+            <h2>Contrast for Brand Colors</h2>
+            <p>Many brand palettes include bright colors that fail on white backgrounds. A pragmatic approach: use the brand color as an accent (borders, icons, highlights) but pair text with a darkened variant or against a colored background where the ratio passes.</p>
+
+            <h2>Don't Rely on Color Alone</h2>
+            <p>WCAG also requires that information is never conveyed by color alone. Form error states must include an icon or text label, not just a red border. Chart legends must use patterns or labels, not just different colors.</p>
+
+        </article>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="../contrast-checker.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">contrast</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Contrast Checker</p>
+                    <p class="text-sm text-slate-400">Check WCAG AA & AAA instantly</p>
+                </div>
+            </a>
+            <a href="../color-palette-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">color_lens</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Color Palette Generator</p>
+                    <p class="text-sm text-slate-400">Generate accessible color schemes</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

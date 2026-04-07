@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CSS Flexbox vs Grid: When to Use Each — StudioLimb Guides</title>
+    <meta name="description" content="Learn the key differences between CSS Flexbox and CSS Grid. Practical examples showing when to use each layout system for modern web design." />
+    <link rel="canonical" href="https://studiolimb.com/guides/css-flexbox-vs-grid.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="CSS Flexbox vs Grid: When to Use Each" />
+    <meta property="og:description" content="Practical guide to choosing between CSS Flexbox and Grid for your web layout needs." />
+    <meta property="og:url" content="https://studiolimb.com/guides/css-flexbox-vs-grid.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CSS Flexbox vs Grid: When to Use Each" />
+    <meta name="twitter:description" content="Practical guide to choosing between CSS Flexbox and Grid for your web layout needs." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "CSS Flexbox vs Grid: When to Use Each",
+      "description": "Learn the key differences between CSS Flexbox and CSS Grid with practical examples.",
+      "url": "https://studiolimb.com/guides/css-flexbox-vs-grid.html",
+      "datePublished": "2026-04-07",
+      "dateModified": "2026-04-07",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem; overflow-x: auto; font-size: 0.85rem; }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase">CSS Layout</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 8 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">CSS Flexbox vs Grid: When to Use Each</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">Two of the most powerful CSS layout systems ever created — but developers often use them interchangeably. Here's how to decide correctly every time.</p>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary prose-code:text-violet-300 prose-pre:bg-transparent prose-pre:p-0">
+
+            <h2>The Core Mental Model</h2>
+            <p>The single most useful mental model: <strong>Flexbox is one-dimensional, Grid is two-dimensional.</strong></p>
+            <ul>
+                <li><strong>Flexbox</strong> controls layout along a single axis — either a row <em>or</em> a column.</li>
+                <li><strong>Grid</strong> controls layout across two axes simultaneously — rows <em>and</em> columns.</li>
+            </ul>
+            <p>This isn't just a technicality. It fundamentally changes what each system is good at and how you should think when reaching for one.</p>
+
+            <h2>When to Use Flexbox</h2>
+            <p>Flexbox shines when you need to align or distribute items <em>along a single axis</em> and want the items themselves to control their own sizing.</p>
+
+            <h3>Navigation bars</h3>
+            <p>A classic Flexbox use case. You want items in a row, spaced evenly, with automatic wrapping on small screens:</p>
+            <pre><code class="language-css">.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}</code></pre>
+
+            <h3>Card button groups</h3>
+            <p>When you have a group of buttons inside a card and want them aligned regardless of label length, Flexbox handles this perfectly with <code>justify-content: flex-end</code> or <code>gap</code>.</p>
+
+            <h3>Centering content</h3>
+            <p>The cleanest way to center an element both horizontally and vertically:</p>
+            <pre><code class="language-css">.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}</code></pre>
+
+            <h3>Component internals</h3>
+            <p>Inside small UI components — icon + text combos, tags, badges — Flexbox keeps things clean and compact. It's ideal when you don't know the exact number of items in advance.</p>
+
+            <p><strong>Try it live:</strong> Use StudioLimb's <a href="../flexbox-playground.html">Flexbox Playground</a> to experiment with all justify-content and align-items values visually.</p>
+
+            <h2>When to Use Grid</h2>
+            <p>Grid is the right tool when you're thinking about the <em>entire layout</em> at once — defining rows and columns first, then placing content into that structure.</p>
+
+            <h3>Page-level layouts</h3>
+            <p>Header, sidebar, main content, footer — this is Grid's native territory:</p>
+            <pre><code class="language-css">.page {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+header  { grid-column: 1 / -1; }
+sidebar { grid-row: 2; }
+main    { grid-column: 2; grid-row: 2; }
+footer  { grid-column: 1 / -1; }</code></pre>
+
+            <h3>Card grids</h3>
+            <p>When you want a responsive grid of cards that automatically fills columns without media queries:</p>
+            <pre><code class="language-css">.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}</code></pre>
+
+            <h3>Complex overlapping layouts</h3>
+            <p>Grid allows elements to overlap via named areas or explicit row/column placement — something Flexbox cannot do without <code>position: absolute</code>.</p>
+
+            <p><strong>Try it live:</strong> Build your layout visually with StudioLimb's <a href="../grid-generator.html">CSS Grid Generator</a>.</p>
+
+            <h2>Can You Use Them Together?</h2>
+            <p>Absolutely — and you often should. A common pattern: Grid defines the macro layout of the page, Flexbox handles the micro layout inside each component. There's no rule against nesting them.</p>
+
+            <h2>Quick Decision Guide</h2>
+
+            <table>
+                <thead><tr><th>Scenario</th><th>Best Choice</th></tr></thead>
+                <tbody>
+                    <tr><td>Navigation bar</td><td>Flexbox</td></tr>
+                    <tr><td>Page layout (header/sidebar/main)</td><td>Grid</td></tr>
+                    <tr><td>Centering a single element</td><td>Flexbox</td></tr>
+                    <tr><td>Responsive card gallery</td><td>Grid</td></tr>
+                    <tr><td>Button group inside a card</td><td>Flexbox</td></tr>
+                    <tr><td>Magazine-style editorial layout</td><td>Grid</td></tr>
+                    <tr><td>Icon + label combinations</td><td>Flexbox</td></tr>
+                    <tr><td>Dashboard with fixed sidebar</td><td>Grid</td></tr>
+                </tbody>
+            </table>
+
+            <h2>The Honest Answer</h2>
+            <p>In practice, experienced developers reach for Flexbox first because it's slightly simpler for most component-level work. When you catch yourself fighting Flexbox to control things on two axes — that's your signal to switch to Grid. Trust the friction.</p>
+
+        </article>
+
+        <!-- CTA Tools -->
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="../flexbox-playground.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">view_column</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">Flexbox Playground</p>
+                    <p class="text-sm text-slate-400">Visualize flexbox properties live</p>
+                </div>
+            </a>
+            <a href="../grid-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">grid_4x4</span>
+                <div>
+                    <p class="font-bold group-hover:text-primary transition-colors">CSS Grid Generator</p>
+                    <p class="text-sm text-slate-400">Build grid layouts visually</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

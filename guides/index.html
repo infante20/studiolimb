@@ -3,38 +3,149 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>StudioLimb Guides | Professional Web Design Tutorials</title>
-    <meta name="description" content="Learn modern web design and development with StudioLimb guides. Expert tutorials on CSS, performance, and UI/UX." />
+    <title>StudioLimb Guides — CSS, Images & Web Design Tutorials</title>
+    <meta name="description" content="Expert tutorials for modern web designers and developers. Learn CSS layout, image optimization, glassmorphism, accessibility, and more. Free guides by StudioLimb." />
+    <link rel="canonical" href="https://studiolimb.com/guides/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="StudioLimb Guides — CSS, Images & Web Design Tutorials" />
+    <meta property="og:description" content="Expert tutorials on CSS layout, image optimization, glassmorphism, accessibility, and more." />
+    <meta property="og:url" content="https://studiolimb.com/guides/" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "StudioLimb Guides",
+      "description": "Expert tutorials for modern web designers and developers.",
+      "url": "https://studiolimb.com/guides/",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
     <style>
         body { background-color: #050508; color: #f8f6f6; font-family: 'Public Sans', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass-panel:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(124, 92, 252, 0.3); transform: translateY(-4px); }
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .glass-panel:hover { background: rgba(255,255,255,0.05); border-color: rgba(124,92,252,0.3); transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(124,92,252,0.2); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <nav class="px-6 py-6 max-w-7xl mx-auto w-full flex items-center justify-between">
         <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#7c5cfc] text-white">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
                 <span class="material-symbols-outlined">token</span>
             </div>
-            <span class="text-xl font-bold">StudioLimb <span class="text-[#7c5cfc]">Guides</span></span>
+            <span class="text-xl font-bold">StudioLimb <span class="text-primary">Guides</span></span>
+        </a>
+        <a href="../index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">apps</span> All Tools
         </a>
     </nav>
 
     <main class="max-w-7xl mx-auto px-6 py-12 flex-1 w-full">
         <header class="mb-16 text-center max-w-3xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6">Expert Tutorials for <span class="text-[#7c5cfc]">Modern Creators</span></h1>
-            <p class="text-slate-400 text-lg">Master the art of web creation with our focused, easy-to-follow guides.</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Expert Tutorials for <span class="text-primary">Modern Creators</span></h1>
+            <p class="text-slate-400 text-lg">Master CSS, image optimization, accessibility and UI design with our focused, practical guides.</p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- First Guide -->
+
+            <!-- Guide 1: Flexbox vs Grid -->
+            <a href="css-flexbox-vs-grid.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#10b981,#059669);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">view_column</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase">CSS Layout</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 8 min</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">CSS Flexbox vs Grid: When to Use Each</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">A practical decision guide with real-world examples. Stop guessing and pick the right layout system every time.</p>
+                </div>
+            </a>
+
+            <!-- Guide 2: Image Optimization -->
+            <a href="optimize-images-for-web.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#a855f7,#7c3aed);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">image</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-fuchsia-500/10 text-fuchsia-400 text-[10px] font-bold uppercase">Performance</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 10 min</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">How to Optimize Images for Web Performance</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">WebP vs PNG vs AVIF, compression levels, lazy loading, and Core Web Vitals — the complete 2026 guide.</p>
+                </div>
+            </a>
+
+            <!-- Guide 3: Glassmorphism -->
+            <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#7c5cfc,#a855f7);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">layers</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase">CSS Design</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 7 min</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Glassmorphism CSS Tutorial: Frosted Glass UI</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">Step-by-step guide to the glassmorphism effect with backdrop-filter, rgba, and subtle borders.</p>
+                </div>
+            </a>
+
+            <!-- Guide 4: WCAG Contrast -->
+            <a href="wcag-color-contrast-guide.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">contrast</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 text-[10px] font-bold uppercase">Accessibility</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 9 min</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">WCAG Color Contrast Guide for Web Designers</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">AA vs AAA ratios, common mistakes, and how to fix failing contrast in your design system.</p>
+                </div>
+            </a>
+
+            <!-- Guide 5: SVG vs PNG vs WebP -->
+            <a href="svg-vs-png-vs-webp.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#f43f5e,#dc2626);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">photo_library</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold uppercase">Images</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 8 min</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">SVG vs PNG vs WebP: Which Format to Use?</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">Definitive 2026 comparison of every web image format with a clear decision guide for each use case.</p>
+                </div>
+            </a>
+
+            <!-- Guide 6: CSS Box Shadow -->
+            <a href="css-box-shadow-techniques.html" class="glass-panel rounded-2xl overflow-hidden group">
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#4f46e5,#312e81);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">shadow</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-bold uppercase">CSS Effects</span>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 8 min</span>
+                    </div>
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">CSS Box Shadow: Depth, Glow & Neumorphism</h2>
+                    <p class="text-sm text-slate-400 line-clamp-2">Layered shadows, colored glows, neumorphism, inset shadows — with real CSS code and live demos.</p>
+                </div>
+            </a>
+
+            <!-- Guide 7: Original article -->
             <a href="modern-web-design-essentials.html" class="glass-panel rounded-2xl overflow-hidden group">
-                <div class="aspect-video bg-gradient-to-br from-indigo-600 to-primary flex items-center justify-center">
-                    <span class="material-symbols-outlined text-6xl text-white/50 group-hover:scale-110 transition-transform">article</span>
+                <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#7c5cfc,#4f46e5);">
+                    <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">article</span>
                 </div>
                 <div class="p-6">
                     <div class="flex items-center gap-2 mb-3">
@@ -45,12 +156,18 @@
                     <p class="text-sm text-slate-400 line-clamp-2">Discover the key trends and tools that are shaping the future of high-performance web experiences.</p>
                 </div>
             </a>
+
         </div>
     </main>
 
-    <footer class="border-t border-white/10 py-12 bg-black/20 mt-24">
-        <div class="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
+    <footer class="border-t border-white/10 py-8 bg-black/20 mt-16">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
             <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
         </div>
     </footer>
 </body>
