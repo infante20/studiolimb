@@ -8,10 +8,37 @@
     <xhtml:link rel="alternate" hreflang="hi" href="https://www.studiolimb.com/hi/" />
   </url>
   <url>
+    <loc>https://www.studiolimb.com/contact.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/privacy-policy.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/terms.html</loc>
+  </url>
+  <url>
     <loc>https://www.studiolimb.com/guides/</loc>
   </url>
   <url>
     <loc>https://www.studiolimb.com/guides/modern-web-design-essentials.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/guides/css-box-shadow-techniques.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/guides/css-flexbox-vs-grid.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/guides/glassmorphism-css-tutorial.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/guides/optimize-images-for-web.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/guides/svg-vs-png-vs-webp.html</loc>
+  </url>
+  <url>
+    <loc>https://www.studiolimb.com/guides/wcag-color-contrast-guide.html</loc>
   </url>
   <url>
     <loc>https://www.studiolimb.com/es/</loc>
