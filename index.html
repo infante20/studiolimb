@@ -19,10 +19,10 @@
         content="A free, premium suite of modern web micro-tools for designers and developers. No signup required." />
     <meta property="og:site_name" content="StudioLimb" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://studiolimb.com" />
+    <meta property="og:url" content="https://www.studiolimb.com" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://studiolimb.com/" />
+    <link rel="canonical" href="https://www.studiolimb.com/" />
 
     <!-- PWA Settings -->
     <link rel="manifest" href="/manifest.json" />
@@ -37,7 +37,7 @@
       "@type": "WebApplication",
       "name": "StudioLimb",
       "description": "A free, premium suite of modern web micro-tools for designers and developers.",
-      "url": "https://studiolimb.com",
+      "url": "https://www.studiolimb.com",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
       "offers": {
@@ -82,6 +82,11 @@
       }]
     }
     </script>
+
+    <!-- Preconnect to CDNs for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
@@ -221,6 +226,12 @@
 <body
     class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
 
+    <!-- Skip to main content (accessibility) -->
+    <a href="#tools"
+       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-primary focus:text-white focus:font-bold focus:text-sm">
+        Skip to tools
+    </a>
+
     <!-- Background decorative elements -->
     <div class="fixed inset-0 z-[-1] bg-grid pointer-events-none"></div>
     <div class="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
@@ -252,10 +263,10 @@
         </div>
         
         <!-- Language Selector -->
-        <div class="lang-selector">
-            <button class="lang-btn">
+        <div class="lang-selector" role="navigation" aria-label="Language selector">
+            <button class="lang-btn" aria-haspopup="true" aria-label="Select language">
                 <span class="lang-flag">🇺🇸</span> EN
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </button>
             <div class="lang-dropdown">
                 <a href="index.html" class="lang-option active"><span class="lang-flag">🇺🇸</span> English</a>
@@ -273,7 +284,7 @@
         <div
             class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 shadow-[0_0_15px_rgba(124,92,252,0.15)]">
             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            30+ Free Tools Available
+            32+ Free Tools Available
         </div>
 
         <h2
@@ -301,7 +312,7 @@
     </header>
 
     <!-- Main Tools Directory -->
-    <main id="tools" class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 pb-24">
+    <main id="tools" role="main" class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 pb-24">
 
         <div class="flex items-end justify-between mb-6 border-b border-white/10 pb-6">
             <div>

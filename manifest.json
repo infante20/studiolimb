@@ -1,11 +1,15 @@
 {
-  "name": "StudioLimb",
+  "name": "StudioLimb — Free Creative Tools",
   "short_name": "StudioLimb",
+  "description": "32+ free, privacy-first web design & development tools. No signup required.",
   "start_url": "/index.html",
+  "id": "/",
   "display": "standalone",
   "background_color": "#050508",
   "theme_color": "#050508",
-  "description": "Essential Web Design & Development Tools",
+  "orientation": "any",
+  "categories": ["developer", "design", "utilities", "productivity"],
+  "lang": "en",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
@@ -16,6 +20,38 @@
       "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Gradient Generator",
+      "short_name": "Gradients",
+      "url": "/gradient-generator.html",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Image Compressor",
+      "short_name": "Compress",
+      "url": "/image-compressor.html",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Color Palette Generator",
+      "short_name": "Palette",
+      "url": "/color-palette-generator.html",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Flexbox Playground",
+      "short_name": "Flexbox",
+      "url": "/flexbox-playground.html",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }

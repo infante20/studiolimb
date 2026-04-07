@@ -1,4 +1,4 @@
-const CACHE_NAME = 'studiolimb-cache-v3';
+const CACHE_NAME = 'studiolimb-cache-v4';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -41,10 +41,30 @@ const urlsToCache = [
   '/contrast-checker.html',
   '/px-rem-converter.html',
   '/social-media-sizes.html',
+  // Guides
+  '/guides/index.html',
+  '/guides/modern-web-design-essentials.html',
+  '/guides/css-box-shadow-techniques.html',
+  '/guides/css-flexbox-vs-grid.html',
+  '/guides/glassmorphism-css-tutorial.html',
+  '/guides/optimize-images-for-web.html',
+  '/guides/svg-vs-png-vs-webp.html',
+  '/guides/wcag-color-contrast-guide.html',
+  // Legal & Info
+  '/contact.html',
+  '/privacy-policy.html',
+  '/terms.html',
   // PWA Icons
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
   '/manifest.json',
+];
+
+// CDN assets to cache on first fetch (network-first, then cache)
+const CDN_CACHE_PATTERNS = [
+  'cdn.tailwindcss.com',
+  'fonts.googleapis.com',
+  'fonts.gstatic.com',
 ];
 
 self.addEventListener('install', event => {
@@ -67,21 +87,39 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Only handle GET requests for same-origin or CDN assets
+  // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
+  const url = event.request.url;
+  const isCDN = CDN_CACHE_PATTERNS.some(pattern => url.includes(pattern));
+
+  if (isCDN) {
+    // Stale-while-revalidate for CDN assets (fonts, Tailwind)
+    // Serve from cache immediately, update cache in background
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache =>
+        cache.match(event.request).then(cached => {
+          const fetchPromise = fetch(event.request).then(response => {
+            if (response.ok) {
+              cache.put(event.request, response.clone());
+            }
+            return response;
+          }).catch(() => cached);
+
+          return cached || fetchPromise;
+        })
+      )
+    );
+    return;
+  }
+
+  // Cache-first for same-origin assets
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
 
       return fetch(event.request).then(response => {
-        // Cache successful same-origin responses
-        if (
-          response.ok &&
-          (event.request.url.startsWith(self.location.origin) ||
-           event.request.url.includes('fonts.googleapis.com') ||
-           event.request.url.includes('fonts.gstatic.com'))
-        ) {
+        if (response.ok && url.startsWith(self.location.origin)) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
