@@ -50,6 +50,7 @@ const urlsToCache = [
   '/guides/optimize-images-for-web.html',
   '/guides/svg-vs-png-vs-webp.html',
   '/guides/wcag-color-contrast-guide.html',
+  '/guides/mastering-json-ld-rich-snippets.html',
   // Legal & Info
   '/contact.html',
   '/privacy-policy.html',
