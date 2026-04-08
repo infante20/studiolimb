@@ -2,14 +2,15 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>StudioLimb Guides — CSS, Images & Web Design Tutorials</title>
     <meta name="description" content="Expert tutorials for modern web designers and developers. Learn CSS layout, image optimization, glassmorphism, accessibility, and more. Free guides by StudioLimb." />
-    <link rel="canonical" href="https://studiolimb.com/guides/" />
+    <link rel="canonical" href="https://www.studiolimb.com/guides/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="StudioLimb Guides — CSS, Images & Web Design Tutorials" />
     <meta property="og:description" content="Expert tutorials on CSS layout, image optimization, glassmorphism, accessibility, and more." />
-    <meta property="og:url" content="https://studiolimb.com/guides/" />
+    <meta property="og:url" content="https://www.studiolimb.com/guides/" />
     <meta property="og:site_name" content="StudioLimb" />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">
@@ -18,11 +19,14 @@
       "@type": "Blog",
       "name": "StudioLimb Guides",
       "description": "Expert tutorials for modern web designers and developers.",
-      "url": "https://studiolimb.com/guides/",
-      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" }
+      "url": "https://www.studiolimb.com/guides/",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://www.studiolimb.com" }
     }
     </script>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
     <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
     <style>
@@ -30,6 +34,10 @@
         .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
         .glass-panel:hover { background: rgba(255,255,255,0.05); border-color: rgba(124,92,252,0.3); transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(124,92,252,0.2); }
     </style>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 </head>
 <body class="min-h-screen flex flex-col">
     <nav class="px-6 py-6 max-w-7xl mx-auto w-full flex items-center justify-between">
@@ -170,5 +178,6 @@
             </div>
         </div>
     </footer>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 </html>

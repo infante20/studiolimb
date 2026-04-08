@@ -2,15 +2,20 @@
 <html class="dark overflow-x-hidden" lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
+    <meta name="twitter:card" content="summary" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Contact — StudioLimb</title>
     <meta name="description" content="Contact StudioLimb. Report bugs, suggest new tools, or ask about advertising and partnerships." />
-    <link rel="canonical" href="https://studiolimb.com/contact.html" />
+    <link rel="canonical" href="https://www.studiolimb.com/contact.html" />
     <meta name="robots" content="index, follow" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#050508" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-72x72.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
     <script>
         tailwind.config = {
@@ -64,7 +69,7 @@
         </div>
 
         <div class="glass-panel rounded-2xl p-8 md:p-10">
-            <form id="contact-form" class="space-y-5" onsubmit="handleSubmit(event)">
+            <form id="contact-form" class="space-y-5" action="https://formspree.io/f/xpwdjkqb" method="POST">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label for="name" class="block text-sm font-semibold mb-2 text-slate-300">Name</label>
@@ -117,14 +122,34 @@
     </footer>
 
     <script>
-    function handleSubmit(e) {
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
         e.preventDefault();
-        // In production, replace this with a real form handler (Formspree, Netlify Forms, etc.)
-        document.getElementById('contact-form').style.opacity = '0.4';
-        document.getElementById('contact-form').style.pointerEvents = 'none';
-        document.getElementById('form-success').classList.remove('hidden');
-        document.getElementById('form-success').style.display = 'flex';
-    }
+        const form = e.target;
+        const btn = form.querySelector('button[type="submit"]');
+        const success = document.getElementById('form-success');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> Sending…';
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+            if (res.ok) {
+                form.reset();
+                success.classList.remove('hidden');
+                success.style.display = 'flex';
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span> Sent!';
+            } else {
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span> Failed — try again';
+                btn.disabled = false;
+            }
+        } catch {
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span> Network error — try again';
+            btn.disabled = false;
+        }
+    });
     </script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 </html>

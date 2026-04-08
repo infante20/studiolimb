@@ -2,14 +2,15 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>SVG vs PNG vs WebP: Which Image Format Should You Use? — StudioLimb</title>
     <meta name="description" content="Definitive guide to choosing between SVG, PNG, WebP, AVIF and JPG for web projects. File sizes, browser support, transparency, and performance compared." />
-    <link rel="canonical" href="https://studiolimb.com/guides/svg-vs-png-vs-webp.html" />
+    <link rel="canonical" href="https://www.studiolimb.com/guides/svg-vs-png-vs-webp.html" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="SVG vs PNG vs WebP: Which Image Format Should You Use?" />
     <meta property="og:description" content="Definitive guide to SVG, PNG, WebP, AVIF and JPG for web: when to use each format, file sizes, and browser support." />
-    <meta property="og:url" content="https://studiolimb.com/guides/svg-vs-png-vs-webp.html" />
+    <meta property="og:url" content="https://www.studiolimb.com/guides/svg-vs-png-vs-webp.html" />
     <meta property="og:site_name" content="StudioLimb" />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">
@@ -18,14 +19,17 @@
       "@type": "Article",
       "headline": "SVG vs PNG vs WebP: Which Image Format Should You Use?",
       "description": "Complete comparison of web image formats: SVG, PNG, WebP, AVIF and JPG — when to use each one.",
-      "url": "https://studiolimb.com/guides/svg-vs-png-vs-webp.html",
+      "url": "https://www.studiolimb.com/guides/svg-vs-png-vs-webp.html",
       "datePublished": "2026-04-07",
       "dateModified": "2026-04-07",
-      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://www.studiolimb.com" },
       "author": { "@type": "Organization", "name": "StudioLimb" }
     }
     </script>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
     <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
     <style>
@@ -33,6 +37,10 @@
         .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
         code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
     </style>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 </head>
 <body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
 
@@ -168,5 +176,6 @@
             </div>
         </div>
     </footer>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 </html>

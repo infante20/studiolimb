@@ -3,10 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Générateur Code QR | StudioLimb</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -78,17 +82,17 @@
             background: transparent;
         }
     </style>
-    <link rel="canonical" href="https://studiolimb.com/qr-code-generator.html">
+    <link rel="canonical" href="https://www.studiolimb.com/qr-code-generator.html">
     <meta name="description" content="Générez des codes QR de haute qualité personnalisés.">
-    <link rel="alternate" hreflang="x-default" href="https://studiolimb.com/qr-code-generator.html" />
-    <link rel="alternate" hreflang="en" href="https://studiolimb.com/qr-code-generator.html" />
-    <link rel="alternate" hreflang="es" href="https://studiolimb.com/es/qr-code-generator.html" />
-    <link rel="alternate" hreflang="fr" href="https://studiolimb.com/fr/qr-code-generator.html" />
-    <link rel="alternate" hreflang="hi" href="https://studiolimb.com/hi/qr-code-generator.html" />
-    <link rel="alternate" hreflang="pt-BR" href="https://studiolimb.com/pt/qr-code-generator.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.studiolimb.com/qr-code-generator.html" />
+    <link rel="alternate" hreflang="en" href="https://www.studiolimb.com/qr-code-generator.html" />
+    <link rel="alternate" hreflang="es" href="https://www.studiolimb.com/es/qr-code-generator.html" />
+    <link rel="alternate" hreflang="fr" href="https://www.studiolimb.com/fr/qr-code-generator.html" />
+    <link rel="alternate" hreflang="hi" href="https://www.studiolimb.com/hi/qr-code-generator.html" />
+    <link rel="alternate" hreflang="pt-BR" href="https://www.studiolimb.com/pt/qr-code-generator.html" />
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://studiolimb.com/fr/qr-code-generator.html" />
+    <meta property="og:url" content="https://www.studiolimb.com/fr/qr-code-generator.html" />
     <meta property="og:title" content="QR Code Generator — Custom High-Resolution QR Codes" />
     <meta property="og:description" content="Create custom QR codes with logo embedding, color customization and high-resolution export. Free, no signup." />
     <meta property="og:site_name" content="StudioLimb" />
@@ -104,13 +108,17 @@
       "@type": "SoftwareApplication",
       "name": "QR Code Generator",
       "description": "Create custom QR codes with logo embedding, color customization and high-resolution export. Free, no signup.",
-      "url": "https://studiolimb.com/fr/qr-code-generator.html",
+      "url": "https://www.studiolimb.com/fr/qr-code-generator.html",
       "applicationCategory": "WebApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "qr code generator, custom qr code, qr code maker, qr logo"
     }
     </script>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
@@ -160,7 +168,7 @@
                         <div class="relative">
                             <span
                                 class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">link</span>
-                            <input type="text" id="textInput" value="https://studiolimb.com" placeholder="https://"
+                            <input type="text" id="textInput" value="https://www.studiolimb.com" placeholder="https://"
                                 class="w-full bg-[#0a0a0f] border border-white/10 rounded-xl pl-12 pr-4 py-4 text-sm font-bold text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all shadow-inner">
                         </div>
                     </div>
@@ -272,7 +280,7 @@
 
             // Using qrcode.js
             qrcode = new QRCode(container, {
-                text: textInput.value || "https://studiolimb.com",
+                text: textInput.value || "https://www.studiolimb.com",
                 width: size,
                 height: size,
                 colorDark: fgColor.value,
@@ -332,6 +340,7 @@
         });
     </script>
     <script src="../shared.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 
 </html>

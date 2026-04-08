@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
+    <meta name="twitter:card" content="summary" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum Premier — StudioLimb</title>
     <meta name="description" content="Generador premium de texto de prueba para diseñadores.">
@@ -317,7 +319,11 @@
             background: var(--text-muted);
         }
     </style>
-    <link rel="canonical" href="https://studiolimb.com/lorem-ipsum-generator.html">
+    <link rel="canonical" href="https://www.studiolimb.com/lorem-ipsum-generator.html">
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 </head>
 
 <body>
@@ -403,7 +409,7 @@
         </main>
 
         <footer class="footer">
-            Crafted for excellence by <a href="https://studiolimb.com">StudioLimb</a>.
+            Crafted for excellence by <a href="https://www.studiolimb.com">StudioLimb</a>.
         </footer>
     </div>
 
@@ -507,6 +513,7 @@
 
         generate();
     </script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 
 </html>

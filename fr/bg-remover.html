@@ -3,9 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Suppresseur de Fond IA | StudioLimb</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
     <!-- @imgly/background-removal for client-side AI processing -->
@@ -79,17 +83,17 @@
             }
         }
     </style>
-    <link rel="canonical" href="https://studiolimb.com/bg-remover.html">
+    <link rel="canonical" href="https://www.studiolimb.com/bg-remover.html">
     <meta name="description" content="Supprimez le fond des images automatiquement à l'aide de l'IA locale.">
-    <link rel="alternate" hreflang="x-default" href="https://studiolimb.com/bg-remover.html" />
-    <link rel="alternate" hreflang="en" href="https://studiolimb.com/bg-remover.html" />
-    <link rel="alternate" hreflang="es" href="https://studiolimb.com/es/bg-remover.html" />
-    <link rel="alternate" hreflang="fr" href="https://studiolimb.com/fr/bg-remover.html" />
-    <link rel="alternate" hreflang="hi" href="https://studiolimb.com/hi/bg-remover.html" />
-    <link rel="alternate" hreflang="pt-BR" href="https://studiolimb.com/pt/bg-remover.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.studiolimb.com/bg-remover.html" />
+    <link rel="alternate" hreflang="en" href="https://www.studiolimb.com/bg-remover.html" />
+    <link rel="alternate" hreflang="es" href="https://www.studiolimb.com/es/bg-remover.html" />
+    <link rel="alternate" hreflang="fr" href="https://www.studiolimb.com/fr/bg-remover.html" />
+    <link rel="alternate" hreflang="hi" href="https://www.studiolimb.com/hi/bg-remover.html" />
+    <link rel="alternate" hreflang="pt-BR" href="https://www.studiolimb.com/pt/bg-remover.html" />
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://studiolimb.com/fr/bg-remover.html" />
+    <meta property="og:url" content="https://www.studiolimb.com/fr/bg-remover.html" />
     <meta property="og:title" content="Background Remover — Remove Image Background Free Online" />
     <meta property="og:description" content="Remove image backgrounds instantly using on-device AI — no uploads, total privacy. Works offline in your browser." />
     <meta property="og:site_name" content="StudioLimb" />
@@ -105,13 +109,17 @@
       "@type": "SoftwareApplication",
       "name": "Background Remover",
       "description": "Remove image backgrounds instantly using on-device AI — no uploads, total privacy. Works offline in your browser.",
-      "url": "https://studiolimb.com/fr/bg-remover.html",
+      "url": "https://www.studiolimb.com/fr/bg-remover.html",
       "applicationCategory": "WebApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "background remover, remove background, image background, bg eraser"
     }
     </script>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased h-screen overflow-hidden flex flex-col">
@@ -363,6 +371,7 @@
 
     </script>
     <script src="../shared.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 
 </html>

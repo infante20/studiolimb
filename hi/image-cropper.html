@@ -3,9 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>StudioLimb | Photo Cropper Premier</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <!-- Cropper.js for robust image cropping -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
@@ -82,17 +86,17 @@
             background-color: rgba(5, 5, 8, 0.85);
         }
     </style>
-    <link rel="canonical" href="https://studiolimb.com/image-cropper.html">
+    <link rel="canonical" href="https://www.studiolimb.com/image-cropper.html">
     <meta name="description" content="छवियों को विशिष्ट अनुपात (16:9, 4:3, 1:1) या स्वतंत्र रूप से क्रॉप करें।">
-    <link rel="alternate" hreflang="x-default" href="https://studiolimb.com/image-cropper.html" />
-    <link rel="alternate" hreflang="en" href="https://studiolimb.com/image-cropper.html" />
-    <link rel="alternate" hreflang="es" href="https://studiolimb.com/es/image-cropper.html" />
-    <link rel="alternate" hreflang="fr" href="https://studiolimb.com/fr/image-cropper.html" />
-    <link rel="alternate" hreflang="hi" href="https://studiolimb.com/hi/image-cropper.html" />
-    <link rel="alternate" hreflang="pt-BR" href="https://studiolimb.com/pt/image-cropper.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.studiolimb.com/image-cropper.html" />
+    <link rel="alternate" hreflang="en" href="https://www.studiolimb.com/image-cropper.html" />
+    <link rel="alternate" hreflang="es" href="https://www.studiolimb.com/es/image-cropper.html" />
+    <link rel="alternate" hreflang="fr" href="https://www.studiolimb.com/fr/image-cropper.html" />
+    <link rel="alternate" hreflang="hi" href="https://www.studiolimb.com/hi/image-cropper.html" />
+    <link rel="alternate" hreflang="pt-BR" href="https://www.studiolimb.com/pt/image-cropper.html" />
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://studiolimb.com/hi/image-cropper.html" />
+    <meta property="og:url" content="https://www.studiolimb.com/hi/image-cropper.html" />
     <meta property="og:title" content="Image Cropper — Crop to Custom Dimensions & Aspect Ratios" />
     <meta property="og:description" content="Crop images to specific aspect ratios (16:9, 1:1, 4:3) or custom dimensions. Free, browser-based, no signup." />
     <meta property="og:site_name" content="StudioLimb" />
@@ -108,13 +112,17 @@
       "@type": "SoftwareApplication",
       "name": "Image Cropper",
       "description": "Crop images to specific aspect ratios (16:9, 1:1, 4:3) or custom dimensions. Free, browser-based, no signup.",
-      "url": "https://studiolimb.com/hi/image-cropper.html",
+      "url": "https://www.studiolimb.com/hi/image-cropper.html",
       "applicationCategory": "WebApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "image cropper, crop image online, aspect ratio crop, photo crop tool"
     }
     </script>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased h-screen overflow-hidden flex flex-col">
@@ -428,6 +436,7 @@
         });
     </script>
     <script src="../shared.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
 </body>
 
 </html>
