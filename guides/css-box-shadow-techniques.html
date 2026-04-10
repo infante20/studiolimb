@@ -175,6 +175,101 @@
 
             <h2>Transition Tip</h2>
             <p>Avoid animating <code>box-shadow</code> on scroll or hover for many elements simultaneously. Instead, animate <code>opacity</code> on a pseudo-element that has the target shadow — this is GPU-composited and far smoother.</p>
+            <pre><code class="language-css">/* Performant shadow hover animation */
+.card {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card:hover::after {
+  opacity: 1;
+}</code></pre>
+
+            <h2>Technique 6: Box Shadow as a Border (Zero-Blur Trick)</h2>
+            <p>Using <code>box-shadow</code> with zero blur and zero offset creates a border-like outline that doesn't affect layout (unlike <code>border</code>, which adds to the element's box model). This is useful for adding multiple "borders" or for creating focus rings without layout shift:</p>
+            <pre><code class="language-css">/* Doesn't affect layout, can be stacked */
+.multi-border {
+  box-shadow:
+    0 0 0 2px #7c5cfc,       /* inner ring */
+    0 0 0 5px rgba(124,92,252,0.2); /* outer glow ring */
+}
+
+/* Focus ring without layout shift */
+.btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #050508,    /* offset gap */
+    0 0 0 4px #7c5cfc;    /* visible ring */
+}</code></pre>
+
+            <h2>Building a Shadow Design Token System</h2>
+            <p>Professional design systems define shadows as named tokens, not one-off values. This ensures consistency across components and makes global updates trivial:</p>
+            <pre><code class="language-css">:root {
+  /* Elevation scale */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.15);
+  --shadow-md:  0 1px 2px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.15);
+  --shadow-lg:  0 2px 4px rgba(0,0,0,0.3), 0 16px 32px rgba(0,0,0,0.25), 0 40px 80px rgba(0,0,0,0.2);
+
+  /* Semantic shadows */
+  --shadow-card:   var(--shadow-sm);
+  --shadow-modal:  var(--shadow-lg);
+  --shadow-button: var(--shadow-xs);
+
+  /* Colored glows */
+  --shadow-primary-glow: 0 8px 24px rgba(124,92,252,0.4);
+  --shadow-danger-glow:  0 8px 24px rgba(239,68,68,0.4);
+}
+
+/* Usage */
+.card   { box-shadow: var(--shadow-card); }
+.modal  { box-shadow: var(--shadow-modal); }
+.btn-cta { box-shadow: var(--shadow-primary-glow); }</code></pre>
+
+            <h2>Common Box Shadow Mistakes</h2>
+
+            <h3>1. Single shadow on everything</h3>
+            <p>One shadow at one blur radius looks flat and generic — the same shadow Photoshop users have been applying since 2006. Use 2–3 layers at different blur radii. The extra two lines of CSS are always worth it.</p>
+
+            <h3>2. Black shadows on dark backgrounds</h3>
+            <p>Pure black shadows (<code>rgba(0,0,0,X)</code>) on dark backgrounds look muddy. Add a subtle hue that matches the surface color: a dark blue background should use dark blue-tinted shadows (<code>rgba(10,10,30,X)</code>).</p>
+
+            <h3>3. Spread radius making shadows too large</h3>
+            <p>A large positive spread pushes the shadow far beyond the element's edges, creating an ugly halo. Use spread at <code>0</code> or negative values for most cases. Reserve positive spread for intentional glow effects.</p>
+
+            <h3>4. Animating box-shadow directly</h3>
+            <p>Animating <code>box-shadow</code> forces the browser to repaint on every frame — expensive on complex pages. Use the pseudo-element opacity technique above for hover transitions instead.</p>
+
+            <h3>5. Forgetting dark mode</h3>
+            <p>Shadows that look great on white backgrounds are often invisible on dark backgrounds. Build your shadow tokens separately for light and dark modes, or use <code>@media (prefers-color-scheme: dark)</code> to swap them.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>What's the maximum number of box-shadow layers I should use?</h3>
+            <p>3 layers is almost always sufficient and covers all real-world needs. Beyond that, the visual difference is imperceptible to most users and the performance cost isn't worth it. Google's Material Design uses exactly 3 elevation layers for its shadow system.</p>
+
+            <h3>Can I use box-shadow on inline elements?</h3>
+            <p>Yes, but it behaves differently — it renders on each line box separately when text wraps. For inline text highlights, consider <code>background</code> with a padding hack instead, as it gives you more control over the shape.</p>
+
+            <h3>Is box-shadow or filter: drop-shadow() better for performance?</h3>
+            <p><code>box-shadow</code> is composited on the GPU in all modern browsers and is the better choice for most use cases. <code>filter: drop-shadow()</code> follows the element's alpha mask (useful for cutout PNGs), but it's repainted on the CPU and should not be used on animated elements.</p>
+
+            <h3>How do I create a bottom-only shadow?</h3>
+            <p>Use a negative spread radius to prevent the shadow from appearing on the sides: <code>box-shadow: 0 20px 30px -15px rgba(0,0,0,0.5)</code>. The <code>-15px</code> spread pulls the shadow inward, making it appear only at the bottom.</p>
 
         </article>
 

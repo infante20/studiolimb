@@ -124,17 +124,103 @@
             <h2>Step 7: Optimize SVGs</h2>
             <p>Raw SVG exported from design tools contains enormous amounts of unnecessary markup — editor metadata, redundant attributes, unnecessary precision. Run every SVG through StudioLimb's <a href="../svg-optimizer.html">SVG Optimizer</a> before deploying. Savings of 40–70% are common.</p>
 
+            <h2>Step 8: Preload Your Hero Image</h2>
+            <p>Your LCP element — usually the hero image — should be discovered and fetched as early as possible. Add a <code>&lt;link rel="preload"&gt;</code> in the <code>&lt;head&gt;</code> to tell the browser to start downloading it immediately, before it parses the HTML body:</p>
+            <pre><code class="language-html">&lt;!-- In &lt;head&gt;, before stylesheets --&gt;
+&lt;link
+  rel="preload"
+  as="image"
+  href="hero.webp"
+  imagesrcset="hero-400.webp 400w, hero-800.webp 800w, hero-1200.webp 1200w"
+  imagesizes="100vw"
+/&gt;</code></pre>
+            <p>This is one of the highest-leverage LCP improvements available. Without it, the browser discovers the hero image only after parsing the HTML, rendering CSS, and potentially executing JavaScript — adding hundreds of milliseconds to LCP.</p>
+
+            <h2>Step 9: Responsive Images with srcset and sizes</h2>
+            <p>Serving a 1200px wide image to a phone with a 390px screen wastes bandwidth and slows loading. The <code>srcset</code> and <code>sizes</code> attributes tell the browser which image to download based on screen width:</p>
+            <pre><code class="language-html">&lt;img
+  src="photo-800.webp"
+  srcset="
+    photo-400.webp  400w,
+    photo-800.webp  800w,
+    photo-1200.webp 1200w,
+    photo-1600.webp 1600w
+  "
+  sizes="
+    (max-width: 640px)  100vw,
+    (max-width: 1024px) 80vw,
+    1200px
+  "
+  alt="Team photo"
+  width="1200"
+  height="630"
+  loading="lazy"
+/&gt;</code></pre>
+            <p><strong>How to read <code>sizes</code>:</strong> The browser reads left to right and stops at the first matching condition. On screens under 640px, the image fills 100% of the viewport width, so the browser picks an appropriately sized source from <code>srcset</code>. On screens under 1024px, it fills 80vw. Otherwise, it's a fixed 1200px. This dramatically reduces the image size downloaded on mobile devices.</p>
+
+            <h2>Real-World File Size Comparison</h2>
+            <p>To illustrate the impact of format choice and compression, here's a real comparison of the same 1200×800px photograph across formats:</p>
+
+            <table>
+                <thead><tr><th>Format</th><th>Quality</th><th>File Size</th><th>vs. JPG</th></tr></thead>
+                <tbody>
+                    <tr><td>JPG</td><td>85%</td><td>~320 KB</td><td>baseline</td></tr>
+                    <tr><td>JPG</td><td>75%</td><td>~190 KB</td><td>−41%</td></tr>
+                    <tr><td>WebP</td><td>85%</td><td>~200 KB</td><td>−37%</td></tr>
+                    <tr><td>WebP</td><td>75%</td><td>~130 KB</td><td>−59%</td></tr>
+                    <tr><td>AVIF</td><td>75%</td><td>~95 KB</td><td>−70%</td></tr>
+                    <tr><td>WebP lossless</td><td>—</td><td>~480 KB</td><td>+50%</td></tr>
+                    <tr><td>PNG</td><td>—</td><td>~650 KB</td><td>+103%</td></tr>
+                </tbody>
+            </table>
+            <p>The takeaway: WebP at 75–80% quality is the safe default. AVIF offers dramatic savings but requires the <code>&lt;picture&gt;</code> element for fallback support.</p>
+
+            <h2>Common Image Optimization Mistakes</h2>
+
+            <h3>1. Lazy-loading the hero/LCP image</h3>
+            <p>This is the single most damaging mistake for Core Web Vitals. Adding <code>loading="lazy"</code> to your above-the-fold hero image delays its download until after the page renders — the opposite of what you want. Never lazy-load images that appear in the initial viewport.</p>
+
+            <h3>2. Serving retina images to everyone</h3>
+            <p>A 2× retina image is 4× the pixels (and roughly 2–3× the file size) of a standard image. Always use <code>srcset</code> to serve 2× images only to devices that need them. Phones with 1× displays (still common globally) get the smaller version.</p>
+
+            <h3>3. Not setting width and height on images</h3>
+            <p>Without explicit dimensions, the browser doesn't know how much space to reserve before the image loads. As the image downloads, the page jumps — causing Cumulative Layout Shift (CLS), which tanks your Core Web Vitals score and frustrates users mid-read.</p>
+
+            <h3>4. Using PNG for photographs</h3>
+            <p>A photograph saved as PNG is typically 3–5× larger than the same image in WebP or JPEG. PNG's lossless compression provides zero visible quality benefit for photographic content — the format simply wasn't designed for it.</p>
+
+            <h3>5. Forgetting to optimize SVGs</h3>
+            <p>SVG exported from Figma, Illustrator, or Sketch contains enormous metadata, unnecessary decimal precision, and editor-specific markup. An "optimized" SVG icon from a raw export might be 12KB; after running through StudioLimb's <a href="../svg-optimizer.html">SVG Optimizer</a>, the same icon is often 2–4KB.</p>
+
+            <h3>6. Not testing on slow connections</h3>
+            <p>Optimize with throttling enabled in DevTools (Network tab → Slow 3G or Fast 3G). What looks fast on your fiber connection may be a 10-second wait on a mobile network. Your image choices look very different when you actually simulate what most users experience.</p>
+
             <h2>Quick Checklist</h2>
             <ul>
-                <li>Convert all photographs to WebP (or AVIF)</li>
+                <li>Convert all photographs to WebP (or AVIF via <code>&lt;picture&gt;</code>)</li>
                 <li>Compress to 75–85% quality</li>
-                <li>Resize to 2× display dimensions</li>
+                <li>Resize to 2× display dimensions (use <code>srcset</code> to serve smaller versions to smaller screens)</li>
                 <li>Add <code>loading="lazy"</code> to below-fold images</li>
-                <li>Add explicit <code>width</code> and <code>height</code> attributes</li>
-                <li>Never lazy-load hero images</li>
-                <li>Use SVG for icons and logos — run through an optimizer</li>
-                <li>Use <code>&lt;picture&gt;</code> for AVIF/WebP with fallbacks</li>
+                <li>Add explicit <code>width</code> and <code>height</code> attributes to prevent CLS</li>
+                <li>Never lazy-load hero images — preload them instead</li>
+                <li>Use SVG for icons and logos — run through an optimizer before deploying</li>
+                <li>Use <code>&lt;picture&gt;</code> for AVIF/WebP with JPG fallback</li>
+                <li>Test with DevTools throttling on Slow 3G</li>
             </ul>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>What's a good target file size for web images?</h3>
+            <p>A good rule of thumb: hero images under 150KB, content images under 80KB, thumbnails under 30KB. These aren't hard rules — a 200KB hero is fine if it's properly lazy-loaded and isn't your LCP element. The real target is LCP under 2.5 seconds in Google's Core Web Vitals measurement.</p>
+
+            <h3>Should I use an image CDN?</h3>
+            <p>For high-traffic sites, yes. CDNs like Cloudflare Images, Imgix, or Cloudinary can automatically serve WebP/AVIF, resize on-the-fly, and cache images at edge nodes globally. For low-traffic sites or static sites, manual optimization with StudioLimb's tools is sufficient and has no monthly cost.</p>
+
+            <h3>Does image optimization affect SEO?</h3>
+            <p>Directly, yes. Google uses LCP (usually the hero image) as a Core Web Vital ranking signal. A faster LCP means better rankings. Google also reads <code>alt</code> attributes for indexing — always write descriptive, specific alt text rather than leaving it empty or using file names.</p>
+
+            <h3>How often should I re-optimize images?</h3>
+            <p>Any time you update images or add new ones. If you're using a static site, make optimization part of your deployment checklist. If you're using a CMS, set up an automatic compression pipeline at upload time so you never have to think about it manually.</p>
 
         </article>
 

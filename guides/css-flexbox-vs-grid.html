@@ -151,6 +151,109 @@ footer  { grid-column: 1 / -1; }</code></pre>
             <h2>The Honest Answer</h2>
             <p>In practice, experienced developers reach for Flexbox first because it's slightly simpler for most component-level work. When you catch yourself fighting Flexbox to control things on two axes — that's your signal to switch to Grid. Trust the friction.</p>
 
+            <h2>Flexbox Deep Dive: flex-grow, flex-shrink, flex-basis</h2>
+            <p>The shorthand <code>flex: 1</code> is everywhere, but few developers understand exactly what it sets. It's shorthand for <code>flex-grow: 1; flex-shrink: 1; flex-basis: 0%</code>. Here's what each part actually does:</p>
+
+            <h3>flex-grow</h3>
+            <p>Determines how much of the <em>remaining free space</em> an item claims. If two items have <code>flex-grow: 1</code> and <code>flex-grow: 2</code> respectively, the second one grows twice as much as the first. If all items have <code>flex-grow: 0</code> (the default), no item grows.</p>
+            <pre><code class="language-css">/* Sidebar + main content layout */
+.sidebar { flex: 0 0 260px; }   /* Don't grow, don't shrink, stay 260px */
+.main    { flex: 1; }           /* Claim all remaining space */</code></pre>
+
+            <h3>flex-shrink</h3>
+            <p>Controls how items shrink when the container is too small. Default is 1 (items shrink proportionally). Set to 0 to prevent an item from ever shrinking below its <code>flex-basis</code>:</p>
+            <pre><code class="language-css">/* Icon in a button that should never shrink */
+.btn-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}</code></pre>
+
+            <h3>flex-basis</h3>
+            <p>The ideal starting size of an item before free space is distributed. The difference between <code>flex-basis: 0%</code> and <code>flex-basis: auto</code> is subtle but important:</p>
+            <ul>
+                <li><code>flex-basis: 0%</code> — ignores the item's content size; distributes all space proportionally via flex-grow</li>
+                <li><code>flex-basis: auto</code> — uses the item's content size as the starting point before distributing remaining space</li>
+            </ul>
+            <p>Use <code>flex: 1</code> (basis 0%) when you want all items to be exactly equal width. Use <code>flex: 1 1 auto</code> when you want items to start at their natural size and grow/shrink from there.</p>
+
+            <h2>Grid Deep Dive: auto-fill vs auto-fit</h2>
+            <p>Both create responsive grids without media queries, but they behave differently when there are fewer items than columns:</p>
+            <pre><code class="language-css">/* auto-fill: creates empty column tracks to fill the row */
+.grid-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* auto-fit: collapses empty tracks, items stretch to fill */
+.grid-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}</code></pre>
+            <p>If you have 2 items in a 4-column row: <code>auto-fill</code> leaves 2 empty columns (items stay at 200px wide); <code>auto-fit</code> collapses the empty columns and stretches the 2 items to fill the full width. For card grids, <code>auto-fill</code> is usually preferred — items maintain consistent widths.</p>
+
+            <h2>Grid Template Areas: The Readable Layout Approach</h2>
+            <p>Named grid areas let you define your layout visually in code. This is one of Grid's most underused and most powerful features:</p>
+            <pre><code class="language-css">.page {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 64px 1fr 48px;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  min-height: 100vh;
+}
+
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+.footer  { grid-area: footer; }
+
+/* Responsive: stack on mobile */
+@media (max-width: 768px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "sidebar"
+      "footer";
+  }
+}</code></pre>
+            <p>The <code>grid-template-areas</code> string is a visual representation of your layout — you can literally see the structure in the CSS.</p>
+
+            <h2>Common Flexbox and Grid Mistakes</h2>
+
+            <h3>1. Using Flexbox for a card gallery</h3>
+            <p>Flex items wrap onto new lines but don't align to a grid — each row is independent. The result is cards with inconsistent widths on the last row. Use <code>grid</code> with <code>auto-fill</code> / <code>auto-fit</code> for any gallery or card grid.</p>
+
+            <h3>2. Not setting explicit width on flex children</h3>
+            <p>Flex items shrink to fit by default. If a child contains long text, it may shrink unexpectedly. Use <code>min-width: 0</code> on flex children containing text to allow them to shrink below their content size and use <code>overflow: hidden; text-overflow: ellipsis</code> properly.</p>
+
+            <h3>3. Nesting grids unnecessarily</h3>
+            <p>Developers sometimes put a grid inside a grid to handle component-level alignment. In most cases, Flexbox inside a Grid cell is the cleaner approach — use Grid for the macro layout, Flexbox for the component internals.</p>
+
+            <h3>4. Forgetting that <code>gap</code> works on both</h3>
+            <p>Since 2021, <code>gap</code> works on Flexbox containers too (previously it was Grid-only). No more <code>margin</code> hacks on flex children to create spacing.</p>
+
+            <h3>5. Using <code>align-items</code> vs <code>align-content</code> wrong</h3>
+            <p><code>align-items</code> aligns items within their row. <code>align-content</code> aligns the rows themselves within the container. If your container doesn't have a defined height or only has one row, <code>align-content</code> has no visible effect.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>Can I use Flexbox and Grid together?</h3>
+            <p>Absolutely — and you should. The most common pattern is Grid for the outer page structure, Flexbox for component internals. A grid cell can itself be a flex container. There is no performance penalty for nesting them.</p>
+
+            <h3>Is Grid harder to learn than Flexbox?</h3>
+            <p>Grid has more properties and a steeper initial learning curve, but once you internalize the two-dimensional mental model it becomes intuitive. Start with <code>grid-template-columns</code>, <code>gap</code>, and <code>auto-fill/minmax</code> — those three get you 80% of the way there.</p>
+
+            <h3>When should I use neither and just use normal block flow?</h3>
+            <p>For single-column text content — articles, blog posts, documentation — normal block flow (the default) is often the right choice. Not every layout needs Flexbox or Grid. Reaching for a layout primitive when block flow works adds complexity without benefit.</p>
+
+            <h3>Does CSS Grid replace Bootstrap's grid system?</h3>
+            <p>Yes, for new projects. Native CSS Grid is more powerful, requires no classes or framework, and doesn't carry any JavaScript weight. Bootstrap's grid made sense before native Grid had broad browser support; that era is over.</p>
+
         </article>
 
         <!-- CTA Tools -->

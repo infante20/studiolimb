@@ -129,6 +129,94 @@
             <h2>Don't Rely on Color Alone</h2>
             <p>WCAG also requires that information is never conveyed by color alone. Form error states must include an icon or text label, not just a red border. Chart legends must use patterns or labels, not just different colors.</p>
 
+            <h2>Dark Mode Contrast Challenges</h2>
+            <p>Dark mode introduces a specific set of contrast problems that light mode designs often don't face:</p>
+
+            <h3>Pure white on dark backgrounds is too harsh</h3>
+            <p>While <code>#ffffff</code> on <code>#121212</code> has a contrast ratio of 18.1:1 (well above AAA), it creates eye strain in dark environments. Most design systems use <code>#e2e8f0</code> or similar off-white that still passes AA (15:1+) while being much easier on the eyes.</p>
+
+            <h3>Saturated colors need different treatment</h3>
+            <p>A bright blue link (<code>#2563eb</code>) that passes AA on white (5.7:1) may fail on dark backgrounds. On dark navy (<code>#0f172a</code>), the same blue is only 3.2:1 — failing AA for normal text. Always re-check your color palette in both modes.</p>
+
+            <h3>Dark mode testing workflow</h3>
+            <pre><code class="language-css">/* Test your text colors in both modes */
+@media (prefers-color-scheme: light) {
+  --text-primary: #1e293b;    /* Must pass on your light bg */
+  --text-secondary: #64748b;  /* Must pass on your light bg */
+  --link-color: #2563eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  --text-primary: #e2e8f0;    /* Must pass on your dark bg */
+  --text-secondary: #94a3b8;  /* Must pass on your dark bg */
+  --link-color: #60a5fa;      /* Lighter blue for dark mode */
+}</code></pre>
+            <p>Use StudioLimb's <a href="../contrast-checker.html">Contrast Checker</a> to verify each color pair in both modes before shipping.</p>
+
+            <h2>Focus Indicator Contrast</h2>
+            <p>WCAG 2.2 (released 2023) introduced stricter requirements for focus indicators — the outlines shown when users navigate with a keyboard. Focus indicators must now meet a <strong>3:1 contrast ratio</strong> against both the adjacent colors and the focused element's background.</p>
+            <p>The most common failure: browsers' default blue focus ring (<code>outline: 2px solid -webkit-focus-ring-color</code>) fails on dark or blue backgrounds. Always define custom focus styles:</p>
+            <pre><code class="language-css">/* Custom focus styles that meet WCAG 2.2 */
+:focus-visible {
+  outline: 2px solid #7c5cfc;     /* your brand color */
+  outline-offset: 3px;            /* gap between element and ring */
+  border-radius: 4px;
+}
+
+/* On dark backgrounds, use a contrasting color */
+.dark-surface :focus-visible {
+  outline-color: #a78bfa;
+}</code></pre>
+            <p>The key rule: your focus ring color must have 3:1 contrast against the background it sits on, <em>and</em> 3:1 contrast against the element it wraps.</p>
+
+            <h2>Automated Accessibility Testing</h2>
+            <p>Manual color checking covers individual components, but automated tools find issues across the whole page simultaneously:</p>
+
+            <h3>Lighthouse (built into Chrome DevTools)</h3>
+            <p>Open DevTools → Lighthouse → check "Accessibility" → run audit. Lighthouse flags contrast failures across all visible text on the page and assigns an accessibility score. It's the fastest way to catch obvious issues.</p>
+
+            <h3>axe DevTools (browser extension)</h3>
+            <p>More thorough than Lighthouse for accessibility specifically. The free version finds the most critical issues; the paid version can test interactive states (hover, focus) that Lighthouse misses.</p>
+
+            <h3>What automated tools miss</h3>
+            <p>Automated tools cannot test: text over images or gradients (the contrast depends on which pixel of the background is behind which pixel of text), dynamic content, or elements that are visually hidden but accessible to screen readers. Manual review remains essential for complex UIs.</p>
+
+            <h2>Brand Color Compliance: Practical Strategies</h2>
+            <p>Most brand color palettes include at least one color that fails WCAG AA as a text color on white. Here's how to handle this without abandoning your brand identity:</p>
+
+            <h3>Strategy: Use brand color as background, not text</h3>
+            <p>If your brand blue (<code>#1d4ed8</code>) fails as body text on white, flip it — use it as a background and put white text on it. White on <code>#1d4ed8</code> is 7.2:1 (AAA). Your brand color appears prominently without the contrast violation.</p>
+
+            <h3>Strategy: Create a dark and light variant</h3>
+            <p>For each brand color, define a darkened variant for text on light backgrounds and a lightened variant for text on dark backgrounds:</p>
+            <pre><code class="language-css">:root {
+  --brand-primary: #7c5cfc;        /* Base — use as background only */
+  --brand-on-light: #5b3fcc;       /* Darkened — text on white bg, passes AA */
+  --brand-on-dark:  #a78bfa;       /* Lightened — text on dark bg, passes AA */
+}
+
+/* Usage */
+.tag        { background: var(--brand-primary); color: white; }
+.link       { color: var(--brand-on-light); }
+.dark .link { color: var(--brand-on-dark); }</code></pre>
+
+            <h3>Strategy: Use brand colors for large text and decorative elements only</h3>
+            <p>Large text (18pt+ / 14pt+ bold) has a lower requirement of 3:1 instead of 4.5:1. If your brand color fails for body text, it may pass for headings. Use it where the threshold is lower — never as small body text on white.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>What contrast ratio do I actually need to meet?</h3>
+            <p>For most commercial websites, Level AA is the target — 4.5:1 for normal text, 3:1 for large text and UI components. Level AAA (7:1 for normal text) is a stretch goal and isn't required by most legal standards. Focus on AA compliance first; AAA is an enhancement, not a baseline.</p>
+
+            <h3>Does contrast matter for decorative images?</h3>
+            <p>No. WCAG contrast requirements apply to text and informational UI components (buttons, form controls, icons that convey meaning). Purely decorative images — backgrounds, illustrations that don't carry information — are exempt.</p>
+
+            <h3>What about color contrast on gradients?</h3>
+            <p>Text over a gradient is tricky because the contrast changes across the gradient. The safest approach: measure contrast against the lightest color in the gradient range. If the text passes against the lightest background it will encounter, it's safe everywhere. Alternatively, add a subtle text-shadow or scrim to lock the effective background color.</p>
+
+            <h3>Is there a legal requirement to meet WCAG?</h3>
+            <p>In many jurisdictions, yes — particularly for public sector organizations, businesses in the EU under the European Accessibility Act (EAA, effective 2025), and any US business serving the public under the ADA. Courts have increasingly ruled that WCAG AA is the implicit accessibility standard for websites. Beyond legal compliance, accessible contrast simply makes your product usable by more people.</p>
+
         </article>
 
         <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">

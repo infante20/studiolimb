@@ -140,6 +140,97 @@
                 <li><strong>Nothing else applies?</strong> → WebP.</li>
             </ol>
 
+            <h2>Real File Size Comparison</h2>
+            <p>Numbers tell the story better than any description. Here's the same 1200×800px photograph compressed across formats (values are approximate averages across a range of images):</p>
+
+            <table>
+                <thead><tr><th>Format</th><th>Quality</th><th>File Size</th><th>Savings vs JPG 85%</th></tr></thead>
+                <tbody>
+                    <tr><td>JPG</td><td>85%</td><td>~310 KB</td><td>—</td></tr>
+                    <tr><td>JPG</td><td>75%</td><td>~185 KB</td><td>−40%</td></tr>
+                    <tr><td>WebP</td><td>85%</td><td>~195 KB</td><td>−37%</td></tr>
+                    <tr><td>WebP</td><td>75%</td><td>~125 KB</td><td>−60%</td></tr>
+                    <tr><td>AVIF</td><td>75%</td><td>~90 KB</td><td>−71%</td></tr>
+                    <tr><td>PNG (lossless)</td><td>—</td><td>~640 KB</td><td>+106%</td></tr>
+                    <tr><td>SVG (same image)</td><td>N/A</td><td>Not applicable</td><td>—</td></tr>
+                </tbody>
+            </table>
+            <p>The jump from JPG to WebP at equivalent quality is consistently 25–40%. The jump to AVIF is another 30–40% on top of that. For a site with 50 images, switching from JPG to WebP alone could save 3–5MB of bandwidth per page load.</p>
+
+            <h2>GIF vs WebP Animation: Stop Using GIF</h2>
+            <p>GIF was the dominant format for simple animations before WebP and AVIF existed. In 2026, there is no valid reason to use GIF for new web content:</p>
+            <ul>
+                <li>GIF is limited to 256 colors — WebP and AVIF support full 24-bit color</li>
+                <li>GIF uses a lossless compression algorithm designed in 1987 — WebP animated files are typically 40–80% smaller</li>
+                <li>GIF has no alpha transparency — only 1-bit on/off transparency</li>
+                <li>All major browsers have supported animated WebP since 2020</li>
+            </ul>
+            <p>The only exception: some third-party tools or platforms still require GIF input (older email clients, certain CMS editors). In those cases, accept the file size penalty rather than fighting the tool.</p>
+
+            <h2>Favicon Formats in 2026</h2>
+            <p>Favicons have their own format requirements distinct from regular images. The modern recommendation:</p>
+            <pre><code class="language-html">&lt;!-- Modern browsers: SVG favicon (scales perfectly, small) --&gt;
+&lt;link rel="icon" type="image/svg+xml" href="/favicon.svg"&gt;
+
+&lt;!-- Fallback for older browsers: ICO (contains 16x16 and 32x32) --&gt;
+&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;
+
+&lt;!-- Apple touch icon for iOS home screen --&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"&gt;
+
+&lt;!-- PWA manifest icons --&gt;
+&lt;link rel="manifest" href="/manifest.json"&gt;</code></pre>
+            <p>An SVG favicon adapts automatically to dark mode (you can embed a <code>@media (prefers-color-scheme: dark)</code> inside the SVG itself), scales to any size on retina displays, and is typically under 1KB.</p>
+
+            <h2>How to Convert Between Formats</h2>
+            <p>The fastest way to convert images in your browser — without installing software or uploading to a third-party server:</p>
+            <ul>
+                <li><strong>PNG/JPG → WebP:</strong> Use StudioLimb's <a href="../image-format-converter.html">Image Format Converter</a> — drag, drop, download.</li>
+                <li><strong>Any format → compressed:</strong> Use the <a href="../image-compressor.html">Image Compressor</a> to control quality level and output size.</li>
+                <li><strong>SVG cleanup:</strong> Run through the <a href="../svg-optimizer.html">SVG Optimizer</a> to strip unnecessary markup and reduce file size 40–70%.</li>
+            </ul>
+            <p>All tools process locally in your browser — your files never leave your device.</p>
+
+            <h2>SVG Inline vs img vs CSS background</h2>
+            <p>There are three ways to use SVG in HTML, each with different tradeoffs:</p>
+            <table>
+                <thead><tr><th>Method</th><th>CSS styleable?</th><th>Cacheable?</th><th>Accessible?</th><th>Best for</th></tr></thead>
+                <tbody>
+                    <tr><td><code>&lt;img src="icon.svg"&gt;</code></td><td>No</td><td>Yes</td><td>With alt text</td><td>Static icons, logos</td></tr>
+                    <tr><td>Inline <code>&lt;svg&gt;</code></td><td>Yes (full)</td><td>No</td><td>Yes (with ARIA)</td><td>Animated/themed icons</td></tr>
+                    <tr><td>CSS <code>background-image</code></td><td>No</td><td>Yes</td><td>No (decorative only)</td><td>Decorative backgrounds, patterns</td></tr>
+                </tbody>
+            </table>
+            <p>For icons that need color theming with CSS <code>currentColor</code>, inline SVG is the only option. For logos used as static images, <code>&lt;img&gt;</code> is simpler and allows browser caching.</p>
+
+            <h2>Common Format Mistakes</h2>
+
+            <h3>1. Using PNG for product photos</h3>
+            <p>This is extremely common in e-commerce. A PNG product photo can easily be 2–5MB. The same photo in WebP at 80% quality is typically under 300KB with no perceptible quality difference at display resolution.</p>
+
+            <h3>2. Serving full-size images in thumbnails</h3>
+            <p>A 3000×2000px image served in a 150×150px thumbnail forces the browser to download 400× more pixels than necessary. Always generate and serve appropriately sized versions.</p>
+
+            <h3>3. Not serving AVIF because of fallback complexity</h3>
+            <p>The <code>&lt;picture&gt;</code> element makes AVIF + WebP + JPG fallback trivial — it's 3 extra lines of HTML. The 30–70% file size saving is worth the 5 minutes of implementation.</p>
+
+            <h3>4. Optimizing SVG manually</h3>
+            <p>Hand-editing SVG to remove unnecessary markup is tedious and error-prone. Automated optimizers like SVGO (what StudioLimb's SVG Optimizer uses) are thorough and consistent. Always use a tool.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>Should I still support JPG fallbacks in 2026?</h3>
+            <p>Only if your analytics show significant traffic from browsers that don't support WebP (effectively IE11 and very old Android WebViews — both under 3% global usage). For most new projects, WebP as the primary format with a JPG fallback in <code>&lt;picture&gt;</code> is sufficient due diligence.</p>
+
+            <h3>Can I use WebP for Open Graph and social media images?</h3>
+            <p>No — Twitter, Facebook, LinkedIn, and other platforms still require JPG or PNG for OG images. Use WebP for your web content, but keep JPG or PNG versions for social sharing metadata (<code>og:image</code>).</p>
+
+            <h3>Is SVG safe to use directly from user uploads?</h3>
+            <p>No. SVG can contain embedded JavaScript and are a significant XSS attack vector if you display user-uploaded SVG directly on a page. Always sanitize SVG content server-side before rendering, or restrict display to <code>&lt;img&gt;</code> tags which sandbox the SVG's script execution.</p>
+
+            <h3>What image format should I use for screenshots with text?</h3>
+            <p>PNG (or WebP lossless). JPEG/WebP lossy compression creates visible artifacts around high-contrast edges like text, which looks blurry or blocky. For screenshots, lossless compression preserves the sharp text edges exactly.</p>
+
         </article>
 
         <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">

@@ -170,6 +170,123 @@ background: rgba(0, 0, 0, 0.25);</code></pre>
   }
 }</code></pre>
 
+            <h2>Real-World Glassmorphism Components</h2>
+            <p>Knowing the properties is one thing — knowing how to apply them to actual UI components is another. Here are the three most common implementations.</p>
+
+            <h3>Glassmorphism Navigation Bar</h3>
+            <p>A sticky nav that stays readable as users scroll over rich content:</p>
+            <pre><code class="language-css">.glass-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(5, 5, 8, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}</code></pre>
+            <p>The dark background tint (<code>rgba(5,5,8,0.6)</code>) ensures text in the nav remains legible regardless of what content scrolls behind it.</p>
+
+            <h3>Glassmorphism Login Card</h3>
+            <p>A centered auth form that floats over a gradient background:</p>
+            <pre><code class="language-css">.glass-login {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}</code></pre>
+            <p>The <code>inset</code> box-shadow on the top edge simulates the light catching the glass rim — a subtle touch that elevates the realism significantly.</p>
+
+            <h3>Glassmorphism Modal / Dialog</h3>
+            <pre><code class="language-css">.glass-modal {
+  background: rgba(15, 15, 25, 0.75);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  max-width: 560px;
+  width: calc(100% - 2rem);
+}
+
+/* Scrim / backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}</code></pre>
+
+            <h2>Glassmorphism with CSS Variables (Design Token System)</h2>
+            <p>When you use glassmorphism across multiple components, inconsistency becomes a problem. Define your glass values as CSS custom properties so every component stays in sync:</p>
+            <pre><code class="language-css">:root {
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-bg-dark: rgba(15, 15, 25, 0.65);
+  --glass-blur: 20px;
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --glass-radius: 16px;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Dark variant */
+.glass-dark {
+  background: var(--glass-bg-dark);
+}</code></pre>
+
+            <h2>Common Glassmorphism Mistakes</h2>
+
+            <h3>1. Using it on a solid background</h3>
+            <p>This is the most common mistake. On a flat solid color, <code>backdrop-filter: blur()</code> has zero visible effect — the "glass" just looks like a semi-transparent rectangle. Always ensure there's visual complexity behind your glass element.</p>
+
+            <h3>2. Blur value too high</h3>
+            <p>Values above 30px start to look smeared rather than frosted. 12px–24px is the sweet spot. Beyond that, you lose the sense of seeing "through" the material.</p>
+
+            <h3>3. Skipping the border</h3>
+            <p>The border is what sells the illusion of a physical glass edge. Without it, a glass card looks flat and undefined. Even <code>1px solid rgba(255,255,255,0.15)</code> makes a massive difference.</p>
+
+            <h3>4. Forgetting <code>-webkit-backdrop-filter</code></h3>
+            <p>Safari still requires the <code>-webkit-</code> prefix. Without it, Safari users see no blur effect at all — a significant portion of mobile and desktop users.</p>
+
+            <h3>5. Overusing it on every element</h3>
+            <p>Glassmorphism works through contrast with solid surroundings. If every element on the page is glass, nothing feels like glass — it just looks blurry and confusing. Reserve it for 1–3 key UI elements per view.</p>
+
+            <h3>6. Ignoring accessibility</h3>
+            <p>Semi-transparent backgrounds change the effective contrast of text layered on top of varying content. Always test text contrast against both the lightest and darkest backgrounds that could appear behind the glass element. Use the <a href="../contrast-checker.html">Contrast Checker</a> to verify your values pass WCAG AA.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>Does glassmorphism hurt performance?</h3>
+            <p>On modern devices (2020+), a single glass element is imperceptible in terms of performance. Problems arise when you apply <code>backdrop-filter</code> to many simultaneous elements, or animate it on every frame. Use it intentionally — not as a universal style for every card on the page.</p>
+
+            <h3>Can I use glassmorphism without a gradient background?</h3>
+            <p>Yes, but you need <em>some</em> visual complexity behind it. A photograph, a pattern, blurred blob shapes, or even another busy UI element will all work. The key is that there must be something interesting for the blur to reveal.</p>
+
+            <h3>How do I create glassmorphism blobs / shapes behind the card?</h3>
+            <p>Use absolutely-positioned <code>div</code> elements with <code>border-radius: 50%</code>, vivid background colors, and heavy blur via <code>filter: blur(80px)</code>. Place them inside the container behind the glass element using <code>z-index</code>. The <a href="../glassmorphism-generator.html">Glassmorphism Generator</a> generates these automatically.</p>
+
+            <h3>Is glassmorphism still trendy in 2026?</h3>
+            <p>It's moved from trend to technique. Like flat design or material design before it, glassmorphism has been absorbed into the vocabulary of modern UI — used selectively for overlays, navbars, cards, and modals in dark-themed interfaces, rather than applied wholesale to entire layouts.</p>
+
         </article>
 
         <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
