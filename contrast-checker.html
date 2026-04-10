@@ -92,8 +92,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 canvas-container"></div>
 
@@ -399,6 +399,46 @@
 
         update();
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">WCAG Color Contrast Checker — AA &amp; AAA Compliance</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Check the contrast ratio between any text and background color pair. Instant WCAG 2.1 AA and AAA compliance results for normal text, large text, and UI components.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Enter your text color as a hex code</li>
+                        <li>Enter your background color as a hex code</li>
+                        <li>See the contrast ratio and WCAG pass/fail results</li>
+                        <li>Adjust colors until you reach compliance</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> WCAG Requirements</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li><strong class="text-white">4.5:1</strong> — normal text (AA minimum)</li>
+                        <li><strong class="text-white">3:1</strong> — large text &amp; UI components (AA)</li>
+                        <li><strong class="text-white">7:1</strong> — normal text (AAA enhanced)</li>
+                        <li><strong class="text-white">4.5:1</strong> — large text (AAA enhanced)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Common Fixes</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Darken the text color — most effective fix</li>
+                        <li>Add a subtle tint to the background</li>
+                        <li>Increase font size or weight (lower threshold)</li>
+                        <li>Avoid <code class="text-violet-300 text-xs">#999</code> or lighter on white backgrounds</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="color-palette-generator.html" class="text-slate-500 hover:text-primary transition-colors">Color Palette Generator</a> · <a href="guides/wcag-color-contrast-guide.html" class="text-slate-500 hover:text-primary transition-colors">WCAG Contrast Guide</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

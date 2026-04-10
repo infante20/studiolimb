@@ -162,8 +162,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 bg-[#050508]" id="mainBgPreview"></div>
 
@@ -495,6 +495,47 @@
             });
         }
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">CSS Gradient Generator — Linear, Radial &amp; Conic Gradients</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Create beautiful CSS gradients visually and copy production-ready code. Supports linear, radial, and conic gradients with unlimited color stops.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Choose gradient type (linear, radial, conic)</li>
+                        <li>Add and position color stops on the slider</li>
+                        <li>Adjust angle or position for direction</li>
+                        <li>Copy the generated CSS</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Best Use Cases</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Hero section backgrounds</li>
+                        <li>Button and CTA hover states</li>
+                        <li>Card and panel backgrounds</li>
+                        <li>Gradient text effects</li>
+                        <li>Backgrounds behind glassmorphism elements</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Limit to 2–3 color stops for clean results</li>
+                        <li>Slightly saturated midpoints prevent dull gray transitions</li>
+                        <li>Use <code class="text-violet-300 text-xs">oklch</code> for perceptually uniform gradients</li>
+                        <li>135° diagonal gradients feel more dynamic than 90°</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="glassmorphism-generator.html" class="text-slate-500 hover:text-primary transition-colors">Glassmorphism Generator</a> · <a href="color-palette-generator.html" class="text-slate-500 hover:text-primary transition-colors">Color Palette Generator</a> · <a href="box-shadow-generator.html" class="text-slate-500 hover:text-primary transition-colors">Box Shadow Generator</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

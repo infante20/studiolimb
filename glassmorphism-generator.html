@@ -166,8 +166,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 bg-[#050508]"></div>
 
@@ -363,6 +363,47 @@
         // Init
         update();
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">Glassmorphism CSS Generator — Frosted Glass UI Effects</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Generate glassmorphism CSS with live preview. Adjust blur, transparency, border, and background color to create the perfect frosted glass card, navbar, or modal.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Adjust the blur radius (12–24px is ideal)</li>
+                        <li>Set background transparency and color</li>
+                        <li>Fine-tune the border opacity</li>
+                        <li>Copy the generated CSS code</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Best Use Cases</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Sticky navigation bars over hero images</li>
+                        <li>Login and sign-up cards</li>
+                        <li>Modal dialogs and overlays</li>
+                        <li>Dashboard widget panels</li>
+                        <li>Pricing and feature cards</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Requires a colorful background to show the blur effect</li>
+                        <li>Always include <code class="text-violet-300 text-xs">-webkit-backdrop-filter</code> for Safari</li>
+                        <li>The border is what makes it look like real glass — don't skip it</li>
+                        <li>Don't apply to more than 2–3 elements per view</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="gradient-generator.html" class="text-slate-500 hover:text-primary transition-colors">Gradient Generator</a> · <a href="box-shadow-generator.html" class="text-slate-500 hover:text-primary transition-colors">Box Shadow Generator</a> · <a href="guides/glassmorphism-css-tutorial.html" class="text-slate-500 hover:text-primary transition-colors">Glassmorphism Guide</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

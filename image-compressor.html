@@ -116,8 +116,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 canvas-container"></div>
 
@@ -381,6 +381,47 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">Free Online Image Compressor — Compress Without Losing Quality</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Reduce JPG, PNG, and WebP file sizes directly in your browser. No uploads, no server processing — your images stay private and compression is instant.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Upload or drag &amp; drop your image</li>
+                        <li>Adjust the quality slider (75–85% is the sweet spot)</li>
+                        <li>Compare original vs compressed in the preview</li>
+                        <li>Download the compressed file</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Best Use Cases</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Optimizing images before uploading to a website</li>
+                        <li>Reducing email attachment sizes</li>
+                        <li>Social media image preparation</li>
+                        <li>Improving Core Web Vitals (LCP scores)</li>
+                        <li>Batch-compressing product images</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>75–85% quality is visually identical to 100% for most photos</li>
+                        <li>Always compare the preview before downloading</li>
+                        <li>Convert to WebP first for maximum savings</li>
+                        <li>Never compress screenshots with text — use lossless PNG</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="image-format-converter.html" class="text-slate-500 hover:text-primary transition-colors">Format Converter</a> · <a href="image-resizer.html" class="text-slate-500 hover:text-primary transition-colors">Image Resizer</a> · <a href="guides/optimize-images-for-web.html" class="text-slate-500 hover:text-primary transition-colors">Image Optimization Guide</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

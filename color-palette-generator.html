@@ -168,8 +168,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 canvas-container"></div>
 
@@ -449,6 +449,46 @@
             return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
         }
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">Color Palette Generator — Harmonious Color Schemes</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Generate complementary, analogous, triadic, and split-complementary color palettes from any base color. Export CSS variables, HEX, RGB, and HSL values.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Enter your base/brand color as a hex code</li>
+                        <li>Choose a harmony type (complementary, triadic, etc.)</li>
+                        <li>Browse and adjust the generated palette</li>
+                        <li>Export as CSS variables or copy individual values</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Best Use Cases</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Building a brand identity color system</li>
+                        <li>Choosing UI accent and state colors</li>
+                        <li>Finding accessible color combinations</li>
+                        <li>Art and illustration color planning</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Start with your brand primary; derive everything else</li>
+                        <li>Use complementary color for primary CTAs</li>
+                        <li>Verify contrast ratios after generating — beauty ≠ accessibility</li>
+                        <li>Analogous palettes feel calm; triadic feel energetic</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="contrast-checker.html" class="text-slate-500 hover:text-primary transition-colors">Contrast Checker</a> · <a href="gradient-generator.html" class="text-slate-500 hover:text-primary transition-colors">Gradient Generator</a> · <a href="guides/wcag-color-contrast-guide.html" class="text-slate-500 hover:text-primary transition-colors">WCAG Contrast Guide</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

@@ -98,8 +98,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 canvas-container"></div>
 
@@ -279,6 +279,47 @@
 
         window.onload = init;
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">Google Fonts Pairing Tool — Find the Perfect Type Combination</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Preview Google Fonts combinations side by side with live sample text. Find heading and body font pairings that work for your brand, UI, or editorial design.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Select a heading font from the dropdown</li>
+                        <li>Select a body font</li>
+                        <li>Adjust sizes and weights</li>
+                        <li>Preview with your own sample text</li>
+                        <li>Copy the Google Fonts import link</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Pairing Principles</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Contrast styles: geometric serif + humanist sans</li>
+                        <li>One display font max — keep body neutral</li>
+                        <li>Different weight classes for clear hierarchy</li>
+                        <li>Test at small sizes — body fonts must be readable at 16px</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Load only the weights you actually use</li>
+                        <li>2 font families is the limit for web performance</li>
+                        <li>Inter, Plus Jakarta Sans are safe neutral body fonts</li>
+                        <li>Preview dark mode — some fonts look worse inverted</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="type-scale-generator.html" class="text-slate-500 hover:text-primary transition-colors">Type Scale Generator</a> · <a href="guides/modern-web-design-essentials.html" class="text-slate-500 hover:text-primary transition-colors">Modern Web Design Guide</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

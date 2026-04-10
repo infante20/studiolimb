@@ -113,8 +113,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 canvas-container"></div>
 
@@ -331,6 +331,47 @@
             setTimeout(generate, 100);
         });
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">Free QR Code Generator — Custom Colors, No Signup</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Create QR codes for URLs, text, email, or phone numbers. Customize colors, add a logo, and download as PNG or SVG — no account required, generated in your browser.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Enter your URL or text content</li>
+                        <li>Customize colors and size</li>
+                        <li>Optionally add a logo or icon</li>
+                        <li>Download as PNG or SVG</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Best Use Cases</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Business cards and print materials</li>
+                        <li>Restaurant menus and signage</li>
+                        <li>Product packaging and labels</li>
+                        <li>Conference and event materials</li>
+                        <li>Linking print to digital content</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Keep high contrast between QR and background</li>
+                        <li>Test with multiple devices before printing</li>
+                        <li>Shorter URLs = less dense QR = easier to scan</li>
+                        <li>Download SVG for print — it scales perfectly</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="image-compressor.html" class="text-slate-500 hover:text-primary transition-colors">Image Compressor</a> · <a href="url-encode-decode.html" class="text-slate-500 hover:text-primary transition-colors">URL Encoder</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 

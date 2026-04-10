@@ -146,8 +146,8 @@
     </script>
 </head>
 
-<body class="bg-background-dark font-display text-slate-100 antialiased overflow-hidden">
-    <div class="relative flex h-screen w-full flex-col">
+<body class="bg-background-dark font-display text-slate-100 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col">
         <!-- Main Background Canvas -->
         <div class="absolute inset-0 z-0 canvas-container"></div>
 
@@ -467,6 +467,46 @@
             triggerToast('File downloaded!');
         }
     </script>
+
+    <!-- SEO Content Section -->
+    <section class="w-full bg-[#050508] border-t border-white/5 py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-3">SVG Optimizer — Reduce SVG File Size Online</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl">Remove unnecessary markup, metadata, and redundant attributes from SVG files exported by Figma, Illustrator, or Sketch. Typical savings: 40–70% file size reduction.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">help</span> How to Use</h3>
+                    <ol class="text-slate-400 text-sm space-y-2 list-decimal list-inside">
+                        <li>Paste SVG code or upload an .svg file</li>
+                        <li>See the before/after file size comparison</li>
+                        <li>Copy the optimized SVG or download it</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> What Gets Removed</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Editor metadata (Figma, Illustrator IDs)</li>
+                        <li>Redundant group elements and attributes</li>
+                        <li>Excessive decimal precision in path data</li>
+                        <li>Unused definitions and empty elements</li>
+                        <li>XML comments and processing instructions</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">tips_and_updates</span> Tips</h3>
+                    <ul class="text-slate-400 text-sm space-y-2">
+                        <li>Always optimize SVGs before deploying to production</li>
+                        <li>Figma exports are particularly bloated — often 60–75% reducible</li>
+                        <li>Test the optimized SVG visually — complex paths can occasionally change</li>
+                        <li>Use inline SVG for CSS-styleable icons</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-xs text-slate-600">Related: <a href="svg-wave-generator.html" class="text-slate-500 hover:text-primary transition-colors">SVG Wave Generator</a> · <a href="svg-path-editor.html" class="text-slate-500 hover:text-primary transition-colors">SVG Path Editor</a> · <a href="guides/svg-vs-png-vs-webp.html" class="text-slate-500 hover:text-primary transition-colors">SVG vs PNG vs WebP Guide</a></p>
+            </div>
+        </div>
+    </section>
     <script src="/shared.js"></script>
 </body>
 
