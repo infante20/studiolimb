@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatting: Structure, Syntax & Best Practices | StudioLimb</title>
+  <meta name="description" content="Master JSON formatting with syntax rules, data types, nesting, schema design, and common mistakes. Includes practical examples for APIs, config files, and data exchange.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/json-formatting-guide.html">
+  <meta property="og:title" content="JSON Formatting: Structure, Syntax & Best Practices">
+  <meta property="og:description" content="Complete JSON formatting guide covering syntax rules, data types, nested structures, JSON Schema, API design, and common mistakes to avoid.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/json-formatting-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON Formatting: Structure, Syntax & Best Practices">
+  <meta name="twitter:description" content="Complete JSON formatting guide covering syntax rules, data types, nested structures, JSON Schema, API design, and common mistakes to avoid.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"JSON Formatting: Structure, Syntax & Best Practices","description":"JSON formatting guide covering syntax rules, data types, arrays and objects, nesting, JSON Schema validation, API design patterns, and common mistakes.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/json-formatting-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-orange-400">Tools</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-orange-400">data_object</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">JSON Formatting: Structure, Syntax & Best Practices</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">JSON (JavaScript Object Notation) is the universal data interchange format for APIs, config files, and storage. Understanding its structure and best practices prevents bugs, improves API design, and makes data easier to work with.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">JSON Syntax at a Glance</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-json">{
+  "string": "Hello, world!",
+  "number": 42,
+  "float": 3.14159,
+  "boolean": true,
+  "null_value": null,
+  "array": [1, 2, 3, "four", true],
+  "object": {
+    "nested_key": "nested_value",
+    "another": 100
+  },
+  "array_of_objects": [
+    { "id": 1, "name": "Alice" },
+    { "id": 2, "name": "Bob" }
+  ]
+}
+
+/* JSON Rules:
+   - Keys MUST be double-quoted strings (not single quotes)
+   - Strings MUST use double quotes
+   - No trailing commas (after last item in array or object)
+   - No comments (JSON doesn't support // or /* */)
+   - No undefined — use null instead
+*/</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">JSON Data Types</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Type</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Example</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Notes</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">String</td><td class="py-2 pr-4">"Hello"</td><td class="py-2 pr-4">Double quotes only. Use \n, \t for newlines/tabs</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Number</td><td class="py-2 pr-4">42, 3.14, -7, 1e10</td><td class="py-2 pr-4">No distinction between int/float. No NaN or Infinity</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Boolean</td><td class="py-2 pr-4">true, false</td><td class="py-2 pr-4">Lowercase only (not True/False)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Null</td><td class="py-2 pr-4">null</td><td class="py-2 pr-4">Lowercase only (not None/NULL/nil)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Array</td><td class="py-2 pr-4">[1, "two", true]</td><td class="py-2 pr-4">Ordered, mixed types allowed</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Object</td><td class="py-2 pr-4">{"key": "value"}</td><td class="py-2 pr-4">Unordered key-value pairs. Keys must be strings</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Formatting for Readability vs Minification</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Pretty-printed JSON (with indentation) is for humans and debugging. Minified JSON (no whitespace) is for network transmission. Both are valid JSON.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-js">// Pretty-printed (2-space indent — standard):
+{
+  "user": {
+    "id": 123,
+    "name": "Alice",
+    "roles": ["admin", "editor"]
+  }
+}
+
+// Minified (network transport):
+{"user":{"id":123,"name":"Alice","roles":["admin","editor"]}}
+
+// JavaScript: convert between them
+const obj = JSON.parse(jsonString);    // string → object
+const pretty = JSON.stringify(obj, null, 2);   // object → pretty JSON
+const minified = JSON.stringify(obj);          // object → minified JSON</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">JSON for REST API Responses</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Consistent JSON structure in API responses makes clients easier to write and errors easier to diagnose. These patterns are widely adopted.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-json">{
+  "data": {
+    "id": "usr_01ABC",
+    "email": "alice@example.com",
+    "created_at": "2026-04-10T14:30:00Z"
+  },
+  "meta": {
+    "request_id": "req_xyz123",
+    "version": "1.0"
+  }
+}
+
+// Error response
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Email is required",
+    "fields": {
+      "email": ["This field is required"]
+    }
+  }
+}
+
+// Paginated list
+{
+  "data": [
+    { "id": 1, "name": "Alice" },
+    { "id": 2, "name": "Bob" }
+  ],
+  "pagination": {
+    "page": 1,
+    "per_page": 20,
+    "total": 142,
+    "total_pages": 8
+  }
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">JSON Schema: Validate Your JSON</h2>
+<p class="text-slate-300 leading-relaxed mb-4">JSON Schema defines the expected structure of a JSON document. Tools like Ajv (JavaScript) validate data against the schema at runtime.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-json">{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["email", "name"],
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 150
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["admin", "editor", "viewer"]
+      }
+    }
+  },
+  "additionalProperties": false
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common JSON Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Single quotes instead of double quotes</strong> — <code>{'key': 'value'}</code> is invalid JSON. Keys and strings require double quotes.</li>
+  <li><strong>Trailing commas</strong> — <code>[1, 2, 3,]</code> and <code>{"a": 1,}</code> are invalid. Remove the comma after the last item.</li>
+  <li><strong>Comments in JSON</strong> — JSON has no comment syntax. If you need comments in config files, use JSONC (JSON with Comments, supported by VS Code and TypeScript) or YAML instead.</li>
+  <li><strong>Using NaN or Infinity</strong> — these are JavaScript values, not valid JSON. Use null or a sentinel number instead.</li>
+  <li><strong>Inconsistent date formats</strong> — use ISO 8601 (2026-04-10T14:30:00Z) for all dates. Avoid Unix timestamps (1712757000) unless you control both ends — they're hard to debug.</li>
+  <li><strong>Deeply nested structures</strong> — more than 4 levels of nesting is a sign the data model needs restructuring. Flat structures are easier to query, cache, and reason about.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Is JSON5 the same as JSON?</dt>
+<dd class="text-slate-300 leading-relaxed">No — JSON5 is a superset that adds comments, trailing commas, single quotes, and unquoted keys. It's useful for config files (webpack.config.js, for example), but it's not valid JSON and can't be parsed by standard JSON parsers.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I use JSON or YAML for config files?</dt>
+<dd class="text-slate-300 leading-relaxed">Both are popular. JSON has strict syntax (easy to validate, widely supported). YAML is more readable for humans (supports comments, no quotes needed for strings, supports multiline) but whitespace-sensitive. For code-adjacent config, JSON or JSONC. For human-edited config, YAML.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the maximum size JSON can handle?</dt>
+<dd class="text-slate-300 leading-relaxed">JSON itself has no size limit. Practical limits come from the parser — V8 (Node.js/Chrome) can parse JSON up to ~1GB. For large datasets, consider streaming JSON parsers (jsonstream, oboe.js) that don't load the entire document into memory.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I handle dates in JSON?</dt>
+<dd class="text-slate-300 leading-relaxed">JSON has no date type. Best practice: serialize as ISO 8601 strings (2026-04-10T14:30:00Z). On parse, convert back to Date objects in your application code. Avoid Unix timestamps in new APIs — they're harder to debug than ISO strings.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="regex-cheatsheet.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">text_fields</span>
+                <div><p class="font-semibold text-sm text-white">Regex Cheatsheet</p>
+                <p class="text-xs text-slate-400 mt-0.5">Pattern matching for validation and parsing</p></div>
+              </a>
+              <a href="base64-images-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Base64 Images Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Embed images as data URIs in JSON and CSS</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/regex-tester.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">text_fields</span>Regex Tester
+              </a>
+              <a href="/tools/qr-code-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">qr_code</span>QR Code Generator
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

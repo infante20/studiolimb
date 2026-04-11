@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Grid Layout: Complete Guide with Examples | StudioLimb</title>
+  <meta name="description" content="Master CSS Grid Layout with practical examples. Learn grid-template-columns, grid-template-areas, auto-fill vs auto-fit, subgrid, and responsive layouts.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/css-grid-layout-guide.html">
+  <meta property="og:title" content="CSS Grid Layout: Complete Guide with Examples">
+  <meta property="og:description" content="Practical CSS Grid tutorial covering grid tracks, template areas, auto-fit/auto-fill, alignment, and real-world layout patterns.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/css-grid-layout-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Grid Layout: Complete Guide with Examples">
+  <meta name="twitter:description" content="Practical CSS Grid tutorial covering grid tracks, template areas, auto-fit/auto-fill, alignment, and real-world layout patterns.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"CSS Grid Layout: Complete Guide with Examples","description":"Complete CSS Grid Layout guide with code examples for grid tracks, template areas, alignment, subgrid, and responsive patterns.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/css-grid-layout-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(124,111,255,0.15) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-violet-400">CSS</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-violet-400">grid_view</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">CSS Grid Layout: Complete Guide with Examples</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">CSS Grid is the most powerful layout system in CSS. Unlike Flexbox (one-dimensional), Grid handles rows and columns simultaneously — perfect for page layouts, card grids, and complex UI patterns.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 10 min read</p>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Grid vs Flexbox: When to Use Each</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Use <strong>CSS Grid</strong> when you need two-dimensional control (rows AND columns). Use <strong>Flexbox</strong> when you're laying out items in a single row or column. The two work best together: Grid for page-level layout, Flexbox for component-level layout.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Grid vs Flexbox at a Glance</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Feature</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">CSS Grid</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Flexbox</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Dimensions</td><td class="py-2 pr-4">2D (rows + columns)</td><td class="py-2 pr-4">1D (row or column)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Content flow</td><td class="py-2 pr-4">Grid defines structure</td><td class="py-2 pr-4">Content defines structure</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Best for</td><td class="py-2 pr-4">Page layouts, galleries</td><td class="py-2 pr-4">Nav bars, button groups</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Alignment</td><td class="py-2 pr-4">Both axes always</td><td class="py-2 pr-4">Cross-axis only</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Browser support</td><td class="py-2 pr-4">97%+ globally</td><td class="py-2 pr-4">99%+ globally</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Grid Basics: Columns and Rows</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Define a 3-column grid */
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+}
+
+/* fr unit = fraction of remaining space */
+.container {
+  grid-template-columns: 1fr 2fr 1fr; /* 25% 50% 25% */
+}
+
+/* repeat() shorthand */
+.container {
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  grid-template-rows: repeat(2, minmax(100px, auto));
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">grid-template-areas: Named Layout</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The most readable way to define a page layout. Name each area and assign elements to them.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 60px 1fr 60px;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  min-height: 100vh;
+}
+
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+.footer  { grid-area: footer; }
+
+/* Stack on mobile */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "sidebar"
+      "footer";
+  }
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">auto-fill vs auto-fit: Responsive Grids Without Media Queries</h2>
+<p class="text-slate-300 leading-relaxed mb-4"><code>auto-fill</code> creates as many tracks as possible, even if empty. <code>auto-fit</code> collapses empty tracks and expands filled ones. For responsive card grids, <code>auto-fit</code> is almost always what you want.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* auto-fit: items expand to fill the row */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* auto-fill: keeps ghost columns */
+.fixed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Result: auto-fit with 1 card → card fills full width
+   auto-fill with 1 card → card stays 280px min */</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Placing Items: Lines and Spans</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Place by line numbers (1-indexed) */
+.hero {
+  grid-column: 1 / 3;  /* span columns 1 and 2 */
+  grid-row: 1 / 2;
+}
+
+/* span keyword */
+.featured {
+  grid-column: span 2;  /* span 2 columns from current position */
+  grid-row: span 3;
+}
+
+/* Negative lines: count from end */
+.full-width {
+  grid-column: 1 / -1;  /* always full width regardless of column count */
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Grid Alignment</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Align ALL items in their cells */
+.container {
+  align-items: center;    /* vertical in cell */
+  justify-items: start;   /* horizontal in cell */
+  place-items: center;    /* shorthand for both */
+}
+
+/* Align the entire grid within the container */
+.container {
+  align-content: space-between;  /* vertical distribution */
+  justify-content: center;        /* horizontal distribution */
+}
+
+/* Override per-item */
+.item {
+  align-self: end;
+  justify-self: stretch;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Subgrid: Aligning Nested Grids</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Subgrid (supported in all modern browsers since 2023) lets child grids inherit the parent's track sizing — essential for aligned card content.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Parent grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 1rem;
+}
+
+/* Each card spans 3 rows and uses subgrid */
+.card {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid; /* inherit parent row tracks */
+}
+
+/* Now all card headings, bodies, and footers align */
+.card-heading { grid-row: 1; }
+.card-body    { grid-row: 2; }
+.card-footer  { grid-row: 3; }</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Real-World: Magazine Layout</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* 12-column magazine grid */
+.magazine {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(60px, auto);
+  gap: 1rem;
+}
+
+.hero-story    { grid-column: 1 / 9;  grid-row: 1 / 4; }
+.side-story-1  { grid-column: 9 / 13; grid-row: 1 / 2; }
+.side-story-2  { grid-column: 9 / 13; grid-row: 2 / 4; }
+.story-strip   { grid-column: 1 / -1; grid-row: 4 / 5; }</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common CSS Grid Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Using fixed px columns for responsive layouts</strong> — use <code>fr</code> units and <code>minmax()</code> instead.</li>
+  <li><strong>Over-specifying rows</strong> — <code>grid-auto-rows: minmax(100px, auto)</code> handles dynamic content better than fixed heights.</li>
+  <li><strong>Forgetting gap vs margin</strong> — <code>gap</code> applies between grid items, not on the outside edges. Use padding on the container for outer spacing.</li>
+  <li><strong>Using floats inside a grid</strong> — floats have no effect inside grid containers. Use alignment properties.</li>
+  <li><strong>Not using <code>grid-column: 1 / -1</code></strong> for full-width items — it works regardless of how many columns you have.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does CSS Grid replace Flexbox?</dt>
+<dd class="text-slate-300 leading-relaxed">No — they complement each other. Grid is for 2D layout (page structure, card grids), Flexbox is for 1D layout (navigation rows, button groups). Most modern UIs use both.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What does fr mean in CSS Grid?</dt>
+<dd class="text-slate-300 leading-relaxed">fr is a fractional unit. 1fr means 'one fraction of the available space'. <code>repeat(3, 1fr)</code> creates 3 equal-width columns that share the total space after fixed/auto columns are resolved.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I center a single item with Grid?</dt>
+<dd class="text-slate-300 leading-relaxed">Set the container to <code>display: grid; place-items: center;</code> — this is the shortest, most reliable way to center anything in CSS.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Is CSS Grid supported in all browsers?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — CSS Grid has 97%+ global support. Subgrid reached full support in late 2023 (all evergreen browsers). Safe to use without fallbacks for modern web projects.</dd></div>
+</dl>
+
+      </article>
+
+      <!-- Related Guides -->
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="css-flexbox-vs-grid.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">view_column</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">CSS Flexbox vs Grid</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Side-by-side comparison with decision guide</p>
+                </div>
+              </a>
+              <a href="css-variables-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">code</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">CSS Variables Guide</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Use custom properties in your grid design tokens</p>
+                </div>
+              </a>
+        </div>
+      </div>
+
+      <!-- CTA Tools -->
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/gradient-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">gradient</span>
+                Gradient Generator
+              </a>
+              <a href="/tools/color-palette-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">palette</span>
+                Color Palette Generator
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

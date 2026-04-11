@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building an Accessible Color Palette for WCAG | StudioLimb</title>
+  <meta name="description" content="Build a color palette that passes WCAG 2.1 contrast requirements. Learn AA vs AAA, pick accessible brand colors, and automate contrast testing in your workflow.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/accessible-color-palette.html">
+  <meta property="og:title" content="Building an Accessible Color Palette for WCAG">
+  <meta property="og:description" content="Step-by-step guide to building color systems that pass WCAG 2.1 AA/AAA contrast requirements. Covers brand colors, dark mode, automated testing, and common fixes.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/accessible-color-palette.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Building an Accessible Color Palette for WCAG">
+  <meta name="twitter:description" content="Step-by-step guide to building color systems that pass WCAG 2.1 AA/AAA contrast requirements. Covers brand colors, dark mode, automated testing, and common fixes.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Building an Accessible Color Palette for WCAG","description":"Accessible color palette guide covering WCAG contrast requirements, AA vs AAA standards, palette generation strategies, dark mode accessibility, and testing tools.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/accessible-color-palette.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(244,63,94,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-rose-400">Color</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-rose-400">accessibility</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Building an Accessible Color Palette for WCAG</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Accessibility isn't a constraint on good design — it's a constraint that makes design better. A color palette built around contrast requirements from day one is more systematic, more professional, and reaches 15% more users who have visual impairments.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">WCAG Contrast Requirements at a Glance</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Standard</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Ratio</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Applies To</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Who It Covers</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WCAG AA (minimum)</td><td class="py-2 pr-4">4.5:1</td><td class="py-2 pr-4">Normal text (< 18pt / 14pt bold)</td><td class="py-2 pr-4">Legal requirement in many countries</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WCAG AA (minimum)</td><td class="py-2 pr-4">3:1</td><td class="py-2 pr-4">Large text (≥ 18pt / 14pt bold)</td><td class="py-2 pr-4">Legal requirement in many countries</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WCAG AA (minimum)</td><td class="py-2 pr-4">3:1</td><td class="py-2 pr-4">UI components (buttons, inputs, icons)</td><td class="py-2 pr-4">Legal requirement in many countries</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WCAG AAA (enhanced)</td><td class="py-2 pr-4">7:1</td><td class="py-2 pr-4">Normal text</td><td class="py-2 pr-4">Recommended for critical content</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WCAG AAA (enhanced)</td><td class="py-2 pr-4">4.5:1</td><td class="py-2 pr-4">Large text</td><td class="py-2 pr-4">Recommended for critical content</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Accessible Palette Strategy</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Design your palette with contrast in mind from the start. Create a scale from lightest to darkest, then identify which pairs meet which requirements.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Accessible blue palette example */
+:root {
+  --blue-50:  hsl(214, 100%, 97%);  /* #EBF5FF */
+  --blue-100: hsl(214, 95%,  92%);  /* #D6EDFF */
+  --blue-200: hsl(214, 90%,  83%);  /* #A8D4FF */
+  --blue-300: hsl(214, 85%,  70%);  /* #6DB6FF */
+  --blue-400: hsl(214, 80%,  56%);  /* #3494EE */
+  --blue-500: hsl(214, 75%,  44%);  /* #1A6FBF → 4.8:1 on white (AA ✓) */
+  --blue-600: hsl(214, 72%,  35%);  /* #155A9C → 7.3:1 on white (AAA ✓) */
+  --blue-700: hsl(214, 68%,  26%);  /* #10437A → 10.5:1 on white */
+  --blue-800: hsl(214, 64%,  18%);  /* #0B2E54 */
+  --blue-900: hsl(214, 60%,  10%);  /* #061C30 */
+}
+
+/*
+  Text on white bg:
+  --blue-500 → 4.8:1 → AA ✓ for body text
+  --blue-600 → 7.3:1 → AAA ✓ for all text
+
+  Interactive elements (3:1 required):
+  --blue-400 → 3.1:1 → AA ✓ for buttons/links on white
+
+  Dark mode (text on dark bg):
+  --blue-300 on --blue-900 → 9.4:1 → AAA ✓
+  --blue-200 on --blue-900 → 12.1:1 → AAA ✓
+*/</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Checking Contrast Programmatically</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-js">/* JavaScript: calculate WCAG contrast ratio */
+function getLuminance(r, g, b) {
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    c /= 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+function getContrastRatio(hex1, hex2) {
+  const toRGB = hex => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return [r, g, b];
+  };
+  const l1 = getLuminance(...toRGB(hex1));
+  const l2 = getLuminance(...toRGB(hex2));
+  const lighter = Math.max(l1, l2);
+  const darker  = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+// Usage
+const ratio = getContrastRatio('#1A6FBF', '#FFFFFF');
+console.log(ratio.toFixed(2)); // → 4.82 (AA pass)
+const passes = {
+  AA_normal:  ratio >= 4.5,
+  AA_large:   ratio >= 3,
+  AAA_normal: ratio >= 7,
+  AAA_large:  ratio >= 4.5,
+};</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Accessible Brand Colors: Strategy</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Most brand colors fail WCAG when used as text on white. The solution isn't to abandon your brand color — it's to darken it for text use and use the vibrant version only for large elements.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Brand color: #7C6FFF (vibrant purple) */
+/* Contrast on white: 3.2:1 → FAILS AA for normal text */
+
+/* Solutions: */
+
+/* 1. Darken for text use */
+--brand-text: hsl(252, 80%, 42%); /* 5.1:1 on white → AA ✓ */
+
+/* 2. Use only for large text or UI components (3:1 threshold) */
+.button-primary {
+  background: #7C6FFF; /* 3.2:1 on white is OK for UI component */
+  color: white; /* white on #7C6FFF = 4.9:1 → AA ✓ for button text */
+}
+
+/* 3. Use on dark backgrounds (where the vibrant color passes) */
+.badge-on-dark {
+  background: #7C6FFF;
+  /* #7C6FFF on #050508 = 8.1:1 → AAA ✓ */
+}
+
+/* 4. Tint for backgrounds (use very light tint, dark text on it) */
+.alert {
+  background: hsl(252, 100%, 97%); /* very light brand tint */
+  color: hsl(252, 80%, 28%);       /* dark brand text → 7.8:1 */
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Accessible Color Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Using brand color directly for body text</strong> — vibrant brand colors typically have 2–4:1 contrast on white. Darken them by 10–20% lightness for text use.</li>
+  <li><strong>Only checking text, not UI components</strong> — WCAG 1.4.11 requires 3:1 for borders, icons, and form elements. A light gray checkbox border on white often fails.</li>
+  <li><strong>Assuming dark mode is automatically accessible</strong> — light text on dark background needs the same contrast ratios. Recheck all your color pairs in dark mode.</li>
+  <li><strong>Using color as the only differentiator</strong> — for colorblind users, never convey information by color alone. Pair color with icons, labels, or patterns.</li>
+  <li><strong>Not testing with real tools</strong> — eyeballing contrast doesn't work. Use axe, Lighthouse, or StudioLimb's contrast checker to verify every text/background combination.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does my website legally have to be WCAG AA compliant?</dt>
+<dd class="text-slate-300 leading-relaxed">In many countries, yes — especially for government, education, and public-facing commercial sites. The US (Section 508, ADA), EU (EN 301 549), and UK (PSBAR) all reference WCAG 2.1 AA. Even where not legally required, accessibility reduces liability risk and expands your audience.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between WCAG 2.1 and WCAG 3.0?</dt>
+<dd class="text-slate-300 leading-relaxed">WCAG 3.0 (in development) introduces APCA (Advanced Perceptual Contrast Algorithm), which better models human vision than the current relative luminance formula. For now, design to WCAG 2.1 AA — it's the enforceable standard. WCAG 3.0 won't replace 2.1 for regulatory purposes for several years.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Does placeholder text need to meet contrast requirements?</dt>
+<dd class="text-slate-300 leading-relaxed">No — placeholder text is specifically exempt from WCAG 1.4.3 contrast requirements. However, it's still good practice to make placeholder text reasonably readable (aim for 3:1 minimum even if not required), as very light placeholder text frustrates users without disabilities too.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I make focus indicators accessible?</dt>
+<dd class="text-slate-300 leading-relaxed">WCAG 2.2 added Success Criterion 2.4.11 (Focus Appearance): the focus indicator must have at least 3:1 contrast with adjacent colors and a minimum area of the component's perimeter × 2px. The simplest compliant focus style: a 2px solid outline in your darkened brand color with 2px offset.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="wcag-color-contrast-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">contrast</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">WCAG Color Contrast Guide</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Full reference for contrast ratios and testing</p>
+                </div>
+              </a>
+              <a href="color-theory-web-design.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">palette</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Color Theory for Web Design</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Color harmonies, HSL, and psychological associations</p>
+                </div>
+              </a>
+        </div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/contrast-checker.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">contrast</span>
+                Contrast Checker
+              </a>
+              <a href="/tools/color-palette-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">palette</span>
+                Color Palette Generator
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

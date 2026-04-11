@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS clip-path: Shapes, Polygons & Animations | StudioLimb</title>
+  <meta name="description" content="Learn CSS clip-path to create circles, polygons, ellipses, and SVG shape masks. Includes animated clip-path examples and a path generator reference.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/css-clip-path-guide.html">
+  <meta property="og:title" content="CSS clip-path: Shapes, Polygons & Animations">
+  <meta property="og:description" content="Complete CSS clip-path tutorial with circle, polygon, ellipse, and inset examples, plus animated transitions and browser support notes.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/css-clip-path-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS clip-path: Shapes, Polygons & Animations">
+  <meta name="twitter:description" content="Complete CSS clip-path tutorial with circle, polygon, ellipse, and inset examples, plus animated transitions and browser support notes.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"CSS clip-path: Shapes, Polygons & Animations","description":"CSS clip-path guide with shape syntax reference, polygon examples, animation techniques, and browser support for circles, ellipses, and SVG paths.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/css-clip-path-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(124,111,255,0.15) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-violet-400">CSS</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-violet-400">crop_free</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">CSS clip-path: Shapes, Polygons & Animations</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">CSS clip-path lets you mask elements into any shape — circles, polygons, ellipses, or custom SVG paths. It's GPU-accelerated and animatable, making it a powerful tool for hero sections, image treatments, and reveal animations.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 8 min read</p>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">How clip-path Works</h2>
+<p class="text-slate-300 leading-relaxed mb-4">clip-path defines a clipping region. Everything inside the region is visible; everything outside is hidden. Unlike overflow:hidden, clip-path can create non-rectangular shapes and can be smoothly animated between compatible shapes.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Basic Shape Functions</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Circle: clip-path: circle(radius at cx cy) */
+.avatar {
+  clip-path: circle(50%);          /* perfect circle */
+  clip-path: circle(40% at 50% 50%);  /* explicit center */
+}
+
+/* Ellipse: clip-path: ellipse(rx ry at cx cy) */
+.blob {
+  clip-path: ellipse(60% 40% at 50% 50%);
+}
+
+/* Inset: clip-path: inset(top right bottom left round radius) */
+.card {
+  clip-path: inset(0 0 0 0 round 16px);  /* rounded rect mask */
+  clip-path: inset(10% 5% round 24px);    /* shrink + round corners */
+}
+
+/* Polygon: clip-path: polygon(x1 y1, x2 y2, ...) */
+.triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.diamond {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.arrow {
+  clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Angled Hero Sections</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The diagonal slice is one of the most popular clip-path uses — it creates a natural visual break between a colored hero section and the white content below.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Diagonal bottom edge on a hero section */
+.hero {
+  background: linear-gradient(135deg, #7c6fff, #06b6d4);
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  padding-bottom: 120px; /* compensate for clipped area */
+}
+
+/* Opposite diagonal */
+.hero-reverse {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+}
+
+/* Chevron bottom */
+.hero-chevron {
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Animating clip-path</h2>
+<p class="text-slate-300 leading-relaxed mb-4">clip-path can be animated — but only between compatible shapes with the same number of points. Use polygon to polygon, circle to circle. For cross-shape animation, convert everything to polygon.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Hover reveal animation */
+.image-reveal {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%); /* start hidden */
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-reveal:hover,
+.image-reveal.visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); /* fully visible */
+}
+
+/* Expanding circle reveal (good for page transitions) */
+.page-cover {
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 0.8s ease;
+}
+.page-cover.open {
+  clip-path: circle(150% at 50% 50%);
+}
+
+/* Scroll-triggered with IntersectionObserver */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+});
+document.querySelectorAll('.image-reveal').forEach(el => observer.observe(el));</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG path Clipping</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Define SVG clip path in HTML -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
+      <path d="M0,0 L1,0 L1,0.8 Q0.75,1 0.5,0.85 Q0.25,0.7 0,0.9 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<style>
+  /* Reference the SVG clip path */
+  .wave-image {
+    clip-path: url(#wave-clip);
+  }
+
+  /* Or use path() directly in CSS (Chrome/Edge 88+) */
+  .custom-shape {
+    clip-path: path("M 0 0 L 300 0 L 300 200 Q 150 250 0 200 Z");
+  }
+</style></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Browser Support</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Feature</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Chrome</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Firefox</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Safari</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Edge</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Basic shapes (circle, polygon, inset)</td><td class="py-2 pr-4">55+</td><td class="py-2 pr-4">54+</td><td class="py-2 pr-4">9.1+</td><td class="py-2 pr-4">79+</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">clip-path animations</td><td class="py-2 pr-4">55+</td><td class="py-2 pr-4">54+</td><td class="py-2 pr-4">13.1+</td><td class="py-2 pr-4">79+</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">path() function</td><td class="py-2 pr-4">88+</td><td class="py-2 pr-4">71+</td><td class="py-2 pr-4">13.1+</td><td class="py-2 pr-4">88+</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">SVG clipPath reference</td><td class="py-2 pr-4">55+</td><td class="py-2 pr-4">54+</td><td class="py-2 pr-4">9.1+</td><td class="py-2 pr-4">79+</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common clip-path Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Animating between incompatible shapes</strong> — polygon to circle won't interpolate smoothly. Convert both to polygon with the same vertex count.</li>
+  <li><strong>Forgetting overflow padding</strong> — clip-path hides box-shadow. Use a wrapper element with the shadow, and clip the inner element.</li>
+  <li><strong>Clipping text accidentally</strong> — clip-path clips the entire element including children. Apply it to image wrappers, not to containers holding text.</li>
+  <li><strong>Using only px units</strong> — prefer % for responsive shapes. px-based polygons break at different screen sizes.</li>
+  <li><strong>Not testing Safari</strong> — Safari has had clip-path quirks with <code>-webkit-clip-path</code>. Always add the prefixed version: <code>-webkit-clip-path: circle(50%); clip-path: circle(50%);</code></li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does clip-path affect layout?</dt>
+<dd class="text-slate-300 leading-relaxed">No — clip-path is purely visual. The element still takes up its full box-model space; only the painted pixels change. Use it alongside margin and padding as normal.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I use clip-path on video elements?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes! clip-path works on any element including img, video, canvas, and SVG. This makes it great for shaped video players.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I generate polygon coordinates?</dt>
+<dd class="text-slate-300 leading-relaxed">Use tools like Clippy (bennettfeely.com/clippy) to visually draw shapes and copy the CSS. Firefox DevTools also has a built-in clip-path editor when you click the polygon icon in the Styles panel.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between clip-path and mask?</dt>
+<dd class="text-slate-300 leading-relaxed">clip-path uses geometric shapes for binary clipping (visible or hidden). mask uses image/gradient alpha channel for partial transparency — it's more powerful but heavier. Use clip-path for shapes, mask for gradual fade effects.</dd></div>
+</dl>
+
+      </article>
+
+      <!-- Related Guides -->
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="css-animations-keyframes.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">animation</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">CSS Animations & Keyframes</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Combine clip-path with @keyframes for reveal effects</p>
+                </div>
+              </a>
+              <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">blur_on</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Glassmorphism Tutorial</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Layered visual effects with backdrop-filter</p>
+                </div>
+              </a>
+        </div>
+      </div>
+
+      <!-- CTA Tools -->
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/gradient-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">gradient</span>
+                Gradient Generator
+              </a>
+              <a href="/tools/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                SVG Optimizer
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

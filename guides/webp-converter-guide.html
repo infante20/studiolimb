@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Convert Images to WebP (Complete Guide) | StudioLimb</title>
+  <meta name="description" content="Convert JPG, PNG, and GIF images to WebP format to reduce file sizes by 25-35%. Includes browser tools, command-line cwebp, Squoosh, and CMS integration.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/webp-converter-guide.html">
+  <meta property="og:title" content="How to Convert Images to WebP (Complete Guide)">
+  <meta property="og:description" content="Step-by-step guide to converting images to WebP. Covers quality settings, batch conversion with cwebp, Squoosh, browser support, and HTML picture element fallbacks.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/webp-converter-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Convert Images to WebP (Complete Guide)">
+  <meta name="twitter:description" content="Step-by-step guide to converting images to WebP. Covers quality settings, batch conversion with cwebp, Squoosh, browser support, and HTML picture element fallbacks.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How to Convert Images to WebP (Complete Guide)","description":"WebP image conversion guide covering cwebp command line, Squoosh, quality settings, animated WebP, browser fallbacks with picture element, and CMS plugins.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/webp-converter-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-blue-400">Images</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-blue-400">image</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">How to Convert Images to WebP (Complete Guide)</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">WebP delivers 25–35% smaller files than JPEG at equivalent quality, and 25–50% smaller than PNG with transparency. Converting to WebP is one of the highest-ROI performance optimizations you can make — and it takes minutes.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 8 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">WebP vs Other Formats: File Size Reality Check</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Format</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Quality Setting</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">File Size</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Best For</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">JPEG</td><td class="py-2 pr-4">85%</td><td class="py-2 pr-4">310 KB</td><td class="py-2 pr-4">Photos (no transparency)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">PNG</td><td class="py-2 pr-4">—</td><td class="py-2 pr-4">820 KB</td><td class="py-2 pr-4">Graphics, logos, transparency</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WebP</td><td class="py-2 pr-4">75%</td><td class="py-2 pr-4">125 KB</td><td class="py-2 pr-4">Photos + transparency, any use case</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">AVIF</td><td class="py-2 pr-4">75%</td><td class="py-2 pr-4">90 KB</td><td class="py-2 pr-4">Photos (newest format, 97% browser support)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WebP (animated)</td><td class="py-2 pr-4">—</td><td class="py-2 pr-4">~40% smaller than GIF</td><td class="py-2 pr-4">Animations, simple motion</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Method 1: Browser-Based (Squoosh)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Squoosh (squoosh.app) is a free Google tool that converts images in the browser with no upload to a server. Drag in your image, select WebP on the right panel, and drag the quality slider while watching the file size change in real time.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- No code needed — use squoosh.app in your browser -->
+<!-- Settings to start with:
+  Quality: 75 (good balance)
+  Effort: 4 (compression effort, higher = smaller but slower)
+  Lossless: OFF for photos, ON for graphics/logos with flat colors
+
+  Rule of thumb: start at quality 75, lower to 65 if file size still too large,
+  only go below 60 if the result is acceptable at full zoom
+--></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Method 2: Command Line with cwebp</h2>
+<p class="text-slate-300 leading-relaxed mb-4">cwebp is Google's official WebP encoder. Install it from developers.google.com/speed/webp/download, then use it for fast batch processing.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-bash"># Single file conversion
+cwebp -q 75 input.jpg -o output.webp
+
+# -q 75    quality (0-100, default 75)
+# -lossless    use lossless compression (for logos/graphics)
+# -resize 800 0    resize to 800px wide (0 = auto height)
+
+# Batch convert all JPGs in a folder
+for f in *.jpg; do
+  cwebp -q 75 "$f" -o "${f%.jpg}.webp"
+done
+
+# Animated WebP from GIF
+gif2webp -q 75 animation.gif -o animation.webp
+
+# Check output info
+webpinfo output.webp</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">HTML: Always Provide Fallbacks with picture</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Even though WebP has 97%+ browser support in 2026, use the <code>&lt;picture&gt;</code> element to serve WebP to supporting browsers and JPEG/PNG to older ones.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Modern picture element with fallbacks -->
+<picture>
+  <!-- Serve WebP to supporting browsers -->
+  <source srcset="hero.webp" type="image/webp">
+  <!-- Fallback for older browsers -->
+  <img src="hero.jpg" alt="Hero image description"
+       width="1200" height="600" loading="lazy">
+</picture>
+
+<!-- With multiple sizes (responsive) -->
+<picture>
+  <source
+    type="image/webp"
+    srcset="hero-400.webp 400w, hero-800.webp 800w, hero-1200.webp 1200w"
+    sizes="(max-width: 600px) 100vw, 1200px">
+  <source
+    srcset="hero-400.jpg 400w, hero-800.jpg 800w, hero-1200.jpg 1200w"
+    sizes="(max-width: 600px) 100vw, 1200px">
+  <img src="hero-1200.jpg" alt="Hero" width="1200" height="600">
+</picture></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">WordPress & CMS: Automatic Conversion</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Most modern WordPress plugins and CMSes handle WebP conversion automatically on upload.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- WordPress plugins that auto-convert to WebP:
+  - Smush (EWWW Image Optimizer)
+  - ShortPixel
+  - Imagify
+  - Cloudflare (if proxying — handles conversion at edge)
+
+  These generate both original + WebP versions and serve
+  WebP via picture element or HTTP Accept header detection.
+-->
+
+<!-- Next.js: automatic WebP conversion built-in -->
+import Image from 'next/image'
+
+export function Hero() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero"
+      width={1200}
+      height={600}
+      priority
+      // Next.js automatically serves WebP/AVIF based on browser support
+    />
+  )
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common WebP Conversion Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Converting WebP back to PNG for editing</strong> — each lossy conversion degrades quality. Always keep original PNG/TIFF source files, only export WebP as the final delivery format.</li>
+  <li><strong>Not setting explicit dimensions on img tags</strong> — converted images should still have width/height attributes to prevent layout shift (CLS).</li>
+  <li><strong>Using WebP for logos/icons</strong> — SVG is better for logos and icons (infinitely scalable, much smaller). WebP is best for photographs and complex illustrations.</li>
+  <li><strong>Lossless WebP for photos</strong> — lossless WebP is actually larger than lossy for photographs. Use lossless only for graphics with flat colors, text, or transparency that needs pixel-perfect quality.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">What quality setting should I use for WebP?</dt>
+<dd class="text-slate-300 leading-relaxed">Start at 75. For product images where detail matters, 80–85. For background images or decorative photos, 65–70. Below 60 is usually visually noticeable. Use Squoosh to compare side-by-side at your target quality.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I use WebP or AVIF in 2026?</dt>
+<dd class="text-slate-300 leading-relaxed">AVIF is now at 97%+ browser support and delivers 30–50% smaller files than WebP. Use picture to serve AVIF first, WebP as second source, JPEG as final fallback. The extra source element is worth it for the file size savings.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Does WebP support transparency?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — WebP supports both lossy and lossless transparency (alpha channel). It's smaller than PNG for transparent images. This makes it a direct replacement for both JPEG and PNG.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Will converting to WebP break my CMS?</dt>
+<dd class="text-slate-300 leading-relaxed">Converting files and renaming them to .webp may break references in your CMS. The safer approach is to use a plugin that generates WebP variants alongside originals and serves them via picture or server-side content negotiation, keeping the original filenames intact.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Complete 9-step image optimization guide</p></div>
+              </a>
+              <a href="svg-vs-png-vs-webp.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">compare</span>
+                <div><p class="font-semibold text-sm text-white">SVG vs PNG vs WebP</p>
+                <p class="text-xs text-slate-400 mt-0.5">Format comparison with file size data</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>
+                Image Compressor
+              </a>
+              <a href="/tools/bg-remover.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                Background Remover
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

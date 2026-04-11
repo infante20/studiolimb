@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Images in HTML: srcset, sizes & picture | StudioLimb</title>
+  <meta name="description" content="Master responsive images with srcset, sizes, and the picture element. Serve the right image size to every device and screen resolution without JavaScript.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/responsive-images-html.html">
+  <meta property="og:title" content="Responsive Images in HTML: srcset, sizes & picture">
+  <meta property="og:description" content="Complete responsive images guide covering srcset, sizes attribute, picture element, art direction, and device pixel ratio. With practical HTML examples.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/responsive-images-html.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Responsive Images in HTML: srcset, sizes & picture">
+  <meta name="twitter:description" content="Complete responsive images guide covering srcset, sizes attribute, picture element, art direction, and device pixel ratio. With practical HTML examples.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Responsive Images in HTML: srcset, sizes & picture","description":"Responsive images HTML guide covering srcset width descriptors, sizes attribute, picture element for art direction, device pixel ratio, and lazy loading.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/responsive-images-html.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-blue-400">Images</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-blue-400">devices</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Responsive Images in HTML: srcset, sizes & picture</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Serving a 1200px image to a 400px mobile screen wastes 3–5x more bandwidth than necessary. HTML's srcset, sizes, and picture attributes solve this without any JavaScript — the browser picks the optimal image for each device automatically.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">srcset: Multiple Image Sources</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The srcset attribute provides a list of image sources with their intrinsic widths. The browser chooses the best one based on the current viewport width and device pixel ratio.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- srcset with width descriptors -->
+<img
+  src="hero-800.jpg"
+  srcset="hero-400.jpg 400w,
+          hero-800.jpg 800w,
+          hero-1200.jpg 1200w,
+          hero-2400.jpg 2400w"
+  alt="Hero image"
+  width="800"
+  height="600"
+>
+
+<!--
+  Without the sizes attribute, the browser assumes the image
+  is 100vw wide — it picks hero-2400.jpg for a 1200px Retina
+  display (1200px × 2x = 2400w). This is technically correct
+  but wastes bandwidth if the image is displayed smaller.
+
+  Add sizes to give the browser context about display size.
+--></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">sizes: Tell the Browser the Display Size</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The sizes attribute describes how wide the image will actually be displayed. The browser uses this — combined with viewport width — to select the most appropriate srcset source.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Full-width image on mobile, 50% width on desktop -->
+<img
+  src="photo-800.jpg"
+  srcset="photo-400.jpg 400w,
+          photo-800.jpg 800w,
+          photo-1200.jpg 1200w,
+          photo-1600.jpg 1600w"
+  sizes="(max-width: 768px) 100vw,
+         (max-width: 1200px) 50vw,
+         800px"
+  alt="Photo description"
+  width="800"
+  height="600"
+  loading="lazy"
+>
+
+<!--
+  How the browser uses this:
+  - On a 375px mobile screen: sizes → 100vw = 375px, device 2x → needs 750px
+    → picks photo-800.jpg ✓
+  - On a 1440px desktop: sizes → 800px, device 1x → needs 800px
+    → picks photo-800.jpg ✓
+  - On a 1440px Retina: sizes → 800px, device 2x → needs 1600px
+    → picks photo-1600.jpg ✓
+--></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">picture: Art Direction & Format Switching</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The picture element wraps multiple source elements, each with srcset. The browser uses the first matching source. Use it for art direction (different crops per breakpoint) or format switching (AVIF → WebP → JPEG).</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Art direction: different crop ratios per breakpoint -->
+<picture>
+  <!-- Portrait crop for mobile -->
+  <source
+    media="(max-width: 640px)"
+    srcset="hero-portrait-640.webp 640w, hero-portrait-1280.webp 1280w"
+    type="image/webp">
+  <source
+    media="(max-width: 640px)"
+    srcset="hero-portrait-640.jpg 640w, hero-portrait-1280.jpg 1280w">
+
+  <!-- Landscape crop for desktop -->
+  <source
+    srcset="hero-landscape-800.webp 800w, hero-landscape-1600.webp 1600w"
+    type="image/webp">
+
+  <!-- Fallback img (required) -->
+  <img src="hero-landscape-800.jpg" alt="Hero" width="1600" height="900">
+</picture>
+
+<!-- Format switching: AVIF → WebP → JPEG -->
+<picture>
+  <source srcset="photo.avif" type="image/avif">
+  <source srcset="photo.webp" type="image/webp">
+  <img src="photo.jpg" alt="Photo" loading="lazy">
+</picture></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Device Pixel Ratio Descriptors</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For fixed-size images (like icons, avatars, product thumbnails), use the x descriptor instead of w+sizes. It's simpler when the display size is always the same.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Avatar always displays at 64×64, but serve 128px for Retina -->
+<img
+  src="avatar-64.png"
+  srcset="avatar-64.png 1x, avatar-128.png 2x, avatar-192.png 3x"
+  alt="User avatar"
+  width="64"
+  height="64"
+>
+
+<!-- Retina logo in header (fixed 200px wide) -->
+<img
+  src="logo.png"
+  srcset="logo.png 1x, logo@2x.png 2x"
+  alt="Company logo"
+  width="200"
+  height="50"
+></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Responsive Image Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Omitting the fallback src</strong> — the src attribute on img is required as fallback for browsers that don't support srcset (rare in 2026, but also used as the default in picture elements).</li>
+  <li><strong>Not specifying width and height</strong> — missing dimensions cause CLS (Cumulative Layout Shift) as the page reflows when the image loads. Always set width/height equal to the intrinsic dimensions of the source image.</li>
+  <li><strong>Lazy-loading hero/LCP images</strong> — hero images (the Largest Contentful Paint element) should never have loading='lazy'. Lazy loading delays them, worsening LCP. Only lazy-load below-the-fold images.</li>
+  <li><strong>Generating too many srcset sizes</strong> — you don't need an image for every 50px increment. 3–4 breakpoint sizes (e.g., 400, 800, 1200, 2400) cover most cases efficiently.</li>
+  <li><strong>Using vw in sizes without calc for padding</strong> — if your container has 16px padding on each side, the image isn't truly 100vw — it's calc(100vw - 32px). This matters for accurate browser selection.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does the browser always pick the smallest image in srcset?</dt>
+<dd class="text-slate-300 leading-relaxed">No — the browser picks the smallest source that meets the quality requirements for the current display size and pixel density. It may also factor in connection speed on mobile (it can pick a smaller image on slow connections even if a larger one would technically fit).</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I use srcset or picture?</dt>
+<dd class="text-slate-300 leading-relaxed">Use srcset+sizes for most responsive images (same content, different sizes). Use picture when you need art direction (different crops) or format fallbacks (AVIF/WebP/JPEG). For format fallbacks specifically, picture is the only way.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What is preload and when should I use it for images?</dt>
+<dd class="text-slate-300 leading-relaxed">Use <link rel='preload' as='image' href='...'> for your LCP hero image — this tells the browser to fetch it before it parses the img tag in the body. For responsive images, use imagesrcset and imagesizes attributes on the preload link to preload the correct breakpoint variant.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How many srcset sizes should I generate?</dt>
+<dd class="text-slate-300 leading-relaxed">For most images: 400w, 800w, 1200w, and 2400w. This covers mobile (400), tablet (800), desktop 1x (1200), and desktop 2x Retina (2400). For full-bleed hero images, add 3200w for very large screens.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Complete 9-step image optimization workflow</p></div>
+              </a>
+              <a href="webp-converter-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">transform</span>
+                <div><p class="font-semibold text-sm text-white">How to Convert Images to WebP</p>
+                <p class="text-xs text-slate-400 mt-0.5">Reduce file sizes by 25-35% with WebP</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>
+                Image Compressor
+              </a>
+              <a href="/tools/bg-remover.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                Background Remover
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

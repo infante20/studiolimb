@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Fonts Performance: Load Fonts Fast | StudioLimb</title>
+  <meta name="description" content="Speed up Google Fonts with preconnect, font-display swap, subsetting, and self-hosting. Cut font load time and improve Core Web Vitals LCP scores.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/google-fonts-performance.html">
+  <meta property="og:title" content="Google Fonts Performance: Load Fonts Fast">
+  <meta property="og:description" content="Practical guide to loading Google Fonts without slowing your site. Covers preconnect, display=swap, subsetting, variable fonts, and self-hosting.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/google-fonts-performance.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google Fonts Performance: Load Fonts Fast">
+  <meta name="twitter:description" content="Practical guide to loading Google Fonts without slowing your site. Covers preconnect, display=swap, subsetting, variable fonts, and self-hosting.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Google Fonts Performance: Load Fonts Fast","description":"Google Fonts performance optimization guide covering preconnect hints, font-display swap, subsetting, variable fonts, and self-hosting strategies.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/google-fonts-performance.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(251,191,36,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-amber-400">Typography</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-amber-400">font_download</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Google Fonts Performance: Load Fonts Fast</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Google Fonts is convenient, but the default embed code is slow. Two round trips to external servers, render-blocking behavior, and no caching control can add 300–600ms to your LCP. Here's how to load fonts fast — or eliminate the cost entirely.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Default Embed (and Its Problems)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Google's standard embed code is a render-blocking stylesheet that triggers two external DNS lookups before a single character renders on screen.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Default Google embed — slow! -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Problems:
+  1. Blocks rendering until the external CSS is fetched
+  2. That CSS then triggers font file downloads from fonts.gstatic.com
+  3. Two separate domains = two DNS lookups
+  4. No browser caching control (max-age is set by Google)
+--></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Step 1: Add preconnect Hints</h2>
+<p class="text-slate-300 leading-relaxed mb-4">preconnect warms up the TCP connection and TLS handshake for external domains before the browser parses the <code>&lt;link&gt;</code> tag. This alone saves 100–200ms on cold loads.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Add BEFORE the Google Fonts link tag -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Then the font link -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- The crossorigin attribute on gstatic is required because
+     font files are fetched as cross-origin resources. Without it,
+     the preconnect won't apply to font downloads. --></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Step 2: Always Use display=swap</h2>
+<p class="text-slate-300 leading-relaxed mb-4"><code>font-display: swap</code> tells the browser to render text in a system font immediately, then swap to the custom font when it loads. Without this, browsers may show blank text (FOIT — Flash of Invisible Text) for up to 3 seconds.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Without display=swap */
+@font-face {
+  font-family: 'Inter';
+  /* browser default: auto — may hide text for up to 3s */
+}
+
+/* With display=swap (what &display=swap adds in the URL) */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap; /* show system font → swap when loaded */
+}
+
+/* Other values:
+   font-display: block    → 3s invisible, then swap (worst for UX)
+   font-display: fallback → 100ms invisible, 3s swap window
+   font-display: optional → 100ms invisible, no swap (best perf, skip if slow)
+*/</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Step 3: Request Only the Weights You Need</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Every weight is a separate font file download. Request only what you actually use — common mistake is including 8 weights when the design uses 2.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Bad: requesting every weight -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Good: only what you use -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Multiple families in one request (fewer HTTP connections) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Step 4: Use Variable Fonts</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Variable fonts contain ALL weights and styles in a single file. One request instead of many. Google Fonts automatically serves variable fonts when you request a weight range.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css"><!-- Request a weight range → gets variable font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+/* Now use any weight without extra downloads */
+h1 { font-weight: 800; }
+p  { font-weight: 400; }
+strong { font-weight: 600; }
+
+/* Variable font axes (if the font supports them) */
+.heading {
+  font-variation-settings: 'wght' 750, 'ital' 0;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Step 5: Self-Host for Maximum Control</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Self-hosting eliminates the external DNS lookup entirely and gives you full control over caching headers. Use google-webfonts-helper.herokuapp.com to download the font files and CSS.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Self-hosted setup (after downloading from google-webfonts-helper) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-v13-latin-regular.woff2') format('woff2');
+  /* woff2 is supported in all modern browsers — no fallback needed */
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/inter-v13-latin-700.woff2') format('woff2');
+}
+
+/* Preload the most critical font file */
+<!-- In <head>: -->
+<link rel="preload" href="/fonts/inter-v13-latin-regular.woff2"
+      as="font" type="font/woff2" crossorigin></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Performance Comparison</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Method</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">DNS Lookups</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Render Blocking</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Cache Control</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">LCP Impact</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Default Google Fonts</td><td class="py-2 pr-4">2 (googleapis + gstatic)</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">Google controls</td><td class="py-2 pr-4">High</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">+ preconnect + swap</td><td class="py-2 pr-4">2 (warmed up)</td><td class="py-2 pr-4">No (swap)</td><td class="py-2 pr-4">Google controls</td><td class="py-2 pr-4">Medium</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">+ variable font</td><td class="py-2 pr-4">2 (warmed up)</td><td class="py-2 pr-4">No (swap)</td><td class="py-2 pr-4">Google controls</td><td class="py-2 pr-4">Low-Medium</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Self-hosted</td><td class="py-2 pr-4">0 (same origin)</td><td class="py-2 pr-4">No (swap)</td><td class="py-2 pr-4">Full control</td><td class="py-2 pr-4">Very Low</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Google Fonts Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>No preconnect to fonts.gstatic.com</strong> — most guides only show the googleapis preconnect but font files come from gstatic.com. Both are needed.</li>
+  <li><strong>Missing crossorigin on the gstatic preconnect</strong> — without crossorigin, the preconnect hint is ignored for font file requests.</li>
+  <li><strong>Requesting unused weights</strong> — check your CSS and use the minimum required (usually just 400 and 700).</li>
+  <li><strong>Loading fonts in CSS @import instead of HTML link</strong> — @import is blocking inside a stylesheet. Always use the HTML <link> tag.</li>
+  <li><strong>Not preloading the hero font</strong> — if your above-the-fold text uses a custom font, preload it with <code>&lt;link rel=preload&gt;</code> to eliminate the LCP penalty.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does Google Fonts share user data?</dt>
+<dd class="text-slate-300 leading-relaxed">Google Fonts logs IP addresses for abuse protection purposes. For GDPR-strict sites, self-hosting eliminates this concern entirely, as no requests go to Google's servers.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What is FOUT vs FOIT?</dt>
+<dd class="text-slate-300 leading-relaxed">FOUT (Flash of Unstyled Text) = system font shown briefly, then replaced by custom font. FOIT (Flash of Invisible Text) = no text shown until custom font loads. FOUT with font-display: swap is preferable — users can read content immediately.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Is woff2 the only format I need?</dt>
+<dd class="text-slate-300 leading-relaxed">For modern browsers (2020+), yes — woff2 has 97%+ support. The old pattern of serving woff, ttf, and eot fallbacks is unnecessary for any site targeting modern browsers.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I check if my font is render-blocking?</dt>
+<dd class="text-slate-300 leading-relaxed">Run a Lighthouse audit in Chrome DevTools and look for 'Eliminate render-blocking resources'. Google PageSpeed Insights will also flag it. The Network waterfall in DevTools shows font request timing.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="web-typography-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">text_fields</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Web Typography Guide</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Font sizing, line-height, and typographic scale</p>
+                </div>
+              </a>
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Complete image optimization guide</p>
+                </div>
+              </a>
+        </div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/font-pairing.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">text_fields</span>
+                Font Pairing Tool
+              </a>
+              <a href="/tools/contrast-checker.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">contrast</span>
+                Contrast Checker
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

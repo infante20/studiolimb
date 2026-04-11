@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lazy Loading Images: HTML, JavaScript & Best Practices | StudioLimb</title>
+  <meta name="description" content="Implement lazy loading for images with native loading='lazy', Intersection Observer, and frameworks. Boost page load speed and Core Web Vitals without extra libraries.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/lazy-loading-images-guide.html">
+  <meta property="og:title" content="Lazy Loading Images: HTML, JavaScript & Best Practices">
+  <meta property="og:description" content="Complete lazy loading guide for images. Covers native loading=lazy, Intersection Observer API, placeholder techniques, and when NOT to lazy-load.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/lazy-loading-images-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lazy Loading Images: HTML, JavaScript & Best Practices">
+  <meta name="twitter:description" content="Complete lazy loading guide for images. Covers native loading=lazy, Intersection Observer API, placeholder techniques, and when NOT to lazy-load.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Lazy Loading Images: HTML, JavaScript & Best Practices","description":"Lazy loading images guide covering native loading attribute, Intersection Observer API, blur placeholder technique, skeleton loading, and Core Web Vitals impact.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/lazy-loading-images-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-blue-400">Images</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-blue-400">hourglass_bottom</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Lazy Loading Images: HTML, JavaScript & Best Practices</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Lazy loading defers the download of off-screen images until the user scrolls near them. For a page with 20 images, this can reduce initial page weight by 70% and dramatically improve Time to Interactive. Here's how to implement it correctly.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 8 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Native Lazy Loading: One Attribute</h2>
+<p class="text-slate-300 leading-relaxed mb-4">As of 2020, all modern browsers support the loading attribute. For most sites, this is all you need — no JavaScript, no library.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Add loading="lazy" to all below-the-fold images -->
+<img src="product.jpg" alt="Product" width="400" height="300" loading="lazy">
+
+<!-- loading="eager" = default behavior (load immediately) -->
+<!-- loading="lazy"  = defer until near viewport -->
+
+<!-- NEVER lazy-load the hero/LCP image -->
+<img src="hero.jpg" alt="Hero" width="1200" height="600" loading="eager">
+<!-- Or just omit loading= entirely for eager (it's the default) -->
+
+<!-- Browser support: Chrome 77+, Firefox 75+, Safari 15.4+, Edge 79+ -->
+<!-- Approximately 95%+ of browsers as of 2026 --></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Intersection Observer: Custom Lazy Loading</h2>
+<p class="text-slate-300 leading-relaxed mb-4">When you need more control — fade-in effects, custom thresholds, or support for background images — Intersection Observer gives you precise control without polling.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- HTML: use data-src instead of src -->
+<img
+  class="lazy"
+  data-src="photo.webp"
+  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+  alt="Photo description"
+  width="800"
+  height="600"
+>
+
+<script>
+// JavaScript: swap data-src → src when in viewport
+const images = document.querySelectorAll('img.lazy');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      img.classList.remove('lazy');
+      img.classList.add('loaded');
+      observer.unobserve(img);
+    }
+  });
+}, {
+  rootMargin: '200px 0px', // start loading 200px before entering viewport
+  threshold: 0
+});
+
+images.forEach(img => observer.observe(img));
+</script>
+
+<style>
+/* Fade-in on load */
+img.lazy { opacity: 0; transition: opacity 0.3s ease; }
+img.loaded { opacity: 1; }
+</style></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Blur Placeholder Technique</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Show a tiny blurred version of the image while the full version loads. The technique uses a 20×20px version of the image (a few hundred bytes) as a placeholder, then swaps to full resolution.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Generate tiny placeholder: convert input.jpg -resize 20x20 placeholder.jpg -->
+<style>
+.img-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(20px);
+  transform: scale(1.1); /* hide blur edges */
+  transition: opacity 0.4s ease;
+}
+
+.img-placeholder.hidden {
+  opacity: 0;
+}
+</style>
+
+<div class="img-container" style="aspect-ratio: 16/9">
+  <!-- Tiny blurred placeholder (loads instantly) -->
+  <img class="img-placeholder" src="photo-placeholder-20px.jpg" alt="">
+
+  <!-- Full image loads lazily -->
+  <img
+    src="photo-full.webp"
+    alt="Photo description"
+    loading="lazy"
+    onload="this.previousElementSibling.classList.add('hidden')"
+    style="width:100%;height:100%;object-fit:cover"
+  >
+</div></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">When NOT to Lazy Load</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Hero images and LCP candidates</strong> — lazy loading the largest above-the-fold image is the most common lazy loading mistake. It delays LCP by 500ms–1s+ and directly harms your Core Web Vitals score.</li>
+  <li><strong>Images within the first viewport</strong> — any image visible without scrolling (approximately the first 800px of page height) should not be lazy loaded. Use loading='eager' or simply omit the attribute.</li>
+  <li><strong>Critical UI images</strong> — logo, profile avatar, product thumbnail in the hero card — these affect perceived performance. Load them immediately.</li>
+  <li><strong>Images in carousels that autoplay immediately</strong> — if your carousel auto-advances, the second slide's image needs to be ready, not deferred.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does native loading=lazy affect SEO?</dt>
+<dd class="text-slate-300 leading-relaxed">No — Google's crawler renders JavaScript and respects loading=lazy. Images with lazy loading are indexed normally. Google also reports that lazy loading images doesn't negatively impact crawling or indexing.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What is the rootMargin in Intersection Observer?</dt>
+<dd class="text-slate-300 leading-relaxed">rootMargin extends the 'viewport' used for intersection detection. A rootMargin of '200px' means images start loading when they're 200px away from the visible viewport — before they scroll into view. This prevents blank images as the user scrolls. 100–300px is a good default.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I use a JavaScript lazy loading library in 2026?</dt>
+<dd class="text-slate-300 leading-relaxed">Probably not — native loading=lazy covers 95%+ of browsers. Only use a JS library if you need specific features: blur placeholders, custom animations, background image lazy loading, or Safari < 15.4 support.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I lazy load CSS background images?</dt>
+<dd class="text-slate-300 leading-relaxed">CSS background images don't support the loading attribute. Use Intersection Observer to add a class when the element enters the viewport, then set the background-image in that class. This defers the image until the element is visible.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Full image optimization guide including preload</p></div>
+              </a>
+              <a href="responsive-images-html.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">devices</span>
+                <div><p class="font-semibold text-sm text-white">Responsive Images in HTML</p>
+                <p class="text-xs text-slate-400 mt-0.5">srcset, sizes, and picture element guide</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>
+                Image Compressor
+              </a>
+              <a href="/tools/bg-remover.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                Background Remover
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

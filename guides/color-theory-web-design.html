@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Theory for Web Design: Practical Guide | StudioLimb</title>
+  <meta name="description" content="Apply color theory to web design: color harmonies, psychology, HSL in CSS, building a palette, and dark mode color systems. With practical CSS examples.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/color-theory-web-design.html">
+  <meta property="og:title" content="Color Theory for Web Design: Practical Guide">
+  <meta property="og:description" content="Practical color theory for web designers. Covers complementary/analogous harmonies, HSL color model, psychological associations, and building CSS color systems.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/color-theory-web-design.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Color Theory for Web Design: Practical Guide">
+  <meta name="twitter:description" content="Practical color theory for web designers. Covers complementary/analogous harmonies, HSL color model, psychological associations, and building CSS color systems.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Color Theory for Web Design: Practical Guide","description":"Color theory guide for web design covering color harmonies, HSL model, psychological associations, CSS color palettes, and dark mode systems.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/color-theory-web-design.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(244,63,94,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-rose-400">Color</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-rose-400">palette</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Color Theory for Web Design: Practical Guide</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Color is the fastest way to communicate emotion, hierarchy, and brand in a design. Understanding color theory lets you make deliberate, defensible color decisions instead of guessing until something 'looks right'.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 10 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Color Models You Actually Need</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Web designers work with three models: <strong>RGB</strong> for screens (additive, 0–255), <strong>HSL</strong> for human-readable CSS (Hue 0–360°, Saturation 0–100%, Lightness 0–100%), and <strong>HEX</strong> as a compact RGB encoding. HSL is the most useful for design decisions — it maps directly to how designers think about color.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">HSL: The Designer's Color Model</h2>
+<p class="text-slate-300 leading-relaxed mb-4">HSL (Hue, Saturation, Lightness) makes palette building intuitive. Same hue + different lightness = tints and shades. Same hue + different saturation = muted vs vibrant.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* HSL makes palette relationships visible in code */
+:root {
+  /* Primary brand color with tints/shades */
+  --blue-50:  hsl(220, 100%, 97%);  /* near white */
+  --blue-100: hsl(220, 96%,  93%);
+  --blue-200: hsl(220, 94%,  87%);
+  --blue-300: hsl(220, 87%,  76%);
+  --blue-400: hsl(220, 80%,  64%);
+  --blue-500: hsl(220, 75%,  55%);  /* base */
+  --blue-600: hsl(220, 72%,  46%);
+  --blue-700: hsl(220, 68%,  38%);
+  --blue-800: hsl(220, 64%,  28%);
+  --blue-900: hsl(220, 60%,  18%);  /* near black */
+}
+
+/* Pattern: same hue, same saturation, vary lightness by ~9% steps */
+
+/* Muted variant: reduce saturation */
+--blue-muted: hsl(220, 30%, 55%);
+
+/* Warm tint: shift hue slightly */
+--blue-warm: hsl(215, 75%, 55%);</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Color Harmonies</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Harmony</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Definition</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">When to Use</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Example Hues</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Monochromatic</td><td class="py-2 pr-4">One hue, many tints/shades</td><td class="py-2 pr-4">Clean, cohesive brand palettes</td><td class="py-2 pr-4">All blues</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Analogous</td><td class="py-2 pr-4">3–4 adjacent hues (±30°)</td><td class="py-2 pr-4">Natural, calm, flowing</td><td class="py-2 pr-4">Blue, teal, green</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Complementary</td><td class="py-2 pr-4">Opposite hues (180°)</td><td class="py-2 pr-4">High contrast, energetic</td><td class="py-2 pr-4">Blue + orange</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Split-complementary</td><td class="py-2 pr-4">Hue + two colors ±150°</td><td class="py-2 pr-4">Vibrant but less jarring than complementary</td><td class="py-2 pr-4">Blue + red-orange + yellow-orange</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Triadic</td><td class="py-2 pr-4">Three evenly spaced hues (120°)</td><td class="py-2 pr-4">Bold, playful</td><td class="py-2 pr-4">Red + yellow + blue</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Tetradic</td><td class="py-2 pr-4">Four hues (90° apart)</td><td class="py-2 pr-4">Rich, complex — hard to balance</td><td class="py-2 pr-4">Red + yellow + green + blue</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Building a CSS Color System</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* 1. Define semantic tokens from base palette */
+:root {
+  /* Brand palette */
+  --color-brand:       hsl(252, 100%, 70%);
+  --color-brand-light: hsl(252, 100%, 85%);
+  --color-brand-dark:  hsl(252, 80%,  55%);
+
+  /* Neutrals (warm gray — slight warm tint to complement purple brand) */
+  --color-surface-0: hsl(240, 10%, 4%);   /* darkest */
+  --color-surface-1: hsl(240, 8%,  8%);
+  --color-surface-2: hsl(240, 6%,  12%);
+  --color-surface-3: hsl(240, 4%,  18%);
+
+  /* Text */
+  --color-text-primary:   hsl(0, 0%, 98%);
+  --color-text-secondary: hsl(240, 5%, 65%);
+  --color-text-muted:     hsl(240, 5%, 45%);
+
+  /* Semantic status colors */
+  --color-success: hsl(142, 70%, 50%);
+  --color-warning: hsl(38,  92%, 55%);
+  --color-error:   hsl(0,   72%, 55%);
+  --color-info:    hsl(200, 80%, 55%);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Color Psychology in Web Design</h2>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Blue</strong>: Trust, stability, professionalism. Dominant in finance (PayPal, Visa), tech (IBM, Twitter/X), and healthcare. Works in almost any context.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Green</strong>: Growth, health, success, environment. Used for CTAs (high conversion), sustainability brands, finance ("in the green"), and health tech.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Red</strong>: Urgency, passion, danger, energy. Used for sales/discounts, alerts, food brands (triggers appetite), and CTAs requiring immediate action.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Purple</strong>: Creativity, luxury, wisdom. Common in fintech, creative tools, premium products, and design-forward brands.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Orange</strong>: Friendly, warm, affordable, accessible. Lower barrier to entry than red; often used for CTAs that should feel approachable.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Important caveat</strong>: Color associations are highly cultural. Red means luck in China but danger in Western contexts. Always research your target audience's cultural context.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Color Mistakes in Web Design</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Using pure black (#000000) for text</strong> — pure black on white is too harsh. Use dark grays (hsl(0,0%,10%)) or dark cool tones for softer, more professional text.</li>
+  <li><strong>Using pure white (#ffffff) for backgrounds</strong> — pure white causes eye strain in long-form reading. Off-white (hsl(0,0%,98%) or warm whites) are more comfortable.</li>
+  <li><strong>Ignoring contrast ratios</strong> — light gray text on white looks elegant but fails WCAG. Every color choice needs a contrast check.</li>
+  <li><strong>Too many saturated colors</strong> — high saturation should be reserved for key UI elements (primary CTA, active states). Too many vibrant colors create visual noise.</li>
+  <li><strong>Not testing dark mode separately</strong> — a color system designed for light mode rarely works for dark mode without significant adjustment. Design both simultaneously.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">What's the 60-30-10 color rule?</dt>
+<dd class="text-slate-300 leading-relaxed">A design composition rule: 60% dominant/neutral color (backgrounds), 30% secondary color (cards, sections), 10% accent color (buttons, links, highlights). It creates visual hierarchy without overwhelming the viewer.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I choose an accent color?</dt>
+<dd class="text-slate-300 leading-relaxed">A complementary color (opposite your primary on the color wheel) creates the most contrast. For a blue primary, orange or amber makes an effective accent. Make sure the accent passes 3:1 contrast ratio against its background when used for interactive elements.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What is the difference between tint, tone, and shade?</dt>
+<dd class="text-slate-300 leading-relaxed">Tint = hue + white (lighter). Shade = hue + black (darker). Tone = hue + gray (more muted). In CSS HSL: tint = increase lightness, shade = decrease lightness, tone = decrease saturation.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I build a dark mode palette from a light palette?</dt>
+<dd class="text-slate-300 leading-relaxed">Flip the lightness scale: your lightest neutral becomes darkest surface, and vice versa. Reduce saturation of text colors slightly. Desaturate colored backgrounds by 10–20% (vibrant colors look garish on dark backgrounds). Keep the brand accent similar but slightly lighter to maintain contrast.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="accessible-color-palette.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">accessibility</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Accessible Color Palette</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Building palettes that pass WCAG contrast requirements</p>
+                </div>
+              </a>
+              <a href="wcag-color-contrast-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">contrast</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">WCAG Color Contrast Guide</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Contrast ratios, tools, and testing strategies</p>
+                </div>
+              </a>
+        </div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/color-palette-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">palette</span>
+                Color Palette Generator
+              </a>
+              <a href="/tools/contrast-checker.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">contrast</span>
+                Contrast Checker
+              </a>
+              <a href="/tools/gradient-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">gradient</span>
+                Gradient Generator
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

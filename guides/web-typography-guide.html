@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Typography Guide: Scales, Spacing & Readability | StudioLimb</title>
+  <meta name="description" content="Master web typography with typographic scales, fluid sizing, line-height, measure, and font pairing. Practical CSS examples for readable, beautiful type.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/web-typography-guide.html">
+  <meta property="og:title" content="Web Typography Guide: Scales, Spacing & Readability">
+  <meta property="og:description" content="Complete web typography guide covering modular scales, fluid type with clamp(), line-height, measure, letter-spacing, and font pairing principles.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/web-typography-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Web Typography Guide: Scales, Spacing & Readability">
+  <meta name="twitter:description" content="Complete web typography guide covering modular scales, fluid type with clamp(), line-height, measure, letter-spacing, and font pairing principles.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Web Typography Guide: Scales, Spacing & Readability","description":"Web typography guide with typographic scale, fluid sizing, line-height ratios, measure, letter-spacing, CSS examples, and readability principles.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/web-typography-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(251,191,36,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-amber-400">Typography</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-amber-400">text_fields</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Web Typography Guide: Scales, Spacing & Readability</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Typography is 95% of design. It determines readability, hierarchy, emotion, and brand voice. This guide covers the principles and CSS techniques that separate professional typographic systems from amateur ones.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 10 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Typographic Scale</h2>
+<p class="text-slate-300 leading-relaxed mb-4">A typographic scale is a set of harmonically related font sizes. The modular scale (each step multiplied by a ratio) creates visual consistency across heading levels.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Modular scale with ratio 1.25 (Major Third) */
+:root {
+  --text-xs:   0.64rem;   /* 10.24px */
+  --text-sm:   0.8rem;    /* 12.8px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.25rem;   /* 20px */
+  --text-xl:   1.563rem;  /* 25px */
+  --text-2xl:  1.953rem;  /* 31px */
+  --text-3xl:  2.441rem;  /* 39px */
+  --text-4xl:  3.052rem;  /* 49px */
+}
+
+/* Usage */
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+p  { font-size: var(--text-base); }
+small { font-size: var(--text-sm); }</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Fluid Typography with clamp()</h2>
+<p class="text-slate-300 leading-relaxed mb-4"><code>clamp(min, preferred, max)</code> creates type that scales smoothly between breakpoints without media queries. The preferred value uses viewport units for fluid scaling.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Fluid heading: 2rem on mobile → 4rem on desktop */
+h1 {
+  font-size: clamp(2rem, 4vw + 1rem, 4rem);
+}
+
+/* Fluid body text: 1rem → 1.125rem */
+p {
+  font-size: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
+}
+
+/*
+  clamp() formula:
+  - min: smallest size (mobile)
+  - preferred: vw-based calculation for smooth scaling
+  - max: largest size (desktop)
+
+  Tip: use utopia.fyi to generate fluid type scales automatically
+*/
+
+/* Full fluid scale example */
+:root {
+  --step-0: clamp(1rem, 0.5vi + 0.875rem, 1.125rem);
+  --step-1: clamp(1.25rem, 1vi + 1rem, 1.5rem);
+  --step-2: clamp(1.5rem, 2vi + 1rem, 2rem);
+  --step-3: clamp(2rem, 3vi + 1rem, 3rem);
+  --step-4: clamp(2.5rem, 5vi + 1rem, 4rem);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Line Height: The Most Impactful Typography Setting</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Line height (leading) has more impact on readability than font size. Too tight creates claustrophobia; too loose breaks the sense of grouping.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Line height ratios by context */
+:root {
+  --leading-tight:   1.2;  /* headings, large display type */
+  --leading-snug:    1.35; /* subheadings, labels */
+  --leading-normal:  1.5;  /* UI text, captions */
+  --leading-relaxed: 1.65; /* body text, articles */
+  --leading-loose:   1.8;  /* long-form reading, accessibility */
+}
+
+h1, h2 { line-height: var(--leading-tight); }
+h3, h4 { line-height: var(--leading-snug); }
+p      { line-height: var(--leading-relaxed); }
+
+/* Rule of thumb:
+   - Headings (large text): 1.1–1.3
+   - Body text: 1.5–1.7
+   - Small/caption text: 1.4–1.6 (needs more leading, not less)
+*/</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Measure: Optimal Line Length</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Measure is the width of a column of text. The ideal is 45–75 characters per line. Too wide: eyes lose track of the next line. Too narrow: constant line breaks disrupt flow.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Using ch units (1ch = width of '0' character) */
+article, .prose {
+  max-width: 70ch; /* approximately 65-75 characters */
+}
+
+/* More precise with character count test:
+   "The quick brown fox jumps over the lazy dog" = 44 chars
+   Adjust max-width until a typical paragraph line is 50-70 chars
+*/
+
+/* For multiple column sizes */
+.caption { max-width: 45ch; }
+.body    { max-width: 70ch; }
+.lead    { max-width: 55ch; }</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Letter Spacing (Tracking)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Default letter spacing works for body text. Adjust for specific contexts: uppercase labels need positive tracking; large display headings often benefit from negative tracking.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Context-appropriate letter spacing */
+/* All-caps labels, buttons, overlines */
+.label, .overline, .badge {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;  /* 0.05–0.1em for uppercase */
+  font-size: 0.75rem;
+}
+
+/* Display headings (tighten at large sizes) */
+.display-xl {
+  font-size: clamp(3rem, 6vw, 6rem);
+  letter-spacing: -0.02em; /* tighter at large sizes */
+}
+
+/* Body text */
+p {
+  letter-spacing: 0; /* or 0.01em for optical correction */
+}
+
+/* Never: tracking sans-serif body text positively
+   Only tracking all-caps or small type positively */</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Font Pairing Archetypes</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Pairing Type</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Heading</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Body</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Character</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Classic editorial</td><td class="py-2 pr-4">Playfair Display</td><td class="py-2 pr-4">Source Serif 4</td><td class="py-2 pr-4">Authoritative, literary</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Modern tech</td><td class="py-2 pr-4">Inter</td><td class="py-2 pr-4">Inter</td><td class="py-2 pr-4">Clean, neutral, readable</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Warm humanist</td><td class="py-2 pr-4">Lora</td><td class="py-2 pr-4">Source Sans 3</td><td class="py-2 pr-4">Approachable, editorial</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">High contrast</td><td class="py-2 pr-4">Montserrat</td><td class="py-2 pr-4">Merriweather</td><td class="py-2 pr-4">Strong, magazine-like</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Minimal UI</td><td class="py-2 pr-4">DM Sans</td><td class="py-2 pr-4">DM Sans</td><td class="py-2 pr-4">Systemic, app-like</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Typography Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Body text below 16px</strong> — 16px is the minimum comfortable reading size. 17–18px is better for long-form content.</li>
+  <li><strong>Using heading font for body text</strong> — display/heading fonts are designed for large sizes. At small sizes they lose legibility. Use a text-optimized typeface for body.</li>
+  <li><strong>100% line-height on body text</strong> — this makes lines collide. Always set line-height explicitly; browser defaults vary.</li>
+  <li><strong>Positive letter-spacing on lowercase body text</strong> — spacing is set by the type designer for lowercase text. Expanding it hurts readability; only expand tracking on uppercase.</li>
+  <li><strong>Using more than 2–3 typefaces</strong> — every additional font family adds cognitive noise and network overhead. 1 family (with multiple weights) or 2 families is almost always enough.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">What is the best font size for body text?</dt>
+<dd class="text-slate-300 leading-relaxed">16px is the conventional baseline. For long-form reading (articles, documentation), 17–18px with 1.6–1.7 line-height is more comfortable, especially on large screens.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I use rem or px for font sizes?</dt>
+<dd class="text-slate-300 leading-relaxed">rem (root em) respects the user's browser font-size preferences — important for accessibility. Users who've set their browser default to 20px because they need larger text will have that preference respected with rem but not with px.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I choose a font pairing?</dt>
+<dd class="text-slate-300 leading-relaxed">The most reliable approach: pair a geometric/grotesque sans-serif with a humanist serif from the same period, or use a single superfamily with both display and text cuts (like Inter, Merriweather, or Source). Contrast in style (sans + serif) is safer than matching two different sans-serifs.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What is a variable font and should I use one?</dt>
+<dd class="text-slate-300 leading-relaxed">A variable font contains an entire type family (weights, widths, optical sizes) in a single file. One file replaces 4–8 separate font files, with significant bandwidth savings. All major Google Fonts support variable fonts now — use them.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="google-fonts-performance.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">font_download</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Google Fonts Performance</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Load custom fonts without slowing your site</p>
+                </div>
+              </a>
+              <a href="wcag-color-contrast-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">contrast</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">WCAG Color Contrast Guide</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Ensure text meets accessibility contrast ratios</p>
+                </div>
+              </a>
+        </div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/font-pairing.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">text_fields</span>
+                Font Pairing Tool
+              </a>
+              <a href="/tools/contrast-checker.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">contrast</span>
+                Contrast Checker
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

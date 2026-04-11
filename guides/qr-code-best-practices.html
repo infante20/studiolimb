@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Best Practices: Design, Size & Error Correction | StudioLimb</title>
+  <meta name="description" content="Create effective QR codes that scan reliably. Learn error correction levels, optimal sizing, design guidelines, URL shortening, tracking, and common QR code mistakes.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/qr-code-best-practices.html">
+  <meta property="og:title" content="QR Code Best Practices: Design, Size & Error Correction">
+  <meta property="og:description" content="QR code design guide covering error correction levels, minimum print sizes, quiet zone requirements, logo embedding, URL shortening, and UTM tracking.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/qr-code-best-practices.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QR Code Best Practices: Design, Size & Error Correction">
+  <meta name="twitter:description" content="QR code design guide covering error correction levels, minimum print sizes, quiet zone requirements, logo embedding, URL shortening, and UTM tracking.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"QR Code Best Practices: Design, Size & Error Correction","description":"QR code best practices guide covering error correction levels L/M/Q/H, minimum sizes, quiet zone, logo embedding, URL optimization, UTM tracking, and design tips.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/qr-code-best-practices.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-orange-400">Tools</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-orange-400">qr_code</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">QR Code Best Practices: Design, Size & Error Correction</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">QR codes look simple, but poor implementation leads to codes that fail to scan, direct users to broken URLs, or have no tracking. These best practices ensure your QR codes work reliably in print and digital contexts.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 8 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Error Correction Levels</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Level</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Data Recovery</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Use Case</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Size Overhead</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">L (Low)</td><td class="py-2 pr-4">~7% recovery</td><td class="py-2 pr-4">Clean digital displays, no logo overlay</td><td class="py-2 pr-4">Smallest</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">M (Medium)</td><td class="py-2 pr-4">~15% recovery</td><td class="py-2 pr-4">Standard use, slight logo overlay</td><td class="py-2 pr-4">Small</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Q (Quartile)</td><td class="py-2 pr-4">~25% recovery</td><td class="py-2 pr-4">Recommended for print, small logos</td><td class="py-2 pr-4">Medium</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">H (High)</td><td class="py-2 pr-4">~30% recovery</td><td class="py-2 pr-4">Large logo overlay, harsh environments</td><td class="py-2 pr-4">Largest (most modules)</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Choosing Error Correction Level</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Use <strong>M or Q</strong> for most cases. M works for clean digital screens. Q is recommended for print (which may be photocopied, creased, or partially obscured). H is necessary if you embed a logo — it allows the covered modules to be reconstructed. Note: higher error correction = more dense QR code = potentially harder to scan at small sizes. Balance logo size with QR code size.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Minimum Print Sizes</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Use Case</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Minimum Size</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Recommended Size</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Business card</td><td class="py-2 pr-4">2 × 2 cm (0.8in)</td><td class="py-2 pr-4">3 × 3 cm (1.2in)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Flyer / poster</td><td class="py-2 pr-4">3 × 3 cm (1.2in)</td><td class="py-2 pr-4">5 × 5 cm (2in)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Retail/product label</td><td class="py-2 pr-4">2 × 2 cm (0.8in)</td><td class="py-2 pr-4">4 × 4 cm (1.6in)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Billboard (far distance)</td><td class="py-2 pr-4">Depends on distance</td><td class="py-2 pr-4">1/10 of viewing distance</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Digital display</td><td class="py-2 pr-4">150 × 150 px minimum</td><td class="py-2 pr-4">200 × 200 px+</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">URL Optimization for QR Codes</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Shorter URLs generate less dense QR codes with fewer modules, making them easier to scan. Use a URL shortener or redirect for print campaigns, and always use HTTPS.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Good: short, HTTPS, UTM tracked -->
+https://example.com/s/spring-sale
+
+<!-- With UTM parameters for tracking -->
+https://example.com?utm_source=print&utm_medium=flyer&utm_campaign=spring-sale
+
+<!-- Use a URL shortener for print to reduce module density -->
+<!-- Short URL → less dense QR → scans faster at smaller sizes -->
+https://ex.co/flyer26
+
+<!-- Avoid: long URLs in print QR codes -->
+https://example.com/products/category/subcategory/spring-sale-2026?ref=flyer&coupon=SAVE20</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Logo Embedding Guidelines</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Embedding a logo in a QR code is purely cosmetic — it reduces scannability. If you add a logo, follow these rules to minimize scan failure:</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Use H error correction level</strong> when adding a logo — the covered modules need to be reconstructable.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Cover no more than 30%</strong> of the QR code with the logo (the theoretical H-level recovery limit). In practice, keep it under 20% for reliable scanning.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Place the logo in the exact center</strong> — QR readers expect the corner finder patterns to be intact. Never cover the three corner squares.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Always test with multiple devices</strong> — an older Android phone or low-light scan will be the weakest test. Test before printing.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">QR Code Design Rules</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Maintain the quiet zone</strong> — QR codes require a 4-module white border (quiet zone) on all sides. Eliminating it prevents scanners from locating the code boundaries.</li>
+  <li><strong>High contrast is mandatory</strong> — dark modules on light background (not the other way around — inverted QR codes often fail). Minimum 4:1 contrast ratio between module colors.</li>
+  <li><strong>Never use busy backgrounds</strong> — placing a QR code over a photograph or pattern reduces scannability. Use a solid white or light background pad behind the code.</li>
+  <li><strong>Verify before printing</strong> — generate the final code and test scan it with at least 3 different devices (iPhone, Android, desktop) before committing to print.</li>
+  <li><strong>Always add a call to action</strong> — print 'Scan for menu' or 'Scan to shop' near the QR code. Codes without context have significantly lower scan rates.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Do QR codes expire?</dt>
+<dd class="text-slate-300 leading-relaxed">Static QR codes (where the URL is encoded directly) never expire — as long as the destination URL works, the code works. Dynamic QR codes (managed by a QR platform that redirects) can expire if you stop paying for the service. For permanent use, use static QR codes pointing to URLs you control.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I track QR code scans?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — add UTM parameters to the destination URL (utm_source, utm_medium, utm_campaign) and Google Analytics/GA4 will track scans as website traffic. For more detailed tracking (scan location, device type, time), use a dynamic QR service like Bitly or QR.io.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between static and dynamic QR codes?</dt>
+<dd class="text-slate-300 leading-relaxed">Static QR codes encode the final URL directly — they can't be changed after printing. Dynamic QR codes encode a short URL managed by a platform, which redirects to the real destination — this allows updating the destination URL without reprinting. Use dynamic for print campaigns where the destination might change.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Why won't my QR code scan?</dt>
+<dd class="text-slate-300 leading-relaxed">Common causes: too small (increase size), low contrast (darken modules, lighten background), no quiet zone (add white border), damaged/creased print (reprint), URL too long (shorten the URL), or logo too large (reduce to under 20%). Test on multiple devices to narrow down the issue.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="regex-cheatsheet.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">text_fields</span>
+                <div><p class="font-semibold text-sm text-white">Regex Cheatsheet</p>
+                <p class="text-xs text-slate-400 mt-0.5">Pattern matching for validation and parsing</p></div>
+              </a>
+              <a href="json-formatting-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">data_object</span>
+                <div><p class="font-semibold text-sm text-white">JSON Formatting Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Structure, syntax, and best practices for JSON</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/qr-code-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">qr_code</span>QR Code Generator
+              </a>
+              <a href="/tools/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>Image Compressor
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

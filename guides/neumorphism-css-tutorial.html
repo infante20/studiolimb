@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism CSS Tutorial: Soft UI Design | StudioLimb</title>
+  <meta name="description" content="Build neumorphism (soft UI) components with CSS box-shadow. Learn the light and dark variants, pressed state, accessibility pitfalls, and when to use it.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/neumorphism-css-tutorial.html">
+  <meta property="og:title" content="Neumorphism CSS Tutorial: Soft UI Design">
+  <meta property="og:description" content="Create neumorphic buttons, cards, and inputs with CSS. Covers light/dark variants, pressed states, and accessibility limitations of soft UI design.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/neumorphism-css-tutorial.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Neumorphism CSS Tutorial: Soft UI Design">
+  <meta name="twitter:description" content="Create neumorphic buttons, cards, and inputs with CSS. Covers light/dark variants, pressed states, and accessibility limitations of soft UI design.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Neumorphism CSS Tutorial: Soft UI Design","description":"Neumorphism CSS tutorial covering box-shadow technique, light and dark variants, pressed state, concave/convex forms, and accessibility considerations.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/neumorphism-css-tutorial.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#7c6fff' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body { font-family: 'Public Sans', sans-serif; background: #050508; }
+    .glass-panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .prose-guide h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-guide h3 { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose-guide p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; }
+    .prose-guide ul { list-style: disc; padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .prose-guide li { margin-bottom: 0.4rem; }
+    .prose-guide pre { background: #0d0d14; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .prose-guide code { color: #cbd5e1; }
+    .prose-guide table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .prose-guide th { text-align: left; padding: 0.5rem 1rem 0.5rem 0; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose-guide td { padding: 0.5rem 1rem 0.5rem 0; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white">
+        <span class="material-symbols-outlined text-primary">design_services</span>
+        StudioLimb
+      </a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, rgba(124,111,255,0.15) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-violet-400">CSS</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-violet-400">cloud</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Neumorphism CSS Tutorial: Soft UI Design</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Neumorphism (soft UI) creates the illusion of elements extruding from or pressing into a surface using dual box-shadows — one light, one dark. The result: interfaces that feel tactile, physical, and satisfying.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">How Neumorphism Works</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The effect requires a flat background, and two box-shadows: one lighter than the background (simulating light source) and one darker (simulating shadow). The element appears to float above the surface. To create a pressed state, you flip the shadows to <em>inset</em>.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Core Formula</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/*
+  Rule: shadow colors are tints/shades of the background.
+  Background: #e0e5ec
+  Light shadow: lighten ~10% → #ffffff (or near-white)
+  Dark shadow:  darken ~10%  → #a3b1c6
+*/
+
+/* Light neumorphic card */
+.neu-card {
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow:
+    8px 8px 16px #a3b1c6,   /* dark shadow, bottom-right */
+   -8px -8px 16px #ffffff;  /* light shadow, top-left */
+}
+
+/* Pressed / active state */
+.neu-card:active,
+.neu-card.pressed {
+  box-shadow:
+    inset 8px 8px 16px #a3b1c6,
+    inset -8px -8px 16px #ffffff;
+}
+
+/* Soft button */
+.neu-button {
+  background: #e0e5ec;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow:
+    6px 6px 12px #a3b1c6,
+   -6px -6px 12px #ffffff;
+  transition: box-shadow 0.15s ease;
+}
+
+.neu-button:hover {
+  box-shadow:
+    4px 4px 8px #a3b1c6,
+   -4px -4px 8px #ffffff;
+}
+
+.neu-button:active {
+  box-shadow:
+    inset 4px 4px 8px #a3b1c6,
+    inset -4px -4px 8px #ffffff;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Dark Mode Neumorphism</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Dark neumorphism needs a mid-tone dark background (not pure black). Pure black has no room for a darker shadow. A dark gray like #1e2430 works well.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Dark neumorphic surface */
+.neu-dark {
+  background: #1e2430;
+  border-radius: 20px;
+  box-shadow:
+    8px 8px 16px #131820,    /* darker shade */
+   -8px -8px 16px #293040;  /* lighter shade */
+}
+
+/* Dark pressed */
+.neu-dark.pressed {
+  box-shadow:
+    inset 6px 6px 12px #131820,
+    inset -6px -6px 12px #293040;
+}
+
+/* Concave (sunken) form */
+.neu-dark-concave {
+  background: linear-gradient(145deg, #1a202c, #232b38);
+  box-shadow:
+    8px 8px 16px #131820,
+   -8px -8px 16px #293040;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Neumorphic Form Elements</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Text input */
+.neu-input {
+  background: #e0e5ec;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  outline: none;
+  box-shadow:
+    inset 4px 4px 8px #a3b1c6,
+    inset -4px -4px 8px #ffffff;
+  color: #444;
+  font-size: 1rem;
+}
+
+.neu-input:focus {
+  box-shadow:
+    inset 4px 4px 8px #a3b1c6,
+    inset -4px -4px 8px #ffffff,
+    0 0 0 2px rgba(124, 111, 255, 0.4); /* accessible focus ring */
+}
+
+/* Toggle switch */
+.neu-toggle {
+  width: 56px;
+  height: 28px;
+  border-radius: 14px;
+  background: #e0e5ec;
+  box-shadow:
+    inset 3px 3px 6px #a3b1c6,
+    inset -3px -3px 6px #ffffff;
+  position: relative;
+}
+
+.neu-toggle .thumb {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #e0e5ec;
+  box-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
+  position: absolute;
+  top: 3px; left: 3px;
+  transition: transform 0.2s ease;
+}
+
+.neu-toggle.on .thumb {
+  transform: translateX(28px);
+  background: #7c6fff;
+  box-shadow: 2px 2px 4px rgba(124,111,255,0.4);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">CSS Variables for Consistent Neumorphism</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Centralizing shadow values in CSS custom properties makes the system easy to maintain and switch between light/dark themes.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">:root {
+  --neu-bg: #e0e5ec;
+  --neu-shadow-dark: #a3b1c6;
+  --neu-shadow-light: #ffffff;
+  --neu-radius: 16px;
+  --neu-offset: 8px;
+  --neu-blur: 16px;
+}
+
+.neu {
+  background: var(--neu-bg);
+  border-radius: var(--neu-radius);
+  box-shadow:
+    var(--neu-offset) var(--neu-offset) var(--neu-blur) var(--neu-shadow-dark),
+    calc(-1 * var(--neu-offset)) calc(-1 * var(--neu-offset)) var(--neu-blur) var(--neu-shadow-light);
+}
+
+[data-theme="dark"] {
+  --neu-bg: #1e2430;
+  --neu-shadow-dark: #131820;
+  --neu-shadow-light: #293040;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Accessibility Warning</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Neumorphism has a known accessibility problem: <strong>low contrast</strong>. Because the interactive elements use the same background color as the surface (with only shadow variation), they can be nearly invisible to users with low vision.</p>
+<p class="text-slate-300 leading-relaxed mb-4">WCAG 2.1 requires 3:1 contrast ratio for UI components (e.g., buttons) against adjacent colors. Pure neumorphic buttons typically fail this test.</p>
+<p class="text-slate-300 leading-relaxed mb-4">Recommended mitigation: add a subtle border on interactive elements (<code>border: 1px solid rgba(0,0,0,0.08)</code>), ensure focus states are clearly visible with a colored outline, and consider adding color accents to active/selected states.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">When to Use (and When to Avoid) Neumorphism</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Use for:</strong> dashboards, music players, smart home UIs, wearable app mockups — contexts where a tactile, physical feel is desirable.</li>
+  <li><strong>Avoid for:</strong> data-heavy interfaces (contrast is needed), accessibility-critical apps, high-information-density UIs.</li>
+  <li><strong>Never use on:</strong> disabled states (already low contrast), placeholder text, or pure decorative elements with no interaction.</li>
+  <li><strong>Best pairing:</strong> combine neumorphism with a pop of accent color (purple, teal) to provide contrast anchors for interactive elements.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">What background color works best for neumorphism?</dt>
+<dd class="text-slate-300 leading-relaxed">Mid-tone grays in the #d0d8e8 – #e8ecf4 range work best for light mode. Avoid pure white (no room for lighter shadow) or pure black (no room for darker shadow). The background needs to sit in the middle of the lightness scale.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I calculate the shadow colors?</dt>
+<dd class="text-slate-300 leading-relaxed">Take your background hex color and create one version 10-15% lighter (light shadow) and one 10-15% darker (dark shadow). Tools like CSS Neumorphism Generator (neumorphism.io) can do this calculation automatically.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Is neumorphism still a trend in 2026?</dt>
+<dd class="text-slate-300 leading-relaxed">Neumorphism peaked around 2020-2021. It's now used selectively — mostly for specific UI components (toggles, sliders, audio players) rather than entire interfaces. Glassmorphism has largely replaced it as the dominant 'decorative' trend.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I combine glassmorphism and neumorphism?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — 'claymorphism' and hybrid approaches combine translucent glass backgrounds with soft extruded shadows. The key is to maintain contrast for accessibility regardless of which aesthetic you use.</dd></div>
+</dl>
+
+      </article>
+
+      <!-- Related Guides -->
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">blur_on</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">Glassmorphism Tutorial</p>
+                  <p class="text-xs text-slate-400 mt-0.5">The other major decorative CSS trend</p>
+                </div>
+              </a>
+              <a href="css-box-shadow-techniques.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">shadow</span>
+                <div>
+                  <p class="font-semibold text-sm text-white">CSS Box Shadow Techniques</p>
+                  <p class="text-xs text-slate-400 mt-0.5">Deep dive on box-shadow syntax and effects</p>
+                </div>
+              </a>
+        </div>
+      </div>
+
+      <!-- CTA Tools -->
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+
+              <a href="/tools/glassmorphism-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">blur_on</span>
+                Glassmorphism Generator
+              </a>
+              <a href="/tools/gradient-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">gradient</span>
+                Gradient Generator
+              </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

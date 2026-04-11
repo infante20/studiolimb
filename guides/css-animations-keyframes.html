@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CSS Animations & Keyframes: The Complete Guide (2026) — StudioLimb</title>
+    <meta name="description" content="Master CSS animations and @keyframes with practical examples. Learn timing functions, performance tips, reduced motion accessibility, and real-world animation patterns." />
+    <link rel="canonical" href="https://www.studiolimb.com/guides/css-animations-keyframes.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="CSS Animations & Keyframes: The Complete Guide" />
+    <meta property="og:description" content="Learn CSS animations from basics to advanced: keyframes, timing functions, performance, and accessibility." />
+    <meta property="og:url" content="https://www.studiolimb.com/guides/css-animations-keyframes.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CSS Animations & Keyframes: The Complete Guide" />
+    <meta name="twitter:description" content="Learn CSS animations from basics to advanced: keyframes, timing functions, performance, and accessibility." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "CSS Animations & Keyframes: The Complete Guide",
+      "description": "Complete guide to CSS animations and @keyframes with real examples and performance best practices.",
+      "url": "https://www.studiolimb.com/guides/css-animations-keyframes.html",
+      "datePublished": "2026-04-10",
+      "dateModified": "2026-04-10",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem; overflow-x: auto; font-size: 0.85rem; }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-bold uppercase">CSS Effects</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 10 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">CSS Animations & Keyframes: The Complete Guide</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">CSS animations bring interfaces to life — but done wrong, they slow pages down and frustrate users. This guide covers the full picture: from basic keyframe syntax to performance-safe techniques and accessibility requirements.</p>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary">
+
+            <h2>The Two CSS Animation Systems</h2>
+            <p>CSS has two ways to animate: <strong>transitions</strong> (for state changes triggered externally) and <strong>animations</strong> (for self-playing sequences). Both have their place:</p>
+            <pre><code class="language-css">/* Transition: responds to class/state change */
+.btn {
+  background: #7c5cfc;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn:hover {
+  background: #9333ea;
+  transform: translateY(-2px);
+}
+
+/* Animation: runs automatically */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}</code></pre>
+
+            <h2>@keyframes Syntax</h2>
+            <p>The <code>@keyframes</code> rule defines the sequence of styles at specific points in time. You can use percentages or the keywords <code>from</code> / <code>to</code>:</p>
+            <pre><code class="language-css">@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Multi-step keyframes */
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}</code></pre>
+
+            <h2>The animation Shorthand</h2>
+            <p>The <code>animation</code> property is shorthand for 8 individual properties:</p>
+            <pre><code class="language-css">.element {
+  animation: name duration timing-function delay
+             iteration-count direction fill-mode play-state;
+
+  /* Example */
+  animation: fadeSlideIn 0.4s ease-out 0.1s 1 normal forwards running;
+
+  /* Most common — name, duration, easing */
+  animation: fadeSlideIn 0.4s ease-out;
+
+  /* Multiple animations */
+  animation: fadeSlideIn 0.4s ease-out, pulse 2s ease-in-out 1s infinite;
+}</code></pre>
+
+            <h2>Timing Functions Explained</h2>
+            <p>The timing function controls the rate of change throughout the animation. Understanding the options is key to animations that feel natural:</p>
+            <pre><code class="language-css">.element {
+  /* Built-in keywords */
+  animation-timing-function: ease;        /* slow start, fast middle, slow end */
+  animation-timing-function: ease-in;     /* slow start, accelerates */
+  animation-timing-function: ease-out;    /* fast start, decelerates */
+  animation-timing-function: ease-in-out; /* slow start and end */
+  animation-timing-function: linear;      /* constant speed (good for rotations) */
+
+  /* Custom cubic-bezier */
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* spring bounce */
+
+  /* Steps (for sprite animations or typewriter effects) */
+  animation-timing-function: steps(8, end);
+}</code></pre>
+            <p>For most UI animations, <code>ease-out</code> feels the most natural — objects that enter the screen decelerate as they arrive, like real physical objects. Reserve <code>ease-in</code> for elements leaving the screen.</p>
+
+            <h2>fill-mode: What Happens Before and After</h2>
+            <p><code>animation-fill-mode</code> controls the element's style outside the animation's active duration:</p>
+            <pre><code class="language-css">.element {
+  /* none (default): returns to original state after animation */
+  animation-fill-mode: none;
+
+  /* forwards: keeps final keyframe values after animation ends */
+  animation-fill-mode: forwards;
+
+  /* backwards: applies first keyframe values during delay period */
+  animation-fill-mode: backwards;
+
+  /* both: applies backwards + forwards */
+  animation-fill-mode: both;
+}
+
+/* Most fade-in animations need "both" to avoid flash before start */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 0.2s both;
+}
+@keyframes fadeIn { to { opacity: 1; } }</code></pre>
+
+            <h2>Performance: Only Animate These Properties</h2>
+            <p>CSS animations can trigger three different browser pipeline stages: layout, paint, and composite. Only composited properties are GPU-accelerated and smooth at 60fps:</p>
+            <pre><code class="language-css">/* ✅ GPU-composited: always smooth */
+transform: translate(), scale(), rotate(), skew()
+opacity
+
+/* ⚠️ Triggers paint: avoid animating on many elements */
+color, background-color, border-color, box-shadow
+
+/* ❌ Triggers layout: never animate these */
+width, height, padding, margin, top, left, font-size
+
+/* Promote to GPU layer if needed */
+.animated-element {
+  will-change: transform; /* Use sparingly — right before animation */
+}</code></pre>
+
+            <h2>Accessibility: Respecting Motion Preferences</h2>
+            <p>Users with vestibular disorders or motion sensitivity can set their OS to "reduce motion". Always respect this preference:</p>
+            <pre><code class="language-css">/* Define animation normally */
+.card {
+  animation: slideIn 0.5s ease-out both;
+}
+
+/* Disable or reduce for users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none; /* or a gentler alternative */
+  }
+
+  /* For transitions */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}</code></pre>
+            <p>The nuclear option (setting all durations to 0.01ms) works but may cause jarring instant state changes. A better approach is to define a simplified, opacity-only version of each animation for reduced-motion users rather than removing all animation entirely.</p>
+
+            <h2>Common Animation Patterns</h2>
+            <p>These are the animations that appear most frequently in production UI:</p>
+            <pre><code class="language-css">/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Slide up (enter from below) */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scale pop (for modals, tooltips) */
+@keyframes scalePop {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Shimmer (loading skeleton) */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position: 200% center; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1a1a2e 25%, #2a2a4e 50%, #1a1a2e 75%);
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+}</code></pre>
+
+            <h2>Common Mistakes</h2>
+            <p></p>
+            <ul>
+                <li><strong>Animating layout properties:</strong> Animating <code>width</code>, <code>height</code>, <code>top</code>, or <code>margin</code> forces layout recalculation on every frame. Always use <code>transform</code> and <code>opacity</code> instead.</li>
+                <li><strong>Forgetting prefers-reduced-motion:</strong> Approximately 1 in 5 users has some form of motion sensitivity. Ignoring this preference causes real harm and can create legal accessibility liability.</li>
+                <li><strong>Using will-change on everything:</strong> <code>will-change: transform</code> creates a new compositing layer, consuming GPU memory. Don't apply it globally — add it right before animation starts and remove it after.</li>
+                <li><strong>Too many simultaneous animations:</strong> Animating 20 cards at once is much more expensive than animating 1. Stagger entrance animations to reduce concurrent GPU load.</li>
+                <li><strong>Infinite animations on large elements:</strong> An infinitely spinning large element repaints on every frame. Use the technique of animating a pseudo-element's opacity instead of the element itself.</li>
+            </ul>
+        </article>
+
+        <div class="mt-12 mb-8">
+            <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a href="css-box-shadow-techniques.html" class="glass-panel rounded-xl p-4 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                    <span class="material-symbols-outlined text-primary text-xl">shadow</span>
+                    <div><p class="font-semibold text-sm group-hover:text-primary transition-colors">CSS Box Shadow Techniques</p><p class="text-xs text-slate-500">Performant shadow hover animations</p></div>
+                </a>
+                <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-xl p-4 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                    <span class="material-symbols-outlined text-primary text-xl">layers</span>
+                    <div><p class="font-semibold text-sm group-hover:text-primary transition-colors">Glassmorphism Tutorial</p><p class="text-xs text-slate-500">Animated glass effects</p></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="../gradient-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">palette</span>
+                <div><p class="font-bold group-hover:text-primary transition-colors">Gradient Generator</p><p class="text-sm text-slate-400">Animated gradient backgrounds</p></div>
+            </a>
+            <a href="../glassmorphism-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">layers</span>
+                <div><p class="font-bold group-hover:text-primary transition-colors">Glassmorphism Generator</p><p class="text-sm text-slate-400">Animated glass UI</p></div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Compression Formats: JPEG, PNG, WebP, AVIF Explained | StudioLimb</title>
+  <meta name="description" content="Compare JPEG, PNG, GIF, WebP, AVIF, and SVG image formats. Learn which to use for photos, logos, icons, and animations with real file size data.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/image-compression-formats.html">
+  <meta property="og:title" content="Image Compression Formats Explained: JPEG vs PNG vs WebP vs AVIF">
+  <meta property="og:description" content="Complete comparison of web image formats in 2026. Covers lossy vs lossless compression, transparency support, browser support, and when to use each format.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/image-compression-formats.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Image Compression Formats Explained: JPEG vs PNG vs WebP vs AVIF">
+  <meta name="twitter:description" content="Complete comparison of web image formats in 2026. Covers lossy vs lossless compression, transparency support, browser support, and when to use each format.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Image Compression Formats: JPEG, PNG, WebP, AVIF Explained","description":"Web image format comparison guide covering JPEG, PNG, GIF, WebP, AVIF, and SVG compression types, browser support, file sizes, and use cases.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/image-compression-formats.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-blue-400">Images</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-blue-400">photo_library</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Image Compression Formats: JPEG, PNG, WebP, AVIF Explained</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Choosing the wrong image format can triple your file sizes. The web now has six major formats — each with strengths for specific use cases. This guide tells you exactly which format to reach for and why.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Format Decision Matrix</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Format</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Best For</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Compression</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Transparency</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Animation</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Browser Support</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">JPEG</td><td class="py-2 pr-4">Photos, gradients</td><td class="py-2 pr-4">Lossy</td><td class="py-2 pr-4">No</td><td class="py-2 pr-4">No</td><td class="py-2 pr-4">100%</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">PNG</td><td class="py-2 pr-4">Logos, screenshots, exact colors</td><td class="py-2 pr-4">Lossless</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">No</td><td class="py-2 pr-4">100%</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">GIF</td><td class="py-2 pr-4">Simple animations (legacy)</td><td class="py-2 pr-4">Lossless (256 colors)</td><td class="py-2 pr-4">1-bit</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">100%</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">WebP</td><td class="py-2 pr-4">Photos + transparency, animations</td><td class="py-2 pr-4">Lossy + Lossless</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">97%</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">AVIF</td><td class="py-2 pr-4">Photos (best compression)</td><td class="py-2 pr-4">Lossy + Lossless</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">97%</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">SVG</td><td class="py-2 pr-4">Icons, logos, illustrations</td><td class="py-2 pr-4">Vector</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">Yes (CSS/SMIL)</td><td class="py-2 pr-4">99%</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">JPEG: Still the Photo Standard</h2>
+<p class="text-slate-300 leading-relaxed mb-4">JPEG (Joint Photographic Experts Group) is lossy compression optimized for photographs. Each save degrades quality by discarding color information the human eye doesn't notice. Quality 85% is the sweet spot for most web photos — visually identical to lossless but 60-70% smaller. Progressive JPEG (renders in blurry-to-sharp passes) improves perceived performance on slow connections.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">PNG: Lossless for Precision</h2>
+<p class="text-slate-300 leading-relaxed mb-4">PNG (Portable Network Graphics) is lossless — every pixel is stored exactly. Use it when pixel-perfect quality matters: logos with flat colors, screenshots with text, icons, anything with transparency, and source files you'll edit again. PNG-8 (256 colors) is smaller for simple graphics; PNG-24 supports full color. Never use PNG for photographs — file sizes are 3–5x larger than JPEG with no visible quality improvement.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">WebP: The Modern Default</h2>
+<p class="text-slate-300 leading-relaxed mb-4">WebP (Google, 2010) combines JPEG and PNG capabilities in one format: lossy for photos, lossless for graphics, transparency in both modes, and animated WebP to replace GIF. At quality 75, WebP photos are 25–35% smaller than JPEG 85% with equivalent visual quality.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Serve WebP with JPEG/PNG fallback -->
+<picture>
+  <source srcset="photo.webp" type="image/webp">
+  <img src="photo.jpg" alt="Description" loading="lazy">
+</picture></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">AVIF: The New Champion</h2>
+<p class="text-slate-300 leading-relaxed mb-4">AVIF (AV1 Image File Format) is the most efficient format available. Based on the AV1 video codec, it achieves 50% better compression than JPEG and 30% better than WebP. Support reached 97% in 2024. Encoding is slower than WebP, so use CDN-level conversion rather than encoding at build time.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Optimal 2026 image setup: AVIF → WebP → JPEG -->
+<picture>
+  <source srcset="photo.avif" type="image/avif">
+  <source srcset="photo.webp" type="image/webp">
+  <img src="photo.jpg" alt="Description" width="800" height="600" loading="lazy">
+</picture></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG: Vector for Anything Non-Photographic</h2>
+<p class="text-slate-300 leading-relaxed mb-4">SVG (Scalable Vector Graphics) is XML-based vector format. It's the only format that scales perfectly at any size — essential for logos, icons, and illustrations used at multiple sizes. SVGs are also searchable by Google (content is text), CSS-styleable, and animatable. File sizes for simple graphics are typically 5–20KB — smaller than any raster equivalent. Use SVG for anything that isn't a photograph.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">GIF: Only for Memes in 2026</h2>
+<p class="text-slate-300 leading-relaxed mb-4">GIF is limited to 256 colors, no true transparency, and large file sizes for animations. Animated WebP is 40-60% smaller than GIF with full color. Animated AVIF is even smaller. There's no technical reason to use GIF for new content — it persists only for meme/social media compatibility (Twitter, Discord).</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Image Format Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Using PNG for photographs</strong> — lossless compression of photo data is 3–5x larger than JPEG. Always use JPEG/WebP/AVIF for photos.</li>
+  <li><strong>Using JPEG for logos</strong> — JPEG introduces compression artifacts on sharp edges and flat colors. Use SVG or PNG for logos.</li>
+  <li><strong>Exporting SVG with embedded raster data</strong> — Illustrator can export SVG with embedded JPEGs. Always check SVG file size; if it's over 100KB, the SVG probably contains embedded images.</li>
+  <li><strong>Not using picture for AVIF/WebP</strong> — serving only WebP without a fallback will break images in older browsers. Always use the picture element.</li>
+  <li><strong>Upscaling low-res source images</strong> — no format can recover detail that wasn't in the original. Upscaling a 400px image to 1200px just makes a blurry 1200px image.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">When will I be able to drop JPEG fallbacks?</dt>
+<dd class="text-slate-300 leading-relaxed">AVIF and WebP both have 97% support as of 2026. The remaining 3% are primarily old Safari (pre-14) and legacy Android WebViews. For most sites, a simple WebP with JPEG fallback (using picture) is sufficient. AVIF-only is still premature.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What about HEIC/HEIF?</dt>
+<dd class="text-slate-300 leading-relaxed">HEIC (Apple's default iPhone format) has limited browser support and licensing restrictions. It's excellent for native apps and device storage, but not suitable for web delivery. Convert to WebP or AVIF for the web.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Does format choice affect SEO?</dt>
+<dd class="text-slate-300 leading-relaxed">Indirectly — image format affects file size, which affects page load time, which affects Core Web Vitals (LCP, CLS), which are Google ranking signals. Smaller images = faster LCP = potential ranking improvement. Google can also index content in WebP images.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the fastest way to convert my existing images?</dt>
+<dd class="text-slate-300 leading-relaxed">Use Squoosh (squoosh.app) for individual images, or cwebp/avifenc command-line tools for batch conversion. Alternatively, a CDN like Cloudflare Images or Next.js Image component handles conversion automatically based on browser support.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="svg-vs-png-vs-webp.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">compare</span>
+                <div><p class="font-semibold text-sm text-white">SVG vs PNG vs WebP</p>
+                <p class="text-xs text-slate-400 mt-0.5">Deep dive with file size comparison tables</p></div>
+              </a>
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Full 9-step optimization workflow</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>
+                Image Compressor
+              </a>
+              <a href="/tools/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                SVG Optimizer
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Images: When to Use Data URIs in CSS & HTML | StudioLimb</title>
+  <meta name="description" content="Learn when to use Base64 encoded images as data URIs in CSS and HTML. Covers encoding, inline SVG, performance trade-offs, and when NOT to use Base64.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/base64-images-guide.html">
+  <meta property="og:title" content="Base64 Images: When to Use Data URIs in CSS & HTML">
+  <meta property="og:description" content="Complete guide to Base64 image encoding. Covers encoding syntax, CSS data URIs, inline SVG alternatives, performance trade-offs, and practical use cases.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/base64-images-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Base64 Images: When to Use Data URIs in CSS & HTML">
+  <meta name="twitter:description" content="Complete guide to Base64 image encoding. Covers encoding syntax, CSS data URIs, inline SVG alternatives, performance trade-offs, and practical use cases.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Base64 Images: When to Use Data URIs in CSS & HTML","description":"Base64 images guide covering data URI syntax, CSS background encoding, inline SVG, performance trade-offs, cache implications, and when to use or avoid Base64.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/base64-images-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-orange-400">Tools</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-orange-400">image</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Base64 Images: When to Use Data URIs in CSS & HTML</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Base64 encoding converts binary image data into ASCII text, allowing images to be embedded directly in HTML, CSS, or JSON. It eliminates an HTTP request — but at a cost. Here's when the trade-off makes sense.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">What is Base64 Encoding?</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Base64 represents binary data using 64 ASCII characters (A-Z, a-z, 0-9, +, /). Each 3 bytes of binary becomes 4 Base64 characters, meaning Base64 output is approximately 33% larger than the original binary. An image encoded as Base64 is inlined as text in your HTML or CSS.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Data URI Syntax</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">data:[mediatype][;base64],<data>
+
+/* Examples: */
+/* PNG: */
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+
+/* SVG (can be URL-encoded instead of Base64): */
+data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'...%3E
+
+/* In CSS: */
+.icon {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDov...');
+}
+
+/* In HTML: */
+<img src="data:image/png;base64,iVBORw0KGgo..." alt="Icon"></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG: URL Encoding vs Base64</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For inline SVG, URL encoding (percent-encoding) produces smaller output than Base64 and is still text-searchable. Prefer URL-encoded SVG over Base64 SVG.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Base64 SVG — 33% larger than necessary */
+background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL...");
+
+/* URL-encoded SVG — smaller, readable */
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3C/svg%3E");
+
+/* Even better: inline SVG in HTML (no encoding overhead at all) */
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+</svg></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">When to Use Base64 vs External File</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Scenario</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Recommendation</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Reason</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Critical small icon (< 2KB)</td><td class="py-2 pr-4">Base64 in CSS</td><td class="py-2 pr-4">Saves 1 HTTP request, negligible size overhead</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Placeholder/LQIP (20×20px blur)</td><td class="py-2 pr-4">Base64 in HTML</td><td class="py-2 pr-4">Loads instantly, no separate request</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Logo (SVG, any size)</td><td class="py-2 pr-4">External file + link preload</td><td class="py-2 pr-4">SVG is better as separate cacheable file</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Photo (JPEG/WebP, any size)</td><td class="py-2 pr-4">External file</td><td class="py-2 pr-4">Base64 overhead + no browser cache</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Email template images</td><td class="py-2 pr-4">Base64</td><td class="py-2 pr-4">Many email clients block external images</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">CSS sprite alternative</td><td class="py-2 pr-4">Base64 (small icons only)</td><td class="py-2 pr-4">Only if < 2KB each</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Generate Base64 in JavaScript</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-js">// Browser: File to Base64
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file); // returns "data:image/png;base64,..."
+  });
+}
+
+// Usage
+const input = document.querySelector('input[type="file"]');
+input.addEventListener('change', async e => {
+  const dataUri = await fileToBase64(e.target.files[0]);
+  document.querySelector('img').src = dataUri;
+});
+
+// Node.js: image file to Base64 string
+const fs = require('fs');
+const base64 = fs.readFileSync('icon.png').toString('base64');
+const dataUri = `data:image/png;base64,${base64}`;</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Base64 Pitfalls to Avoid</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Base64-encoding large images</strong> — a 100KB photo becomes 133KB as Base64, is embedded in every page load, and is not cached by the browser. Always use external files for images over 2KB.</li>
+  <li><strong>Not using browser cache</strong> — external image files are cached by the browser across pages. Base64-inlined images are not — they're downloaded with every HTML/CSS file.</li>
+  <li><strong>Base64 in JavaScript bundles</strong> — webpack and other bundlers can inline images as Base64. Check your bundle size; a few images can add significant kilobytes to your JS bundle.</li>
+  <li><strong>Using Base64 in JSON APIs for image transfer</strong> — sending images as Base64 in JSON APIs bloats payload by 33% and prevents streaming. Use multipart/form-data or pre-signed URLs instead.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">How do I convert an image to Base64 in a browser?</dt>
+<dd class="text-slate-300 leading-relaxed">Use StudioLimb's Image Compressor or Squoosh to export as Base64, or use the browser's FileReader API (see code example above). For SVG, copy the SVG source code and URL-encode it manually or with an online tool.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can search engines index Base64 images?</dt>
+<dd class="text-slate-300 leading-relaxed">Google can index the content of external image files but cannot index Base64-embedded images (they're opaque text strings to the crawler). If image SEO matters for your content, always serve images as external files with descriptive filenames and alt text.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Is Base64 a form of compression?</dt>
+<dd class="text-slate-300 leading-relaxed">No — Base64 is encoding, not compression. It makes the data larger (by ~33%). Gzip/Brotli HTTP compression can partially offset this, but Base64-encoded images in CSS files will still be larger than external image files even after compression.</dd></div>
+<div><dt class="font-semibold text-white mb-1">When does Base64 actually improve performance?</dt>
+<dd class="text-slate-300 leading-relaxed">Only for very small images (< 2KB) where the HTTP request round-trip cost (typically 50–100ms) is greater than the size overhead cost. For most images in 2026 with HTTP/2 multiplexing, external files are faster because they're individually cacheable and don't add to HTML/CSS parse time.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Complete 9-step image optimization guide</p></div>
+              </a>
+              <a href="svg-icons-web-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">interests</span>
+                <div><p class="font-semibold text-sm text-white">SVG Icons for the Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Inline SVG, sprite systems, and CSS backgrounds</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>Image Compressor
+              </a>
+              <a href="/tools/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>SVG Optimizer
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

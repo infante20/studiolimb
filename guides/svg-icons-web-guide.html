@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Icons for the Web: Inline, Sprite & Icon Systems | StudioLimb</title>
+  <meta name="description" content="Use SVG icons on the web the right way. Compare inline SVG, img tag, CSS background, and SVG sprite approaches with accessibility and performance guidance.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/svg-icons-web-guide.html">
+  <meta property="og:title" content="SVG Icons for the Web: Inline, Sprite & Icon Systems">
+  <meta property="og:description" content="Complete SVG icon guide covering inline vs img vs sprite vs CSS approaches, accessibility with aria-label, dark mode SVG, and icon system design.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/svg-icons-web-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVG Icons for the Web: Inline, Sprite & Icon Systems">
+  <meta name="twitter:description" content="Complete SVG icon guide covering inline vs img vs sprite vs CSS approaches, accessibility with aria-label, dark mode SVG, and icon system design.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"SVG Icons for the Web: Inline, Sprite & Icon Systems","description":"SVG icons guide covering inline SVG, img element, CSS background, SVG sprites, accessibility attributes, dark mode support, and icon system implementation.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/svg-icons-web-guide.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-blue-400">Images</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-blue-400">interests</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">SVG Icons for the Web: Inline, Sprite & Icon Systems</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Icons are everywhere in UI design, and SVG is the unambiguous best format for them. But the way you embed SVG icons significantly affects styling capability, accessibility, caching behavior, and performance. This guide covers every approach.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG Icon Embedding Methods Compared</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Method</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Styleable</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Cacheable</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Accessible</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Best For</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Inline SVG</td><td class="py-2 pr-4">Full CSS/JS access</td><td class="py-2 pr-4">No (in HTML)</td><td class="py-2 pr-4">Yes (with aria)</td><td class="py-2 pr-4">Icons that need color theming</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><img src='icon.svg'></td><td class="py-2 pr-4">No (opaque)</td><td class="py-2 pr-4">Yes (separate file)</td><td class="py-2 pr-4">Yes (with alt)</td><td class="py-2 pr-4">Static decorative icons</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">CSS background-image</td><td class="py-2 pr-4">No</td><td class="py-2 pr-4">Yes</td><td class="py-2 pr-4">No (background)</td><td class="py-2 pr-4">Decorative only, no screen readers</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">SVG sprite + <use></td><td class="py-2 pr-4">Full CSS access</td><td class="py-2 pr-4">Yes (sprite file)</td><td class="py-2 pr-4">Yes (with aria)</td><td class="py-2 pr-4">Icon systems, many repeated icons</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Inline SVG: Full Control</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Inline SVG is embedded directly in the HTML. It can be styled with CSS, manipulated with JS, and animates with CSS transitions. Best for interactive, theme-aware icons.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Inline SVG — full CSS access -->
+<button class="btn">
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="20" height="20" viewBox="0 0 24 24"
+       fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+       aria-hidden="true" focusable="false">
+    <path d="M12 5v14M5 12l7 7 7-7"/>
+  </svg>
+  Download
+</button>
+
+<style>
+/* currentColor inherits the text color — works with dark mode automatically */
+.btn { color: #7c6fff; }
+.btn:hover { color: #9d96ff; }
+/* The SVG stroke changes color with the button text */
+</style></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG Sprite: The Scalable System</h2>
+<p class="text-slate-300 leading-relaxed mb-4">An SVG sprite file defines all icons as <code>&lt;symbol&gt;</code> elements, then references them with <code>&lt;use&gt;</code>. The sprite file is cached by the browser; you get full CSS styling on each instance.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- sprite.svg (placed anywhere accessible) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-arrow-down" viewBox="0 0 24 24">
+    <path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24">
+    <polyline points="20 6 9 17 4 12" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="icon-x" viewBox="0 0 24 24">
+    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
+    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+</svg>
+
+<!-- Usage anywhere in HTML -->
+<svg width="20" height="20" aria-hidden="true" focusable="false">
+  <use href="/sprite.svg#icon-arrow-down"/>
+</svg>
+
+<svg width="20" height="20" aria-hidden="true" focusable="false">
+  <use href="/sprite.svg#icon-check"/>
+</svg></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG Accessibility: Decorative vs Informative</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Icons are either decorative (redundant with adjacent text) or informative (convey information on their own). Each case needs different ARIA treatment.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-html"><!-- Decorative icon (label is in the button text) -->
+<button>
+  <svg aria-hidden="true" focusable="false" width="20" height="20">
+    <!-- aria-hidden removes from accessibility tree entirely -->
+    <use href="/sprite.svg#icon-download"/>
+  </svg>
+  Download PDF
+</button>
+
+<!-- Informative icon (no adjacent text label) -->
+<button aria-label="Download PDF">
+  <svg role="img" aria-labelledby="download-title" width="20" height="20">
+    <title id="download-title">Download PDF</title>
+    <use href="/sprite.svg#icon-download"/>
+  </svg>
+</button>
+
+<!-- Icon-only button — simplest approach -->
+<button aria-label="Close dialog">
+  <svg aria-hidden="true" focusable="false" width="24" height="24">
+    <use href="/sprite.svg#icon-x"/>
+  </svg>
+</button></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Dark Mode SVG Icons</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-css">/* Approach 1: currentColor (works automatically in both modes) */
+svg { color: inherit; } /* or stroke: currentColor on paths */
+
+/* Approach 2: CSS custom property for explicit control */
+:root { --icon-color: #475569; }
+[data-theme="dark"] { --icon-color: #94a3b8; }
+
+svg path { stroke: var(--icon-color); }
+
+/* Approach 3: Dark mode via prefers-color-scheme inside SVG file */
+<!-- In icon.svg file: -->
+<svg>
+  <style>
+    path { fill: #1e293b; }
+    @media (prefers-color-scheme: dark) {
+      path { fill: #e2e8f0; }
+    }
+  </style>
+  <path d="..."/>
+</svg></code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common SVG Icon Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Hardcoding fill/stroke colors</strong> — use <code>currentColor</code> instead so icons inherit text color and work with dark mode automatically.</li>
+  <li><strong>Missing viewBox</strong> — without viewBox, SVG won't scale properly when you change the width/height. Always include viewBox on every SVG.</li>
+  <li><strong>No aria-hidden on decorative icons</strong> — screen readers will read out SVG path data as gibberish without <code>aria-hidden="true"</code>.</li>
+  <li><strong>Serving icon fonts instead of SVG</strong> — icon fonts (Font Awesome) are a single CSS+font request, but SVG sprites are more performant, more accessible, and easier to customize. Prefer SVG.</li>
+  <li><strong>Not optimizing SVG source files</strong> — Illustrator/Figma export includes unnecessary metadata. Run through SVGO or StudioLimb's SVG Optimizer before deployment.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Should I use Material Icons, Heroicons, or custom SVGs?</dt>
+<dd class="text-slate-300 leading-relaxed">Icon libraries (Heroicons, Phosphor, Lucide) are excellent for product UIs — consistent style, already accessible, easy to use. Custom SVGs are better for brand-specific logos or illustrations. For most projects, an icon library + your logo as SVG is the right split.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the ideal SVG icon size for web?</dt>
+<dd class="text-slate-300 leading-relaxed">Design icons on a 24×24 grid (the standard for most libraries). Render at 20px or 24px in the UI, with 16px for dense UIs and 32px+ for larger touch targets. Never render icons below 16px — details disappear and accessibility suffers.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I animate SVG icons?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — CSS transitions and animations work on SVG properties. Transform, opacity, stroke-dasharray, and fill can all be animated. For complex icon animations, GSAP or CSS @keyframes on SVG elements are both good approaches.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I optimize an SVG file?</dt>
+<dd class="text-slate-300 leading-relaxed">Run it through SVGO (command line) or StudioLimb's SVG Optimizer (browser). SVGO removes comments, unnecessary groups, default attributes, and whitespace — typically reducing file size by 20–60% with no visual change.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="svg-vs-png-vs-webp.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">compare</span>
+                <div><p class="font-semibold text-sm text-white">SVG vs PNG vs WebP</p>
+                <p class="text-xs text-slate-400 mt-0.5">Full format comparison guide</p></div>
+              </a>
+              <a href="optimize-images-for-web.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">image</span>
+                <div><p class="font-semibold text-sm text-white">Optimize Images for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Complete web image optimization workflow</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                SVG Optimizer
+              </a>
+              <a href="/tools/bg-remover.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>
+                Background Remover
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

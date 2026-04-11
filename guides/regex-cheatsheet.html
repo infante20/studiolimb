@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex Cheatsheet: Patterns, Syntax & Examples | StudioLimb</title>
+  <meta name="description" content="Complete regex cheatsheet with character classes, quantifiers, anchors, groups, lookaheads, and common patterns for email, URL, phone, and date validation.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/regex-cheatsheet.html">
+  <meta property="og:title" content="Regex Cheatsheet: Patterns, Syntax & Examples">
+  <meta property="og:description" content="Comprehensive regular expressions cheatsheet covering character classes, quantifiers, anchors, capture groups, lookaheads, and ready-to-use validation patterns.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/regex-cheatsheet.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Regex Cheatsheet: Patterns, Syntax & Examples">
+  <meta name="twitter:description" content="Comprehensive regular expressions cheatsheet covering character classes, quantifiers, anchors, capture groups, lookaheads, and ready-to-use validation patterns.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Regex Cheatsheet: Patterns, Syntax & Examples","description":"Regular expressions cheatsheet with character classes, quantifiers, anchors, groups, lookaheads, flags, and common patterns for email, URL, phone, date validation.","author":{"@type":"Organization","name":"StudioLimb"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"url":"https://www.studiolimb.com/guides/regex-cheatsheet.html"}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/tools.html" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-orange-400">Tools</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-orange-400">text_fields</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Regex Cheatsheet: Patterns, Syntax & Examples</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Regular expressions are the Swiss Army knife of text processing — powerful and cryptic in equal measure. This cheatsheet covers everything from basic syntax to advanced patterns, with practical examples you can use immediately.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 10 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Character Classes</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Pattern</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Matches</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Example</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">.</td><td class="py-2 pr-4">Any character except newline</td><td class="py-2 pr-4">a.c → abc, aXc, a1c</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\w</td><td class="py-2 pr-4">Word character: [a-zA-Z0-9_]</td><td class="py-2 pr-4">\w+ → hello, word_123</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\W</td><td class="py-2 pr-4">Non-word character</td><td class="py-2 pr-4">\W → space, !, @</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\d</td><td class="py-2 pr-4">Digit: [0-9]</td><td class="py-2 pr-4">\d{3} → 123, 456</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\D</td><td class="py-2 pr-4">Non-digit</td><td class="py-2 pr-4">\D+ → abc, hello</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\s</td><td class="py-2 pr-4">Whitespace: space, tab, newline</td><td class="py-2 pr-4">\s+ → ' ', '  '</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\S</td><td class="py-2 pr-4">Non-whitespace</td><td class="py-2 pr-4">\S+ → any word</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">[abc]</td><td class="py-2 pr-4">Character set: a, b, or c</td><td class="py-2 pr-4">[aeiou] → vowels</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">[^abc]</td><td class="py-2 pr-4">Negated set: not a, b, or c</td><td class="py-2 pr-4">[^0-9] → non-digit</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">[a-z]</td><td class="py-2 pr-4">Range: a through z</td><td class="py-2 pr-4">[a-zA-Z] → any letter</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Quantifiers</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Pattern</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Meaning</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Example</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">*</td><td class="py-2 pr-4">0 or more</td><td class="py-2 pr-4">ab* → a, ab, abb, abbb</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">+</td><td class="py-2 pr-4">1 or more</td><td class="py-2 pr-4">ab+ → ab, abb, abbb (not a)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">?</td><td class="py-2 pr-4">0 or 1 (optional)</td><td class="py-2 pr-4">colou?r → color, colour</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">{n}</td><td class="py-2 pr-4">Exactly n times</td><td class="py-2 pr-4">\d{4} → 2024 (exactly 4 digits)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">{n,}</td><td class="py-2 pr-4">n or more times</td><td class="py-2 pr-4">\d{2,} → 12, 123, 1234</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">{n,m}</td><td class="py-2 pr-4">Between n and m times</td><td class="py-2 pr-4">\d{2,4} → 12, 123, 1234</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">*?</td><td class="py-2 pr-4">Lazy: as few as possible</td><td class="py-2 pr-4"><.*?> → <b> in <b>text</b></td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">+?</td><td class="py-2 pr-4">Lazy 1+</td><td class="py-2 pr-4">'.*?' → 'hello' in 'hello' 'world'</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Anchors & Boundaries</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Pattern</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Meaning</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">^</td><td class="py-2 pr-4">Start of string (or line with m flag)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">$</td><td class="py-2 pr-4">End of string (or line with m flag)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\b</td><td class="py-2 pr-4">Word boundary (between \w and \W)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\B</td><td class="py-2 pr-4">Non-word boundary</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\A</td><td class="py-2 pr-4">Start of string (Python/Java — not JS)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\Z</td><td class="py-2 pr-4">End of string (Python/Java)</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Groups & References</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Pattern</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Meaning</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Example</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(abc)</td><td class="py-2 pr-4">Capture group</td><td class="py-2 pr-4">(\d{4}) captures year</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?:abc)</td><td class="py-2 pr-4">Non-capture group</td><td class="py-2 pr-4">(?:Mr|Mrs)\.? — group without capture</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?P<name>...)</td><td class="py-2 pr-4">Named capture (Python)</td><td class="py-2 pr-4">(?P<year>\d{4})</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?<name>...)</td><td class="py-2 pr-4">Named capture (JS/PCRE)</td><td class="py-2 pr-4">(?<year>\d{4})</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">\1, \2</td><td class="py-2 pr-4">Backreference to group 1, 2</td><td class="py-2 pr-4">(\w+) \1 matches 'the the'</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?=...)</td><td class="py-2 pr-4">Positive lookahead</td><td class="py-2 pr-4">\w+(?=\.com)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?!...)</td><td class="py-2 pr-4">Negative lookahead</td><td class="py-2 pr-4">\d+(?! years)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?<=...)</td><td class="py-2 pr-4">Positive lookbehind</td><td class="py-2 pr-4">(?<=\$)\d+</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">(?<!...)</td><td class="py-2 pr-4">Negative lookbehind</td><td class="py-2 pr-4">(?<!\d)\d{3}</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Flags</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Flag</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Meaning</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">g</td><td class="py-2 pr-4">Global: find all matches (not just first)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">i</td><td class="py-2 pr-4">Case insensitive</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">m</td><td class="py-2 pr-4">Multiline: ^ and $ match start/end of each line</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">s</td><td class="py-2 pr-4">Dotall: . matches newline too</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">u</td><td class="py-2 pr-4">Unicode: enable Unicode matching</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">x</td><td class="py-2 pr-4">Extended: allow whitespace and comments (Python/Ruby)</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Validation Patterns</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code class="language-js">// Email address (practical, not RFC-perfect)
+const email = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+// URL (http or https)
+const url = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,6}([-a-zA-Z0-9@:%_+.~#?&/=]*)$/;
+
+// Phone number (flexible international format)
+const phone = /^\+?[\d\s\-().]{7,20}$/;
+
+// US ZIP code
+const zip = /^\d{5}(-\d{4})?$/;
+
+// Date (YYYY-MM-DD)
+const date = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+
+// Hex color
+const hexColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
+// IPv4 address
+const ipv4 = /^(\d{1,3}\.){3}\d{1,3}$/;
+
+// Strong password (8+ chars, upper, lower, digit, special)
+const password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+// Slug (URL-friendly string)
+const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+// Credit card (Luhn check still needed separately)
+const creditCard = /^\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}$/;</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Regex Mistakes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Catastrophic backtracking</strong> — nested quantifiers like <code>(a+)+</code> can cause exponential backtracking. Test with long strings and worst-case inputs before deploying.</li>
+  <li><strong>Not anchoring validation patterns</strong> — <code>/\d+/</code> matches any string containing a digit, including 'abc123xyz'. Use <code>/^\d+$/</code> for full-string validation.</li>
+  <li><strong>Using regex for HTML parsing</strong> — regex cannot correctly parse HTML (nested tags, attributes with quotes). Use a proper HTML parser (DOM, BeautifulSoup, Cheerio).</li>
+  <li><strong>Forgetting to escape special characters</strong> — . * + ? ^ $ { } [ ] | ( ) \ are special in regex. To match them literally, escape with \.</li>
+  <li><strong>Case sensitivity</strong> — regex is case-sensitive by default. Add the <code>i</code> flag for case-insensitive matching.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">How do I test a regex pattern?</dt>
+<dd class="text-slate-300 leading-relaxed">Use StudioLimb's Regex Tester — paste your pattern and test string to see matches highlighted in real time. regex101.com is another excellent tool with explanation of each pattern component.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between greedy and lazy quantifiers?</dt>
+<dd class="text-slate-300 leading-relaxed">Greedy quantifiers (* + {n,m}) match as many characters as possible. Lazy quantifiers (*? +? {n,m}?) match as few as possible. For <b>text</b>, greedy <.*> matches the entire string; lazy <.*?> matches just <b>.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Are regex patterns the same in all languages?</dt>
+<dd class="text-slate-300 leading-relaxed">The core syntax is similar, but there are differences: named groups syntax varies ((?<name>) in JS vs (?P<name>) in Python), lookbehind support varies, and flags differ. Test your patterns in the target language, not just any online tool.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I use regex or a library for email validation?</dt>
+<dd class="text-slate-300 leading-relaxed">For web forms: use a simple regex (like the example above) for immediate feedback, plus server-side email verification (send a confirmation email). The most robust validation is confirming the address actually receives email — no regex catches all edge cases.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="json-formatting-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">data_object</span>
+                <div><p class="font-semibold text-sm text-white">JSON Formatting Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Structure, syntax, and best practices for JSON</p></div>
+              </a>
+              <a href="qr-code-best-practices.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">qr_code</span>
+                <div><p class="font-semibold text-sm text-white">QR Code Best Practices</p>
+                <p class="text-xs text-slate-400 mt-0.5">Design, sizing, and error correction for QR codes</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/tools/regex-tester.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">text_fields</span>Regex Tester
+              </a>
+              <a href="/tools/qr-code-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">qr_code</span>QR Code Generator
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2025 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

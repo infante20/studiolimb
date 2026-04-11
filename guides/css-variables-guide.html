@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CSS Custom Properties (Variables): Complete Guide for 2026 — StudioLimb</title>
+    <meta name="description" content="Master CSS custom properties (CSS variables) with practical examples. Learn scope, inheritance, dynamic theming, dark mode, and component-level design tokens." />
+    <link rel="canonical" href="https://www.studiolimb.com/guides/css-variables-guide.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="CSS Custom Properties: The Complete Guide" />
+    <meta property="og:description" content="Learn CSS variables with practical examples: scope, inheritance, dynamic theming, dark mode, and design tokens." />
+    <meta property="og:url" content="https://www.studiolimb.com/guides/css-variables-guide.html" />
+    <meta property="og:site_name" content="StudioLimb" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CSS Custom Properties: The Complete Guide" />
+    <meta name="twitter:description" content="Learn CSS variables with practical examples: scope, inheritance, dynamic theming, dark mode, and design tokens." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "CSS Custom Properties: The Complete Guide",
+      "description": "Complete guide to CSS custom properties: scope, inheritance, theming, dark mode and design token systems.",
+      "url": "https://www.studiolimb.com/guides/css-variables-guide.html",
+      "datePublished": "2026-04-10",
+      "dateModified": "2026-04-10",
+      "publisher": { "@type": "Organization", "name": "StudioLimb", "url": "https://studiolimb.com" },
+      "author": { "@type": "Organization", "name": "StudioLimb" }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode:"class", theme:{ extend:{ colors:{ primary:"#7c5cfc", "background-dark":"#050508" }, fontFamily:{ display:["Public Sans","sans-serif"] } } } }</script>
+    <style>
+        body { background-color: #050508; }
+        .glass-panel { background: rgba(255,255,255,0.03); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem; overflow-x: auto; font-size: 0.85rem; }
+        code:not(pre code) { background: rgba(124,92,252,0.15); color: #c4b5fd; border-radius: 4px; padding: 2px 6px; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <nav class="px-6 py-6 max-w-4xl mx-auto w-full flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined text-[22px]">token</span>
+            </div>
+            <span class="text-xl font-bold">StudioLimb</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Guides
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase">CSS</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase">April 2026 · 10 min read</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">CSS Custom Properties: The Complete Guide</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">CSS custom properties — commonly called CSS variables — are one of the most impactful features added to CSS in the last decade. They enable dynamic theming, design token systems, and runtime style changes that were previously only possible with JavaScript or preprocessors like Sass.</p>
+        </div>
+
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:font-bold prose-headings:text-white prose-p:text-slate-300 prose-li:text-slate-300 prose-a:text-primary">
+
+            <h2>The Basic Syntax</h2>
+            <p>Custom properties are defined with a double-dash prefix and accessed with the <code>var()</code> function:</p>
+            <pre><code class="language-css">:root {
+  --color-primary: #7c5cfc;
+  --spacing-base: 1rem;
+  --border-radius: 12px;
+}
+
+.button {
+  background: var(--color-primary);
+  padding: var(--spacing-base);
+  border-radius: var(--border-radius);
+}</code></pre>
+
+            <h2>Scope and Inheritance</h2>
+            <p>Unlike Sass variables, CSS custom properties are live in the DOM and follow CSS inheritance. A variable defined on a parent is available to all its descendants. This makes component-level scoping natural:</p>
+            <pre><code class="language-css">:root {
+  --card-bg: rgba(255,255,255,0.03); /* global default */
+}
+
+.card--featured {
+  --card-bg: rgba(124,92,252,0.08); /* scoped override */
+}
+
+.card {
+  background: var(--card-bg); /* uses nearest ancestor value */
+}</code></pre>
+            <p>This is fundamentally different from Sass variables, which are compile-time substitutions. CSS custom properties resolve at runtime, meaning JavaScript can update them and the UI responds immediately.</p>
+
+            <h2>Fallback Values</h2>
+            <p>The <code>var()</code> function accepts a fallback as the second argument — used when the variable is undefined or invalid:</p>
+            <pre><code class="language-css">.component {
+  color: var(--text-color, #e2e8f0);
+  /* Uses --text-color if defined, #e2e8f0 otherwise */
+
+  /* Fallbacks can chain: */
+  font-size: var(--font-size-lg, var(--font-size-base, 1rem));
+}</code></pre>
+
+            <h2>Dark Mode with CSS Variables</h2>
+            <p>Custom properties are the cleanest approach to dark mode — define your semantic color tokens once at the root, then swap their values based on color scheme preference:</p>
+            <pre><code class="language-css">:root {
+  --bg-surface:    #ffffff;
+  --bg-elevated:   #f8fafc;
+  --text-primary:  #1e293b;
+  --text-muted:    #64748b;
+  --border-color:  #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-surface:    #050508;
+    --bg-elevated:   #0f0f14;
+    --text-primary:  #e2e8f0;
+    --text-muted:    #94a3b8;
+    --border-color:  rgba(255,255,255,0.08);
+  }
+}
+
+/* Components use tokens, never raw colors */
+.card {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}</code></pre>
+            <p>Every component automatically adapts to dark mode because they reference semantic tokens, not hardcoded color values. This is the key advantage over hardcoding colors directly.</p>
+
+            <h2>JavaScript Integration</h2>
+            <p>CSS custom properties can be read and written from JavaScript at runtime — this is what makes them fundamentally different from preprocessor variables:</p>
+            <pre><code class="language-css">// Read a CSS variable
+const root = document.documentElement;
+const primary = getComputedStyle(root).getPropertyValue('--color-primary');
+
+// Write a CSS variable (triggers re-render)
+root.style.setProperty('--color-primary', '#ec4899');
+
+// Component-level override
+const card = document.querySelector('.card');
+card.style.setProperty('--card-accent', '#0ea5e9');</code></pre>
+
+            <h2>Design Token System</h2>
+            <p>The real power of CSS custom properties is as a design token system. Define all your design decisions as variables in one place:</p>
+            <pre><code class="language-css">:root {
+  /* ─── Color Palette ─────────────────────── */
+  --hue-primary: 257;
+  --color-primary:     hsl(var(--hue-primary) 95% 66%);
+  --color-primary-dim: hsl(var(--hue-primary) 95% 66% / 0.15);
+
+  /* ─── Spacing (8px grid) ───────────────── */
+  --space-1: 0.5rem;   /* 8px  */
+  --space-2: 1rem;     /* 16px */
+  --space-3: 1.5rem;   /* 24px */
+  --space-4: 2rem;     /* 32px */
+  --space-6: 3rem;     /* 48px */
+
+  /* ─── Typography ───────────────────────── */
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.25rem;
+  --font-size-2xl:  1.5rem;
+  --line-height-body:    1.6;
+  --line-height-heading: 1.2;
+
+  /* ─── Borders ───────────────────────────── */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-full: 9999px;
+
+  /* ─── Shadows ───────────────────────────── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.15);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.25), 0 16px 32px rgba(0,0,0,0.2);
+}</code></pre>
+
+            <h2>CSS Variables vs Sass Variables</h2>
+            <p>Both solve the "don't repeat yourself" problem in CSS, but they work differently and solve different problems:</p>
+            <ul>
+                <li><strong>CSS custom properties</strong>: Live in the browser, can be changed at runtime by JavaScript, follow DOM inheritance, work without a build step</li>
+                <li><strong>Sass variables</strong>: Compiled away at build time, not accessible in the browser, don't respond to runtime changes</li>
+                <li><strong>When to use CSS variables</strong>: Theming, dark mode, component variants, anything that changes at runtime</li>
+                <li><strong>When to use Sass variables</strong>: Build-time constants like breakpoints, z-index scales, or values that feed into Sass functions</li>
+                <li><strong>In 2026</strong>: Use CSS custom properties as your primary variable system; only reach for Sass variables for Sass-specific functionality</li>
+            </ul>
+
+            <h2>Common Mistakes</h2>
+            <p>CSS variables have a few non-obvious gotchas:</p>
+            <ul>
+                <li><strong>Units in variables:</strong> You cannot store just a number and append a unit later. <code>--size: 16; width: var(--size)px;</code> does NOT work. Store the full value including unit: <code>--size: 16px</code></li>
+                <li><strong>Invalid values silently fail:</strong> If a variable value is invalid for a given property, the browser uses the property's initial value — not the fallback in <code>var()</code>. The fallback only applies when the variable is <em>undefined</em>.</li>
+                <li><strong>Not supported in media queries:</strong> You cannot use <code>var()</code> inside <code>@media</code> breakpoint conditions. Use CSS container queries or define breakpoints in JavaScript.</li>
+                <li><strong>Forgetting :root scope:</strong> Variables defined inside a selector are only available to that element and its descendants. Always define global tokens on <code>:root</code>.</li>
+                <li><strong>Circular references:</strong> CSS variables that reference each other in a loop both become invalid. The browser detects this and treats them as unset.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <p></p>
+            <ul>
+                <li><strong>Are CSS variables supported everywhere?</strong> Yes — browser support is 97%+ globally as of 2026, including all modern browsers. IE11 is the only notable exception, which has market share well under 0.5%.</li>
+                <li><strong>Can I use CSS variables in SVG?</strong> Yes, CSS custom properties work inside inline SVG. This is particularly useful for theming SVG icons — define <code>fill: var(--icon-color)</code> in the SVG and control the color from CSS.</li>
+                <li><strong>Do CSS variables work in animations?</strong> Yes, but with a caveat: browsers cannot interpolate between two variable values directly. You need to use <code>@property</code> to register the variable with a type (like <code>&lt;color&gt;</code> or <code>&lt;length&gt;</code>) to enable smooth animation.</li>
+                <li><strong>Can I use calc() with CSS variables?</strong> Yes, this is one of the most powerful combinations: <code>width: calc(var(--column-width) * 2 + var(--gap))</code>. This unlocks complex layout math that updates dynamically.</li>
+            </ul>
+        </article>
+
+        <div class="mt-12 mb-8">
+            <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a href="modern-web-design-essentials.html" class="glass-panel rounded-xl p-4 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                    <span class="material-symbols-outlined text-primary text-xl">article</span>
+                    <div><p class="font-semibold text-sm group-hover:text-primary transition-colors">Modern Web Design Essentials</p><p class="text-xs text-slate-500">Design system thinking</p></div>
+                </a>
+                <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-xl p-4 flex items-center gap-3 hover:border-primary/30 transition-all group">
+                    <span class="material-symbols-outlined text-primary text-xl">layers</span>
+                    <div><p class="font-semibold text-sm group-hover:text-primary transition-colors">Glassmorphism Tutorial</p><p class="text-xs text-slate-500">CSS variables for glass effects</p></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="../gradient-generator.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">palette</span>
+                <div><p class="font-bold group-hover:text-primary transition-colors">Gradient Generator</p><p class="text-sm text-slate-400">Use CSS variables with gradients</p></div>
+            </a>
+            <a href="../contrast-checker.html" class="glass-panel rounded-2xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all group">
+                <span class="material-symbols-outlined text-primary text-3xl">contrast</span>
+                <div><p class="font-bold group-hover:text-primary transition-colors">Contrast Checker</p><p class="text-sm text-slate-400">Test your token color combinations</p></div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; 2026 StudioLimb. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="../privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../contact.html" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
