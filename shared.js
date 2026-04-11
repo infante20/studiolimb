@@ -3,6 +3,16 @@
  * Injects: Back-nav, Share button, Related Tools panel, PWA Install banner
  * across all tool pages.
  */
+
+// ─── Google AdSense (Auto Ads) ─────────────────────────────────────────────
+(function () {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432';
+  s.crossOrigin = 'anonymous';
+  document.head.appendChild(s);
+})();
+
 (function () {
   'use strict';
 
