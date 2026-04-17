@@ -105,13 +105,17 @@
       "@type": "SoftwareApplication",
       "name": "Background Remover",
       "description": "Remove image backgrounds instantly using on-device AI — no uploads, total privacy. Works offline in your browser.",
-      "url": "https://studiolimb.com/bg-remover.html",
+      "url": "https://www.studiolimb.com/bg-remover.html",
       "applicationCategory": "WebApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "background remover, remove background, image background, bg eraser"
     }
     </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does the AI background remover work?","acceptedAnswer":{"@type":"Answer","text":"StudioLimb uses on-device AI (machine learning) to detect and remove image backgrounds entirely in your browser — no files are ever uploaded to a server."}},{"@type":"Question","name":"Is the background remover free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free with no signup required. The AI runs locally in your browser using WebAssembly."}},{"@type":"Question","name":"What image formats does the background remover support?","acceptedAnswer":{"@type":"Answer","text":"The tool supports JPG, PNG, and WebP images. Output is always PNG to preserve the transparent background."}},{"@type":"Question","name":"Does it work offline?","acceptedAnswer":{"@type":"Answer","text":"After the AI model loads the first time, the background remover works offline as a Progressive Web App."}}]}
+  </script>
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
@@ -405,6 +409,20 @@
             </div>
         </div>
     </section>
+
+  <section style="background:rgba(124,92,252,0.05);border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem;margin-top:2rem;">
+    <p style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.875rem;">Related Guides</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+      <a href="/guides/optimize-images-for-web.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        How to Optimize Images for Web
+      </a>
+      <a href="/guides/webp-converter-guide.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        How to Convert Images to WebP
+      </a>
+    </div>
+  </section>
 </body>
 
 </html>

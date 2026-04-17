@@ -83,13 +83,17 @@
       "@type": "SoftwareApplication",
       "name": "WCAG Contrast Checker",
       "description": "Check color contrast ratios against WCAG 2.1 AA and AAA guidelines. Ensure your web design is accessible to all users.",
-      "url": "https://studiolimb.com/contrast-checker.html",
+      "url": "https://www.studiolimb.com/contrast-checker.html",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "contrast checker, wcag contrast, accessibility color, color ratio"
     }
     </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is WCAG color contrast?","acceptedAnswer":{"@type":"Answer","text":"WCAG (Web Content Accessibility Guidelines) requires a minimum 4.5:1 contrast ratio for normal text and 3:1 for large text (18pt or 14pt bold) to ensure readability for users with visual impairments."}},{"@type":"Question","name":"What is the difference between AA and AAA contrast?","acceptedAnswer":{"@type":"Answer","text":"AA (4.5:1 for normal text) is the legal minimum in most countries. AAA (7:1) is enhanced and recommended for critical content like legal documents or healthcare information."}},{"@type":"Question","name":"How do I fix a failing contrast ratio?","acceptedAnswer":{"@type":"Answer","text":"Darken the foreground color or lighten the background color until the ratio meets 4.5:1. Use HSL color notation to adjust lightness while preserving the hue and saturation."}},{"@type":"Question","name":"Does contrast affect SEO?","acceptedAnswer":{"@type":"Answer","text":"Not directly, but poor contrast affects accessibility scores in Lighthouse/Core Web Vitals audits, which can influence rankings. More importantly, low contrast reduces usability and conversion rates."}}]}
+  </script>
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased">
@@ -440,6 +444,20 @@
         </div>
     </section>
     <script src="/shared.js"></script>
+
+  <section style="background:rgba(124,92,252,0.05);border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem;margin-top:2rem;">
+    <p style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.875rem;">Related Guides</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+      <a href="/guides/wcag-color-contrast-guide.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        WCAG Color Contrast Guide
+      </a>
+      <a href="/guides/accessible-color-palette.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        Building an Accessible Color Palette
+      </a>
+    </div>
+  </section>
 </body>
 
 </html>

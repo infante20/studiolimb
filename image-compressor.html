@@ -107,13 +107,17 @@
       "@type": "SoftwareApplication",
       "name": "Free Online Image Compressor",
       "description": "Compress JPEG, PNG and WebP images directly in your browser. No uploads, 100% private, client-side processing only.",
-      "url": "https://studiolimb.com/image-compressor.html",
+      "url": "https://www.studiolimb.com/image-compressor.html",
       "applicationCategory": "WebApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "image compressor, compress image, reduce image size, jpg compressor"
     }
     </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much can I compress an image without losing quality?","acceptedAnswer":{"@type":"Answer","text":"For JPEG images, quality 75-85% typically reduces file size by 50-70% with no visible quality loss. WebP at quality 75 achieves 25-35% smaller files than JPEG at equivalent quality."}},{"@type":"Question","name":"Does image compression upload my files?","acceptedAnswer":{"@type":"Answer","text":"No — all compression happens in your browser using JavaScript. Your images never leave your device."}},{"@type":"Question","name":"What formats does the image compressor support?","acceptedAnswer":{"@type":"Answer","text":"The compressor supports JPEG, PNG, and WebP input, and can export to JPEG, PNG, or WebP."}},{"@type":"Question","name":"What is the maximum file size I can compress?","acceptedAnswer":{"@type":"Answer","text":"There is no hard limit — processing depends on your device's memory. Images up to 20MB work reliably on modern devices."}}]}
+  </script>
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased">
@@ -423,6 +427,20 @@
         </div>
     </section>
     <script src="/shared.js"></script>
+
+  <section style="background:rgba(124,92,252,0.05);border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem;margin-top:2rem;">
+    <p style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.875rem;">Related Guides</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+      <a href="/guides/image-compression-formats.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        Image Formats: JPEG vs WebP vs AVIF
+      </a>
+      <a href="/guides/optimize-images-for-web.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        How to Optimize Images for Web
+      </a>
+    </div>
+  </section>
 </body>
 
 </html>

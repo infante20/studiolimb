@@ -159,13 +159,17 @@
       "@type": "SoftwareApplication",
       "name": "Color Palette Generator",
       "description": "Generate harmonious color palettes from any seed color. Extract colors from images or explore complementary schemes.",
-      "url": "https://studiolimb.com/color-palette-generator.html",
+      "url": "https://www.studiolimb.com/color-palette-generator.html",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
       "featureList": "color palette generator, color scheme, color picker, palette tool"
     }
     </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I generate a color palette?","acceptedAnswer":{"@type":"Answer","text":"Enter a base color or let the generator create one randomly. The tool generates complementary, analogous, or triadic color harmonies automatically."}},{"@type":"Question","name":"What color format should I use in CSS?","acceptedAnswer":{"@type":"Answer","text":"HSL is recommended for design systems because it is human-readable and makes tints/shades easy to create by adjusting the lightness value. HEX is the most common format for direct use in CSS."}},{"@type":"Question","name":"How many colors should a web design palette have?","acceptedAnswer":{"@type":"Answer","text":"Most designs use 1-2 brand colors, 1 accent color, and 3-5 neutral grays. The 60-30-10 rule guides proportional use: 60% dominant neutral, 30% secondary, 10% accent."}},{"@type":"Question","name":"Can I export the color palette?","acceptedAnswer":{"@type":"Answer","text":"Yes — the palette generator allows you to copy HEX, RGB, and HSL values for each color, and export as CSS custom properties for use in your stylesheet."}}]}
+  </script>
 </head>
 
 <body class="bg-background-dark font-display text-slate-100 antialiased">
@@ -490,6 +494,20 @@
         </div>
     </section>
     <script src="/shared.js"></script>
+
+  <section style="background:rgba(124,92,252,0.05);border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem;margin-top:2rem;">
+    <p style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.875rem;">Related Guides</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+      <a href="/guides/color-theory-web-design.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        Color Theory for Web Design
+      </a>
+      <a href="/guides/accessible-color-palette.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.875rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:9999px;color:#a78bfa;font-size:0.8rem;font-weight:600;text-decoration:none;">
+        <span style="font-family:'Material Symbols Outlined';font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;">menu_book</span>
+        Accessible Color Palettes
+      </a>
+    </div>
+  </section>
 </body>
 
 </html>
