@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Gradients Guide: Linear, Radial, Conic &amp; Mesh Effects | StudioLimb</title>
+  <meta name="description" content="Master CSS gradients: linear-gradient, radial-gradient, conic-gradient, color stops, multi-stop patterns, gradient text, and modern mesh gradient techniques.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/css-gradients-guide.html">
+  <meta property="og:title" content="CSS Gradients Guide: Linear, Radial, Conic &amp; Mesh">
+  <meta property="og:description" content="Master linear, radial, conic gradients plus modern mesh effects.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/css-gradients-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Gradients Guide">
+  <meta name="twitter:description" content="Linear, radial, conic and mesh gradient techniques.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"CSS Gradients Guide: Linear, Radial, Conic & Mesh Effects","description":"Complete CSS gradients reference: linear-gradient, radial-gradient, conic-gradient, color stops, gradient text, animated gradients, and modern mesh gradient techniques.","keywords":"css gradient, linear gradient css, radial gradient, conic gradient, css gradient tutorial, gradient text, mesh gradient","wordCount":1800,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/css-gradients-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/css-gradients-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"CSS Gradients Guide","item":"https://www.studiolimb.com/guides/css-gradients-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(124,92,252,0.15) 0%, rgba(236,72,153,0.08) 40%, rgba(5,5,8,0) 70%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-primary">CSS</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-primary">gradient</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">CSS Gradients Guide: Linear, Radial, Conic &amp; Mesh Effects</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">CSS gradients replaced a decade of image-based decoration with pure code — resolution-independent, instantly themeable, trivially animatable. This guide covers every gradient type from basic linear through modern conic and mesh-style layered gradients, with copy-paste recipes for each.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 9 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Linear Gradients</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The most common. Colors transition along a straight line between two points. The angle (or direction keyword) controls where the gradient runs:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Angle syntax */
+background: linear-gradient(135deg, #7c5cfc, #ec4899);
+
+/* Direction keyword (more readable) */
+background: linear-gradient(to right, #7c5cfc, #ec4899);
+background: linear-gradient(to bottom right, #7c5cfc, #ec4899);
+
+/* Multiple color stops */
+background: linear-gradient(to right, #7c5cfc 0%, #ec4899 50%, #f59e0b 100%);</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Angle convention: <code>0deg</code> points up, <code>90deg</code> to the right, <code>180deg</code> down, <code>270deg</code> left. Default direction (no angle specified) is <code>to bottom</code> (180deg).</p>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Color Stops</h3>
+<p class="text-slate-300 leading-relaxed mb-4">Each color can specify a position percentage or length where it should be "fully" that color. Stops between hold a smooth transition:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Sharp color boundary (looks like stripes) */
+background: linear-gradient(to right, #7c5cfc 50%, #ec4899 50%);
+
+/* Smooth transition with middle hold */
+background: linear-gradient(to right, #7c5cfc 0%, #7c5cfc 20%, #ec4899 80%, #ec4899 100%);
+
+/* Modern interpolation hint (controls curve shape) */
+background: linear-gradient(to right, #7c5cfc, 30%, #ec4899);</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Radial Gradients</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Colors emanate from a point outward in a circle or ellipse:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Default: ellipse at center */
+background: radial-gradient(#7c5cfc, transparent);
+
+/* Shape and position */
+background: radial-gradient(circle at top left, #7c5cfc, transparent);
+background: radial-gradient(ellipse at 30% 70%, #7c5cfc, transparent);
+
+/* Size keywords */
+background: radial-gradient(circle closest-corner, #7c5cfc, transparent);
+background: radial-gradient(circle farthest-side, #7c5cfc, transparent);
+
+/* Explicit radius */
+background: radial-gradient(circle 200px at center, #7c5cfc, transparent);</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Use radial gradients for spotlight effects, subtle atmospheric backgrounds, and button glow states. Multiple overlapping radials fading to transparent create rich "dreamy" page backgrounds.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Conic Gradients</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Colors rotate around a center point — like a pie chart. Added to browsers around 2020:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Basic conic (rainbow sweep) */
+background: conic-gradient(red, yellow, green, blue, red);
+
+/* From angle + position */
+background: conic-gradient(from 45deg at center, #7c5cfc, #ec4899, #7c5cfc);
+
+/* Pie chart */
+background: conic-gradient(
+  #7c5cfc 0deg 90deg,
+  #ec4899 90deg 200deg,
+  #f59e0b 200deg 360deg
+);
+
+/* Color wheel */
+background: conic-gradient(
+  hsl(0, 80%, 60%),
+  hsl(60, 80%, 60%),
+  hsl(120, 80%, 60%),
+  hsl(180, 80%, 60%),
+  hsl(240, 80%, 60%),
+  hsl(300, 80%, 60%),
+  hsl(360, 80%, 60%)
+);</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Gradient Text</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The "rainbow heading" trick that's everywhere in modern web design:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.gradient-text {
+  background: linear-gradient(135deg, #7c5cfc, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The element gets a gradient background, then the background is clipped to just the text shape, with text itself set to transparent so the gradient shows through. Include both prefixed and unprefixed properties for Safari.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Mesh-Style Gradients</h2>
+<p class="text-slate-300 leading-relaxed mb-4">"Mesh gradients" (the blurry multi-color backgrounds popular since 2021) aren't actually a CSS feature. They're layered radial gradients faded to transparent:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.mesh-bg {
+  background-color: #0a0a1a;
+  background-image:
+    radial-gradient(at 20% 30%, rgba(124, 92, 252, 0.4) 0px, transparent 50%),
+    radial-gradient(at 80% 10%, rgba(236, 72, 153, 0.3) 0px, transparent 50%),
+    radial-gradient(at 40% 90%, rgba(245, 158, 11, 0.3) 0px, transparent 50%),
+    radial-gradient(at 90% 70%, rgba(16, 185, 129, 0.25) 0px, transparent 50%);
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Each radial is a soft blob of color fading to transparent. Stacking 3-5 at different positions and colors creates the "mesh" illusion. Bonus: much cheaper than animated WebGL equivalents.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Animated Gradients</h2>
+<p class="text-slate-300 leading-relaxed mb-4">CSS doesn't animate gradient color stops directly — you have to animate a larger-than-container gradient's position:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.animated-gradient {
+  background: linear-gradient(135deg, #7c5cfc, #ec4899, #f59e0b, #7c5cfc);
+  background-size: 300% 300%;
+  animation: shift 8s ease infinite;
+}
+
+@keyframes shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Key trick: <code>background-size: 300% 300%</code> makes the gradient bigger than the element. Animating <code>background-position</code> slides the oversized gradient, creating the illusion of color shift.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Gradient Borders</h2>
+<p class="text-slate-300 leading-relaxed mb-4"><code>border-image</code> supports gradients, but with limitations on border-radius:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Works for square borders only */
+.gradient-border {
+  border: 4px solid transparent;
+  border-image: linear-gradient(135deg, #7c5cfc, #ec4899) 1;
+}
+
+/* For rounded corners, use background layering */
+.gradient-border-rounded {
+  border-radius: 12px;
+  padding: 2px;
+  background:
+    linear-gradient(#0a0a1a, #0a0a1a) padding-box,
+    linear-gradient(135deg, #7c5cfc, #ec4899) border-box;
+  border: 2px solid transparent;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Color Space: Why Modern Gradients Look Better</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Traditional CSS gradients interpolate in sRGB color space. Modern CSS supports specifying interpolation color space for smoother, more vibrant transitions:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Old: can produce muddy mid-colors */
+background: linear-gradient(to right, blue, yellow);
+
+/* New: smoother perceptual interpolation */
+background: linear-gradient(in oklch to right, blue, yellow);
+background: linear-gradient(in oklab to right, blue, yellow);</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The <code>oklch</code> and <code>oklab</code> color spaces produce perceptually uniform transitions — no muddy grays in the middle of blue-to-yellow gradients. Supported in Chrome, Safari, and Firefox since 2023.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Performance Notes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Gradients are fast</strong> — modern browsers render them on the GPU. Even complex multi-stop gradients don't measurably slow rendering.</li>
+  <li><strong>Animation considerations</strong> — animating <code>background-position</code> forces repainting. For high-FPS animations on mobile, consider a pre-rendered image or WebGL alternative.</li>
+  <li><strong>Layered gradients are fine</strong> — 5-10 stacked gradients render as fast as one. Don't feel limited.</li>
+  <li><strong>File size</strong> — a gradient in CSS is ~200 bytes; a background image is 10-100KB. Always prefer CSS when possible.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Why does my gradient look banded / striped on screens?</dt>
+<dd class="text-slate-300 leading-relaxed">On 8-bit displays, gradients over large areas show visible stepping between similar colors. Fix: add subtle noise via <code>background-image: url('noise.png'), linear-gradient(...)</code>, or use <code>oklch</code> color space for smoother perceptual transitions.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I use gradients on SVG elements?</dt>
+<dd class="text-slate-300 leading-relaxed">SVG has its own gradient syntax (<code>&lt;linearGradient&gt;</code> and <code>&lt;radialGradient&gt;</code> defined in <code>&lt;defs&gt;</code>, referenced via <code>fill="url(#id)"</code>). CSS gradients only work on CSS properties (<code>background</code>, <code>border-image</code>), not SVG <code>fill</code>. See our SVG Wave Divider guide for the SVG syntax.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I make a gradient border around an image?</dt>
+<dd class="text-slate-300 leading-relaxed">Wrap the image in a div with padding, use the layered background technique shown above. Alternatively, use <code>border-image</code> for square borders only. A gradient-border utility with <code>position: relative</code> and an <code>::after</code> pseudo-element that creates the gradient behind works well for complex cases.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I repeat a gradient pattern?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — use <code>repeating-linear-gradient()</code> or <code>repeating-radial-gradient()</code> with color stops that fall inside the size range. Classic use: stripes via <code>repeating-linear-gradient(45deg, #7c5cfc 0 10px, transparent 10px 20px)</code>.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Why do gradients look different in Figma vs my website?</dt>
+<dd class="text-slate-300 leading-relaxed">Figma uses perceptually linear interpolation by default. Browser CSS (pre-2023) uses sRGB interpolation. Match Figma's appearance by using <code>linear-gradient(in oklab to right, ...)</code> — available in modern browsers.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="color-theory-web-design.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">palette</span>
+                <div><p class="font-semibold text-sm text-white">Color Theory for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Choosing colors that work together in gradients</p></div>
+              </a>
+              <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">blur_on</span>
+                <div><p class="font-semibold text-sm text-white">Glassmorphism Tutorial</p>
+                <p class="text-xs text-slate-400 mt-0.5">Combining gradients with backdrop-filter</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/gradient-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">gradient</span>Gradient Generator
+              </a>
+              <a href="/color-palette-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">palette</span>Color Palette
+              </a>
+              <a href="/glassmorphism-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">blur_on</span>Glassmorphism
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Placeholder Guide: Wireframes, Dummy Images &amp; Dev Workflows | StudioLimb</title>
+  <meta name="description" content="Generate placeholder images for wireframes, mockups, and web development: SVG placeholders, solid colors, blurred LQIPs, and programmatic services compared.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/image-placeholder-guide.html">
+  <meta property="og:title" content="Image Placeholder Guide">
+  <meta property="og:description" content="Dummy images, wireframes, LQIPs, and SVG placeholders for web development.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/image-placeholder-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Image Placeholder Guide">
+  <meta name="twitter:description" content="Dummy images, wireframes, and dev placeholders.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Image Placeholder Guide: Wireframes, Dummy Images & Dev Workflows","description":"Complete guide to image placeholders for development: SVG placeholders, solid colors, LQIPs (Low Quality Image Placeholders), and programmatic services.","keywords":"image placeholder, placeholder images, dummy images, wireframe placeholder, lqip, blurhash, svg placeholder","wordCount":1600,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/image-placeholder-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/image-placeholder-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"Image Placeholder Guide","item":"https://www.studiolimb.com/guides/image-placeholder-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(236,72,153,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-pink-400">Development</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-pink-400">image</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Image Placeholder Guide: Wireframes, Dummy Images &amp; Dev Workflows</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Placeholder images are a quiet workhorse of web development — wireframes, demo content, skeleton loaders, lazy-load placeholders. This guide covers every placeholder strategy from simple SVG rectangles to modern LQIPs and BlurHash, plus the services and techniques that produce them.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Placeholder Types by Use Case</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Use Case</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Best Placeholder</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Wireframe / mockup</td><td class="py-2 pr-4">Gray rectangle with dimensions text</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Demo content (prototype)</td><td class="py-2 pr-4">Picsum / Unsplash random photos</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Loading skeleton</td><td class="py-2 pr-4">Shimmer animation on empty div</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Lazy-load reveal</td><td class="py-2 pr-4">LQIP (blurred tiny version)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Avatar fallback</td><td class="py-2 pr-4">Initials on colored background</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Print layout</td><td class="py-2 pr-4">SVG with "X" crossed rectangle</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Offline fallback</td><td class="py-2 pr-4">Solid color from image metadata</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">SVG Placeholder (Most Common)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For wireframes and mockups, inline SVG is unbeatable — infinitely scalable, tiny file size, customizable via CSS:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;rect width="400" height="300" fill="#e2e8f0"/&gt;
+  &lt;text x="200" y="150" text-anchor="middle" dominant-baseline="middle"
+        font-family="sans-serif" font-size="24" fill="#64748b"&gt;
+    400 × 300
+  &lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+
+<p class="text-slate-300 leading-relaxed mb-4">Data URI version (inline as <code>src</code>) for quick use:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;img src="data:image/svg+xml;utf8,
+  &lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'&gt;
+    &lt;rect width='400' height='300' fill='%23e2e8f0'/&gt;
+  &lt;/svg&gt;" alt="placeholder" /&gt;</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Placeholder Services (Random Demo Images)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For prototypes that need real-looking photos, placeholder services generate them on demand via URL:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Picsum Photos</strong> — <code>https://picsum.photos/800/600</code> returns a random high-quality photo at the given dimensions. Great for lifestyle, travel, product prototypes.</li>
+  <li><strong>Unsplash Source</strong> — <code>https://source.unsplash.com/800x600/?nature</code> returns topical photos. Categories include nature, people, food, architecture, business.</li>
+  <li><strong>Placeholder.com</strong> — <code>https://via.placeholder.com/800x600/cccccc/666666?text=Hello</code> for solid color placeholders with text overlays.</li>
+  <li><strong>DummyImage.com</strong> — similar to Placeholder.com with more format and style options.</li>
+  <li><strong>placeKitten.com</strong> — novelty kitten photos. Use sparingly in client work.</li>
+  <li><strong>placebeard.it</strong> — bearded men for comedy mockups.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">LQIP (Low Quality Image Placeholder)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">An LQIP is a tiny, blurred version of the final image shown while the full version loads. Modern pattern popularized by Medium:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;img
+  src="tiny-20x15-blurry.jpg"
+  data-src="full-1920x1080.jpg"
+  style="filter: blur(10px); transition: filter 0.4s;"
+  onload="this.src = this.dataset.src; this.style.filter = 'none';"
+/&gt;</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The 20×15 pixel blurred version is ~200 bytes and loads instantly. When the full image loads, it swaps in with a smooth transition. Users perceive faster loading because the page never shows an empty box.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">BlurHash (Modern LQIP)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">BlurHash encodes a blurred image preview into a 20-30 character string stored in your database alongside the image URL:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Generate once at upload time */
+const hash = blurhash.encode(imageData, width, height, 4, 3);
+/* → "LKO2?U%2Tw=w]~RBVZRi};RPxuwH" */
+
+/* Use forever as placeholder */
+const canvas = blurhash.decode(hash, 32, 32, 1);
+/* → 32x32 pixel array ready to render */</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Advantages over image LQIP: stored as text (fits in DB), no separate file request, identical placeholder across devices. Used by Unsplash, Wolt, and many modern apps.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Skeleton Loader Patterns</h2>
+<p class="text-slate-300 leading-relaxed mb-4">A "skeleton" shows the shape of content before it loads — not a placeholder image, but a structural hint:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.skeleton {
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 0%,
+    #f1f5f9 50%,
+    #e2e8f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The shimmer motion signals "loading" without the frustration of a spinner. Use for text blocks, avatars, and card shells. Pair with LQIP for images.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Dominant Color Placeholder</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Even simpler than LQIP: render a solid color that matches the image's dominant color while it loads. Get the color once via a canvas sampling function or during image upload:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;img
+  src="photo.jpg"
+  style="background-color: #4a5568;"
+  width="1200" height="800"
+  loading="lazy"
+/&gt;</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The background shows through until the image loads, preserving layout and giving a subtle hint of what's coming. Adds zero bytes to the page.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Avatar Placeholders</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For missing profile pictures, the standard pattern is initials on a colored background:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Inline SVG avatar (no requests) */
+function avatarSvg(name, size = 80) {
+  const initials = name.split(' ').map(n =&gt; n[0]).slice(0, 2).join('').toUpperCase();
+  const hue = [...name].reduce((h, c) =&gt; h + c.charCodeAt(0), 0) % 360;
+  return `&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${size} ${size}'&gt;
+    &lt;rect width='${size}' height='${size}' fill='hsl(${hue}, 60%, 50%)'/&gt;
+    &lt;text x='50%' y='50%' fill='white' font-family='sans-serif'
+          font-size='${size * 0.4}' text-anchor='middle' dominant-baseline='central'&gt;
+      ${initials}
+    &lt;/text&gt;
+  &lt;/svg&gt;`;
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The hue derivation from the name ensures "John Smith" always gets the same background color — consistent across sessions without storing anything.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Can I use placeholder services in production?</dt>
+<dd class="text-slate-300 leading-relaxed">Generally no. Picsum and Unsplash are fine for development but slower than your own CDN and dependent on their uptime. Always replace with real images before production. Generate static placeholders (SVG, LQIP, or solid color) for production loading states.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between a placeholder and a fallback?</dt>
+<dd class="text-slate-300 leading-relaxed">Placeholder: shown before the image loads (temporary). Fallback: shown when an image fails to load (permanent). <code>&lt;img&gt;</code>'s <code>onerror</code> attribute swaps to a fallback; CSS backgrounds use both pattern via layering.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Do I need both LQIP and lazy-loading?</dt>
+<dd class="text-slate-300 leading-relaxed">They work together. <code>loading="lazy"</code> delays image loading until near viewport. LQIP provides a preview while the lazy-loaded image fetches. For optimal UX, use both.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Are placeholder images bad for SEO?</dt>
+<dd class="text-slate-300 leading-relaxed">No, as long as the real image eventually replaces them and has proper <code>alt</code> text. Google crawls lazy-loaded and JS-swapped images. The key: your final production page should have real images, not permanent placeholders.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What about CSS-only placeholders?</dt>
+<dd class="text-slate-300 leading-relaxed">CSS can style <code>&lt;img&gt;</code> while it's broken or loading with pseudo-elements and the <code>::before</code> trick. Useful for showing icons or colors behind images. More fragile than SVG placeholders — use for simple cases.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="lazy-loading-images-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">hourglass_empty</span>
+                <div><p class="font-semibold text-sm text-white">Lazy Loading Images</p>
+                <p class="text-xs text-slate-400 mt-0.5">Pair placeholders with lazy loading</p></div>
+              </a>
+              <a href="responsive-images-html.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">devices</span>
+                <div><p class="font-semibold text-sm text-white">Responsive Images</p>
+                <p class="text-xs text-slate-400 mt-0.5">srcset and sizes for placeholder compatibility</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/image-placeholder.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">image</span>Image Placeholder
+              </a>
+              <a href="/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">cleaning_services</span>SVG Optimizer
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>
