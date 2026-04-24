@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PX to REM Conversion Guide: When to Use Each CSS Unit | StudioLimb</title>
+  <meta name="description" content="Complete guide to px, rem, and em CSS units: conversion formula, browser defaults, accessibility implications, conversion table from 1px to 96px, and when to use each.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/px-to-rem-conversion-guide.html">
+  <meta property="og:title" content="PX to REM Conversion Guide: When to Use Each CSS Unit">
+  <meta property="og:description" content="Conversion formula, browser defaults, accessibility implications, and conversion tables for px, rem, and em CSS units.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/px-to-rem-conversion-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PX to REM Conversion Guide">
+  <meta name="twitter:description" content="Complete guide to px, rem, and em CSS units with conversion tables.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"PX to REM Conversion Guide: When to Use Each CSS Unit","description":"Complete guide to CSS unit conversion between px, rem, and em. Includes conversion formula, accessibility implications, full conversion table from 1px to 96px, and real-world usage patterns.","keywords":"px to rem, rem vs em, css units, rem converter, font size rem, accessibility css units","wordCount":1900,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/px-to-rem-conversion-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/px-to-rem-conversion-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"PX to REM Conversion Guide","item":"https://www.studiolimb.com/guides/px-to-rem-conversion-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-blue-400">CSS &amp; Layout</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-blue-400">straighten</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">PX to REM Conversion Guide: When to Use Each CSS Unit</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Pixels are concrete, rems are relative, ems are contextual — each has a right use case. This guide explains the conversion math, the accessibility reason rem exists, the full conversion table from 1 to 96 pixels, and exactly when each unit is the right tool.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 8 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Conversion Formula</h2>
+<p class="text-slate-300 leading-relaxed mb-4">One formula covers 99% of cases:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>rem = px / 16
+px  = rem * 16</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The <code>16</code> is the browser's default root font size. Every browser ships with <code>html { font-size: 16px }</code> by default, and <code>1rem</code> equals that root size. So <code>16px = 1rem</code>, <code>24px = 1.5rem</code>, <code>8px = 0.5rem</code>, and so on.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Full Conversion Table</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Pixels</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">REM</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Common Usage</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">1px</td><td class="py-2 pr-4">0.0625rem</td><td class="py-2 pr-4">Hairline borders (usually keep as px)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">2px</td><td class="py-2 pr-4">0.125rem</td><td class="py-2 pr-4">Borders, outlines</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">4px</td><td class="py-2 pr-4">0.25rem</td><td class="py-2 pr-4">Tight spacing, micro gaps</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">6px</td><td class="py-2 pr-4">0.375rem</td><td class="py-2 pr-4">Small padding</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">8px</td><td class="py-2 pr-4">0.5rem</td><td class="py-2 pr-4">Standard small spacing unit</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">10px</td><td class="py-2 pr-4">0.625rem</td><td class="py-2 pr-4">Labels, captions</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">12px</td><td class="py-2 pr-4">0.75rem</td><td class="py-2 pr-4">Small text, badges</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">14px</td><td class="py-2 pr-4">0.875rem</td><td class="py-2 pr-4">Secondary body text</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">16px</td><td class="py-2 pr-4">1rem</td><td class="py-2 pr-4">Default body text (the baseline)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">18px</td><td class="py-2 pr-4">1.125rem</td><td class="py-2 pr-4">Enlarged body / lead paragraphs</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">20px</td><td class="py-2 pr-4">1.25rem</td><td class="py-2 pr-4">Subheadings</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">24px</td><td class="py-2 pr-4">1.5rem</td><td class="py-2 pr-4">H3, generous padding</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">28px</td><td class="py-2 pr-4">1.75rem</td><td class="py-2 pr-4">H2 small</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">32px</td><td class="py-2 pr-4">2rem</td><td class="py-2 pr-4">H2, large section gaps</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">40px</td><td class="py-2 pr-4">2.5rem</td><td class="py-2 pr-4">H1 mobile</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">48px</td><td class="py-2 pr-4">3rem</td><td class="py-2 pr-4">H1 small desktop</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">56px</td><td class="py-2 pr-4">3.5rem</td><td class="py-2 pr-4">Hero headline</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">64px</td><td class="py-2 pr-4">4rem</td><td class="py-2 pr-4">Large hero / display</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">80px</td><td class="py-2 pr-4">5rem</td><td class="py-2 pr-4">Oversized display</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">96px</td><td class="py-2 pr-4">6rem</td><td class="py-2 pr-4">Huge display text</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Why REM Exists: Accessibility</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The whole reason to prefer rem over px for typography: <strong>users can change their browser's default font size</strong>. In Chrome, go to Settings → Appearance → Font size and set it to "Large" or "Very Large." That multiplies the root font size from 16px to 20px, 24px, or even 32px.</p>
+<p class="text-slate-300 leading-relaxed mb-4">If your site uses rem-based typography, everything scales proportionally — the user reading with vision impairment sees a genuinely larger interface. If your site uses pixel-based typography, their setting does nothing, and you've built something they can't comfortably read.</p>
+<p class="text-slate-300 leading-relaxed mb-4">This is an accessibility requirement under WCAG 1.4.4 (Resize Text) — text must be resizable to 200% without loss of content or functionality. REM makes this trivial; pixel-only CSS usually violates it.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">REM vs EM: The Critical Difference</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Both are relative, but to different references:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>REM</strong> is relative to the <strong>root</strong> element (<code>&lt;html&gt;</code>). <code>1rem</code> is always the same size across your page.</li>
+  <li><strong>EM</strong> is relative to the <strong>current element's font size</strong>. <code>1em</code> inside a 24px heading equals 24px; inside a 12px caption it equals 12px.</li>
+</ul>
+<p class="text-slate-300 leading-relaxed mb-4">This matters because EMs compound. If you nest <code>font-size: 1.2em</code> inside <code>font-size: 1.2em</code> inside <code>font-size: 1.2em</code>, the innermost text is 1.728× the size, not 1.2× — the kind of bug that breaks nested menus and nested lists.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">When to Use Each Unit</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Use Case</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Recommended Unit</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Why</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Font sizes (typography)</td><td class="py-2 pr-4"><code>rem</code></td><td class="py-2 pr-4">Accessibility — respects user's zoom preference</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Padding and margin</td><td class="py-2 pr-4"><code>rem</code></td><td class="py-2 pr-4">Scales proportionally with text size</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Component-internal spacing</td><td class="py-2 pr-4"><code>em</code></td><td class="py-2 pr-4">Scales with the component's own font size</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Borders (1–2px)</td><td class="py-2 pr-4"><code>px</code></td><td class="py-2 pr-4">Pixel-perfect — rem rounding can make them disappear</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Box shadows</td><td class="py-2 pr-4"><code>px</code></td><td class="py-2 pr-4">Scaling shadows looks weird; fixed feels right</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Media query breakpoints</td><td class="py-2 pr-4"><code>em</code> or <code>px</code></td><td class="py-2 pr-4"><code>em</code> respects user zoom in media queries</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">SVG stroke widths</td><td class="py-2 pr-4"><code>px</code></td><td class="py-2 pr-4">SVGs aren't affected by root font scaling</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Line heights</td><td class="py-2 pr-4">unitless (e.g. <code>1.5</code>)</td><td class="py-2 pr-4">Inherits cleanly across nested elements</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The 62.5% Trick (and Why It's Controversial)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">You'll sometimes see this at the top of a stylesheet:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>html {
+  font-size: 62.5%;
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">This makes <code>1rem = 10px</code> instead of 16px, simplifying math: <code>1.4rem = 14px</code>, <code>2.4rem = 24px</code>. Popular in the 2010s.</p>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Don't do this today.</strong> It breaks user-zoom expectations — when a user sets their browser to "Large" (20px), your baseline becomes 12.5px instead of 20px. The whole accessibility benefit of rem disappears. Stick with the default 16px root and embrace the decimals (or use a Sass function to auto-convert).</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Modern Alternative: clamp() for Fluid Typography</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Modern CSS can go beyond static rem values with <code>clamp(min, preferred, max)</code> for typography that scales smoothly across viewport sizes:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>h1 {
+  /* min 2rem, scales with viewport, caps at 4rem */
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+p {
+  /* body text from 1rem to 1.125rem based on viewport */
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">This removes the need for most media queries for typography. Pair with rem values inside the clamp() call to preserve accessibility.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Is it OK to use px at all?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — for things that shouldn't scale with text: borders (especially 1px hairlines), box-shadow offsets, and SVG stroke widths. The accessibility rule is specifically about readable content, not visual decoration.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between rem and % for font-size?</dt>
+<dd class="text-slate-300 leading-relaxed">On the root <code>&lt;html&gt;</code> element, they're identical: <code>100% = 1rem = 16px</code>. Elsewhere, <code>%</code> is relative to the parent's font-size (like em), while <code>rem</code> is relative to the root. Use rem unless you specifically want inheritance.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Do I need to convert every px in my CSS?</dt>
+<dd class="text-slate-300 leading-relaxed">No. Typography, padding, and margin should be rem. Borders, shadows, and component details can stay as px. Don't refactor aggressively — a partial migration (typography first) captures 90% of the accessibility benefit.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What about viewport units like vw and vh?</dt>
+<dd class="text-slate-300 leading-relaxed">Useful for full-screen layouts (hero sections, full-viewport images) but dangerous for typography alone — they don't respect user zoom. Use inside <code>clamp()</code> with rem values to get scaling that still respects accessibility.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I use rem in media queries?</dt>
+<dd class="text-slate-300 leading-relaxed">Use <code>em</code> in media queries, not <code>rem</code> — this is a known quirk. When a user zooms, <code>em</code>-based media queries update (meaning your breakpoints shift), while rem-based ones in some older browsers may not. <code>@media (min-width: 48em)</code> is the accessibility-friendly pattern for a 768px breakpoint.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="web-typography-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">text_fields</span>
+                <div><p class="font-semibold text-sm text-white">Web Typography Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Type scales, line-height, measure, and hierarchy</p></div>
+              </a>
+              <a href="css-variables-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">code</span>
+                <div><p class="font-semibold text-sm text-white">CSS Variables Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Custom properties for themes and spacing scales</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/px-rem-converter.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">straighten</span>PX to REM Converter
+              </a>
+              <a href="/type-scale-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">format_size</span>Type Scale Generator
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>
