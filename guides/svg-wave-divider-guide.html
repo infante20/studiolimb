@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Wave Divider Tutorial: Section Dividers &amp; Shape Transitions | StudioLimb</title>
+  <meta name="description" content="Create SVG wave dividers between sections: cubic Bezier math, responsive sizing, layered waves with parallax, and implementation in pure HTML/CSS.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/svg-wave-divider-guide.html">
+  <meta property="og:title" content="SVG Wave Divider Tutorial: Section Dividers">
+  <meta property="og:description" content="Create wave section dividers with SVG — responsive, performant, and easily customizable.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/svg-wave-divider-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVG Wave Divider Tutorial">
+  <meta name="twitter:description" content="Create wave section dividers with SVG.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"SVG Wave Divider Tutorial: Section Dividers & Shape Transitions","description":"Create wave dividers between webpage sections using SVG: cubic Bezier curves, responsive sizing with viewBox, layered parallax waves, and CSS integration.","keywords":"svg wave divider, svg wave generator, section divider css, wave separator, svg curves, cubic bezier svg","wordCount":1700,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/svg-wave-divider-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/svg-wave-divider-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"SVG Wave Divider Tutorial","item":"https://www.studiolimb.com/guides/svg-wave-divider-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(244,63,94,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-rose-400">SVG</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-rose-400">water</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">SVG Wave Divider Tutorial: Section Dividers &amp; Shape Transitions</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Wave dividers are the modern replacement for the hard rectangular section edge. They're infinitely scalable, weigh less than 1KB, and add organic personality to otherwise blocky layouts. This guide covers the SVG curve math, responsive implementation, and patterns like layered parallax waves.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The Anatomy of an SVG Wave</h2>
+<p class="text-slate-300 leading-relaxed mb-4">An SVG wave divider is typically a single <code>&lt;path&gt;</code> element with four commands:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;path d="M0,64 C320,0 1120,128 1440,64 L1440,120 L0,120 Z" fill="#7c5cfc" /&gt;
+&lt;/svg&gt;</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Breaking it down:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><code>M0,64</code> — move to starting point (left edge, middle height)</li>
+  <li><code>C320,0 1120,128 1440,64</code> — cubic Bezier curve with two control points that define the wave's shape</li>
+  <li><code>L1440,120 L0,120</code> — lines down the right side and across the bottom</li>
+  <li><code>Z</code> — close the path back to the start, creating a fillable shape</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Understanding Cubic Bezier Control Points</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The <code>C x1,y1 x2,y2 x,y</code> syntax describes a curve from the current point to <code>(x,y)</code>, with the curve's shape controlled by <code>(x1,y1)</code> and <code>(x2,y2)</code>:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li>The <strong>first control point</strong> pulls the curve near the start</li>
+  <li>The <strong>second control point</strong> pulls the curve near the end</li>
+  <li>Control points above the baseline create peaks; below create troughs</li>
+  <li>The further the control point is from the baseline, the more dramatic the curve</li>
+</ul>
+<p class="text-slate-300 leading-relaxed mb-4">For a standard "gentle wave" between two points at the same height, set control point Y values in opposite directions — one high, one low — at equal distances from the baseline.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Making Waves Responsive</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The critical attribute is <code>preserveAspectRatio="none"</code>. By default, SVG maintains aspect ratio, so a wave will keep its designed proportions even if the container is wider. That's wrong for dividers — you want the wave to stretch horizontally to match the container's width.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;svg
+  viewBox="0 0 1440 120"
+  preserveAspectRatio="none"
+  style="display:block; width:100%; height:auto;"&gt;
+  &lt;path d="M0,64 C320,0 1120,128 1440,64 L1440,120 L0,120 Z" fill="#7c5cfc" /&gt;
+&lt;/svg&gt;</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The <code>width:100%</code> stretches the SVG to the container. <code>display:block</code> removes the inline-element whitespace that otherwise appears under the SVG. <code>height:auto</code> lets the SVG scale proportionally to maintain the viewBox ratio.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Flipping the Wave</h2>
+<p class="text-slate-300 leading-relaxed mb-4">A wave that curves down at the top of a section curves up at the bottom of the previous one. Either design both versions or flip with CSS:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.wave-flip {
+  transform: rotate(180deg);
+}
+
+/* Or horizontally mirror */
+.wave-mirror {
+  transform: scaleX(-1);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Layered Parallax Waves</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Two or three waves stacked with different opacities and offsets create depth:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;div class="wave-container"&gt;
+  &lt;svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wave wave-back"&gt;
+    &lt;path d="M0,80 C400,40 1040,120 1440,60 L1440,120 L0,120 Z"
+          fill="#7c5cfc" opacity="0.3"/&gt;
+  &lt;/svg&gt;
+  &lt;svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wave wave-mid"&gt;
+    &lt;path d="M0,70 C360,20 1080,130 1440,50 L1440,120 L0,120 Z"
+          fill="#7c5cfc" opacity="0.6"/&gt;
+  &lt;/svg&gt;
+  &lt;svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wave wave-front"&gt;
+    &lt;path d="M0,64 C320,0 1120,128 1440,64 L1440,120 L0,120 Z"
+          fill="#7c5cfc"/&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.wave-container { position: relative; line-height: 0; }
+.wave { position: absolute; inset: 0; width: 100%; }
+.wave-back { bottom: 10px; }
+.wave-mid { bottom: 5px; }
+&lt;/style&gt;</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Animating a Wave</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For a subtle ocean effect, animate the <code>d</code> attribute directly with SMIL or use CSS <code>transform: translateX()</code> to slide a wider-than-container wave horizontally:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.wave-animate svg {
+  width: 200%;  /* oversized */
+  animation: slide 20s linear infinite;
+}
+@keyframes slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Key trick: the wave path must tile seamlessly — the left edge shape must match the right edge shape, so the animation loop is invisible.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Gradient-Filled Waves</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Solid colors are fine, but gradients feel more modern:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;svg viewBox="0 0 1440 120" preserveAspectRatio="none"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%"&gt;
+      &lt;stop offset="0%" stop-color="#7c5cfc"/&gt;
+      &lt;stop offset="100%" stop-color="#ec4899"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;path d="M0,64 C320,0 1120,128 1440,64 L1440,120 L0,120 Z"
+        fill="url(#waveGradient)"/&gt;
+&lt;/svg&gt;</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Performance Notes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>SVGs inline in HTML</strong> save an HTTP request vs external files. Use inline for 1-2 waves per page.</li>
+  <li><strong>Raw SVG source</strong> is typically 300-800 bytes — negligible weight.</li>
+  <li><strong>Avoid image fallbacks</strong> (<code>background-image: url(wave.svg)</code>) — they prevent the CSS <code>currentColor</code> trick for matching section colors.</li>
+  <li><strong>Animation performance</strong> — animate <code>transform</code>, not <code>path d</code>. Path morphing triggers expensive re-rasterization.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Why does my SVG wave leave a white gap under it?</dt>
+<dd class="text-slate-300 leading-relaxed">SVG elements are <code>inline</code> by default, which introduces line-height whitespace. Fix with <code>display: block</code> on the SVG, or set <code>line-height: 0</code> on the container.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I make the wave exactly match two section colors?</dt>
+<dd class="text-slate-300 leading-relaxed">Two options: (1) place the SVG between two colored sections, fill it with the color of the section below; the viewer sees the wave shape as a transition. (2) Use a gradient fill that transitions from the top section color to the bottom.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I create wave dividers without SVG?</dt>
+<dd class="text-slate-300 leading-relaxed">Pure CSS wave dividers exist but require <code>mask-image</code> and are limited to simple sine-wave patterns. SVG gives you full Bezier control. CSS <code>clip-path: polygon()</code> can approximate zigzags but not smooth waves.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Why do my waves look jagged on certain screens?</dt>
+<dd class="text-slate-300 leading-relaxed">Usually missing <code>preserveAspectRatio="none"</code> — the wave is stretching non-uniformly. Also check that the container has a concrete width (not <code>max-content</code>).</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I generate custom wave shapes?</dt>
+<dd class="text-slate-300 leading-relaxed">For hand-crafted waves, use a tool with visual Bezier editing. For quick options, interactive wave generators let you drag control points and copy the path. Alternatively, use Figma's pen tool, then export as SVG and copy the path's <code>d</code> attribute.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="svg-icons-web-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">bolt</span>
+                <div><p class="font-semibold text-sm text-white">SVG Icons for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Vector icons that scale to any size</p></div>
+              </a>
+              <a href="css-clip-path-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">crop_free</span>
+                <div><p class="font-semibold text-sm text-white">CSS clip-path Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Alternative shape-based dividers with clip-path</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/svg-wave-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">water</span>SVG Wave Generator
+              </a>
+              <a href="/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">cleaning_services</span>SVG Optimizer
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

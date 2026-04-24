@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Path Editor Guide: Commands, Bezier Curves &amp; Optimization | StudioLimb</title>
+  <meta name="description" content="Master SVG path syntax: M, L, C, S, Q, T, A, Z commands. Absolute vs relative coordinates, Bezier curves explained, path optimization, and animating paths.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/svg-path-editor-guide.html">
+  <meta property="og:title" content="SVG Path Editor Guide: Commands &amp; Bezier Curves">
+  <meta property="og:description" content="Master SVG path syntax: commands, Bezier curves, optimization, and animation.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/svg-path-editor-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVG Path Editor Guide">
+  <meta name="twitter:description" content="SVG path commands, Bezier curves, and optimization.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"SVG Path Editor Guide: Commands, Bezier Curves & Optimization","description":"Complete guide to SVG path syntax: every path command (M, L, C, S, Q, T, A, Z), absolute vs relative coordinates, Bezier curve math, optimization, and CSS path animation.","keywords":"svg path editor, svg path commands, svg bezier curve, svg path tutorial, svg d attribute, path animation css","wordCount":1700,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/svg-path-editor-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/svg-path-editor-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"SVG Path Editor Guide","item":"https://www.studiolimb.com/guides/svg-path-editor-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(244,63,94,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-rose-400">SVG</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-rose-400">polyline</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">SVG Path Editor Guide: Commands, Bezier Curves &amp; Optimization</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">The <code>d</code> attribute of an SVG path is a compact DSL for drawing anything from a triangle to a hand-drawn logo. This guide covers every path command, the difference between absolute and relative coordinates, how Bezier curves actually work, and how to optimize paths for file size.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The d Attribute Structure</h2>
+<p class="text-slate-300 leading-relaxed mb-4">An SVG path is a string of commands, each followed by its parameters. Commands are single letters; parameters are space- or comma-separated numbers:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;path d="M 10 10 L 90 10 L 90 90 L 10 90 Z" /&gt;</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Reading left to right: move to (10,10), line to (90,10), line to (90,90), line to (10,90), close. Result: a square.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Absolute vs Relative Commands</h2>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Uppercase</strong> commands use absolute coordinates. <strong>Lowercase</strong> commands use coordinates relative to the current position:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Absolute — exact coordinates */
+M 10 10 L 100 50 L 150 10
+
+/* Relative — offset from current position */
+M 10 10 l 90 40 l 50 -40
+
+/* Both produce the same path */</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Relative commands produce shorter path strings when you're drawing repeating patterns or incremental shapes. Absolute commands are clearer when you want specific coordinates (e.g., aligning to a grid).</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Path Commands Reference</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Command</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Parameters</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Purpose</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">M / m</td><td class="py-2 pr-4">x y</td><td class="py-2 pr-4">Move to (no line drawn)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">L / l</td><td class="py-2 pr-4">x y</td><td class="py-2 pr-4">Line to</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">H / h</td><td class="py-2 pr-4">x</td><td class="py-2 pr-4">Horizontal line to (y unchanged)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">V / v</td><td class="py-2 pr-4">y</td><td class="py-2 pr-4">Vertical line to (x unchanged)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">C / c</td><td class="py-2 pr-4">x1 y1 x2 y2 x y</td><td class="py-2 pr-4">Cubic Bezier (two control points)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">S / s</td><td class="py-2 pr-4">x2 y2 x y</td><td class="py-2 pr-4">Smooth cubic Bezier (reflects previous control)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Q / q</td><td class="py-2 pr-4">x1 y1 x y</td><td class="py-2 pr-4">Quadratic Bezier (one control point)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">T / t</td><td class="py-2 pr-4">x y</td><td class="py-2 pr-4">Smooth quadratic Bezier</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">A / a</td><td class="py-2 pr-4">rx ry rot arc sweep x y</td><td class="py-2 pr-4">Elliptical arc</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Z / z</td><td class="py-2 pr-4">(none)</td><td class="py-2 pr-4">Close path back to last M</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Cubic Bezier Curves</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The cubic Bezier command <code>C x1 y1 x2 y2 x y</code> describes a curve from the current point to (x, y). The curve's shape is determined by two control points that "pull" the curve in their direction:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>&lt;path d="M 10 90 C 30 10, 70 10, 90 90" stroke="white" fill="transparent"/&gt;
+/* Wave from (10,90) to (90,90) bulging upward */
+/* Control points: (30,10) pulls curve up at start, (70,10) pulls up at end */</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Visualization: imagine the control point attached to the endpoint by an invisible rubber band. The curve leaves each endpoint heading toward its control point, then bends smoothly to the other endpoint.</p>
+<p class="text-slate-300 leading-relaxed mb-4">To make a wave go down instead of up, swap the control point Y values below the baseline: <code>C 30 170, 70 170, 90 90</code>.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Smooth Curve Chains</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The <code>S</code> command continues a smooth curve by automatically calculating the first control point as a reflection of the previous curve's last control point:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Wavy line using C then S */
+M 10 50
+C 30 10, 50 10, 70 50
+S 110 90, 130 50
+S 170 10, 190 50</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The <code>S</code> command only needs the second control point and the endpoint — the first control point is inferred from the previous curve. This guarantees a smooth transition (no visible corner) between connected curves.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Arc Command (Circles &amp; Ellipses)</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The arc command <code>A rx ry rotation largeArc sweep x y</code> is the most complex, but powerful for rounded corners and arcs:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Half circle from (10,50) to (90,50) */
+M 10 50 A 40 40 0 0 1 90 50
+
+/* Parameters:
+ * rx ry     — radii of the ellipse
+ * rotation  — x-axis rotation in degrees
+ * largeArc  — 0 or 1, use large or small arc
+ * sweep     — 0 or 1, clockwise (1) or counter-clockwise (0)
+ * x y       — endpoint */</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Full circle requires two arc commands since a single arc can't trace a full 360° (starting and ending at the same point is ambiguous). Usually easier to use the <code>&lt;circle&gt;</code> element for circles.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Path Optimization for File Size</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Hand-coded paths are typically already compact. Paths exported from design tools (Figma, Illustrator, Sketch) often have redundant decimals and absolute coordinates:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Before SVGO: */
+M 10.000000 10.000000 L 90.000000 10.000000 L 90.000000 90.000000 Z
+
+/* After SVGO: */
+M10 10 90 0v80z</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Use an SVG optimizer (SVGO, online tools, or build-step plugins) to:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li>Remove unnecessary decimals (3 decimals is enough for visual quality)</li>
+  <li>Convert absolute to relative commands where shorter</li>
+  <li>Merge sequential commands (<code>M 10 10 L 20 20 L 30 30</code> → <code>M 10 10 L 20 20 30 30</code>)</li>
+  <li>Use <code>H</code> and <code>V</code> for horizontal/vertical lines instead of <code>L</code></li>
+  <li>Remove whitespace between commands where unambiguous</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Animating SVG Paths</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Two CSS techniques animate SVG paths without any JavaScript:</p>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Path Drawing Effect</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.path-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3s ease forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Start with a dash gap the length of the path, then animate the offset to zero — the path appears to draw itself. Get the path's actual length with <code>path.getTotalLength()</code> in JavaScript for precise values.</p>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">CSS Motion Path</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.moving-object {
+  offset-path: path('M 10 10 L 90 90 L 10 90 Z');
+  offset-distance: 0%;
+  animation: move 4s linear infinite;
+}
+@keyframes move {
+  to { offset-distance: 100%; }
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Moves an element along any SVG path. Useful for animated icons, loading indicators, and decorative effects.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Can I use pixel values in SVG paths?</dt>
+<dd class="text-slate-300 leading-relaxed">Path coordinates are unitless — they refer to the SVG's coordinate system defined by <code>viewBox</code>. If your viewBox is <code>0 0 100 100</code>, coordinates range 0–100 regardless of the SVG's display size. The SVG scales to fit its container automatically.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I morph one path into another?</dt>
+<dd class="text-slate-300 leading-relaxed">CSS transitions on the <code>d</code> attribute work in modern browsers (<code>transition: d 0.5s</code>), but only if both paths have the same number and type of commands. For more complex morphs, use libraries like Flubber, GSAP MorphSVG, or anime.js — they interpolate between different path structures.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Why is my path filled when I only want a stroke?</dt>
+<dd class="text-slate-300 leading-relaxed">SVG paths fill by default. Add <code>fill="none" stroke="black"</code> attributes to get stroke-only. Or set via CSS: <code>path { fill: none; stroke: currentColor; }</code>. Use <code>stroke-width</code> to control thickness.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between &lt;path&gt; and &lt;polygon&gt;?</dt>
+<dd class="text-slate-300 leading-relaxed"><code>&lt;polygon&gt;</code> only supports straight lines between points. <code>&lt;path&gt;</code> supports curves too. <code>&lt;path&gt;</code> is a strict superset — any polygon can be expressed as a path, but the reverse isn't true.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I convert an image to an SVG path?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes, via tracing tools (Inkscape's Trace Bitmap, Vectorizer.ai, Potrace). They produce paths approximating the image's outlines. Results work well for logos and simple illustrations; photos become lossy abstractions. For detailed images, raster formats are usually better.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="svg-wave-divider-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">water</span>
+                <div><p class="font-semibold text-sm text-white">SVG Wave Divider Tutorial</p>
+                <p class="text-xs text-slate-400 mt-0.5">Cubic Beziers in action for section dividers</p></div>
+              </a>
+              <a href="svg-icons-web-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">bolt</span>
+                <div><p class="font-semibold text-sm text-white">SVG Icons for Web</p>
+                <p class="text-xs text-slate-400 mt-0.5">Practical icon usage with path-based vectors</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/svg-path-editor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">polyline</span>SVG Path Editor
+              </a>
+              <a href="/svg-optimizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">cleaning_services</span>SVG Optimizer
+              </a>
+              <a href="/svg-wave-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">water</span>SVG Wave Gen
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Add a Watermark to Photos (Text &amp; Logo, Free) | StudioLimb</title>
+  <meta name="description" content="Add watermarks to photos for free: text vs logo watermarks, placement strategy, opacity, file formats, batch watermarking, and how to make watermarks hard to remove.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/watermark-images-guide.html">
+  <meta property="og:title" content="How to Add a Watermark to Photos (Text &amp; Logo, Free)">
+  <meta property="og:description" content="Watermarking guide: placement, opacity, text vs logo, and tamper resistance.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/watermark-images-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Add a Watermark to Photos">
+  <meta name="twitter:description" content="Watermarking: placement, opacity, text vs logo, tamper resistance.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How to Add a Watermark to Photos (Text & Logo, Free)","description":"Complete watermarking guide: text vs logo, placement strategy, opacity, file formats, batch workflows, and tamper-resistance techniques.","keywords":"add watermark to photos, image watermark, watermark photo free, logo watermark, tiled watermark, signature watermark","wordCount":1800,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/watermark-images-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/watermark-images-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"How to Add a Watermark to Photos","item":"https://www.studiolimb.com/guides/watermark-images-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-violet-400">Image &amp; Assets</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-violet-400">branding_watermark</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">How to Add a Watermark to Photos (Text &amp; Logo, Free)</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">A watermark protects attribution without ruining the image. The best ones are visible enough to deter casual theft, subtle enough not to distract viewers, and positioned so they're expensive to remove cleanly. This guide covers every decision — text vs logo, placement, opacity, file format, and how to make watermarks actually hard to crop out.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 8 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Text Watermark vs Logo Watermark</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Type</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Best For</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Tradeoff</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Text (©Name 2026)</td><td class="py-2 pr-4">Photographers, bloggers, casual use</td><td class="py-2 pr-4">Easy to replicate but clear attribution</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Logo (PNG with transparency)</td><td class="py-2 pr-4">Brands, agencies, professional portfolios</td><td class="py-2 pr-4">Builds brand recognition, less text clutter</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Signature (handwritten SVG)</td><td class="py-2 pr-4">Artists, illustrators</td><td class="py-2 pr-4">Personal feel, harder to forge</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">Combined (logo + URL)</td><td class="py-2 pr-4">Driving traffic to a site</td><td class="py-2 pr-4">Maximum visibility, some visual weight</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Placement Strategy</h2>
+<p class="text-slate-300 leading-relaxed mb-4">A watermark in the corner is the easiest to crop out. A watermark in the dead center of the subject protects the image but ruins viewing. Good placement balances protection with presentation:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Bottom-right corner</strong> — the traditional default. Fine for shared photos where the viewer is expected to respect the signature. Trivially removable with a 5% crop.</li>
+  <li><strong>Edge along a low-contrast area</strong> — place the watermark where it overlaps a complex background (not the subject). Removing it requires actual clone-stamp work.</li>
+  <li><strong>Over the subject (partial)</strong> — e.g., a translucent logo partly overlapping a person's shoulder. Hard to remove without obviously damaging the image.</li>
+  <li><strong>Tiled across the entire image</strong> — nuclear option for preview-only images. Cropping one removes only some; the image is unusable without all watermarks intact.</li>
+  <li><strong>Randomized placement</strong> — change position for each image so automated watermark-removal tools can't assume a location.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Opacity and Visual Weight</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Opacity settings determine how intrusive the watermark feels:</p>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Opacity</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Use Case</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">10-20%</td><td class="py-2 pr-4">Subtle branding on portfolio images (not piracy protection)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">30-50%</td><td class="py-2 pr-4">Default — visible but doesn't fight the image</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">60-80%</td><td class="py-2 pr-4">Preview/proof images where you want it clearly intrusive</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">100%</td><td class="py-2 pr-4">DO NOT TAKE samples, stock-photo previews</td></tr>
+</tbody></table></div>
+<p class="text-slate-300 leading-relaxed mb-4">Use a subtle drop shadow on the watermark so it reads against both light and dark areas of the image. Without it, a white watermark vanishes on a bright background.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Sizing the Watermark</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Scale the watermark to image dimensions — don't use a fixed pixel size. Rule of thumb: the watermark should take up 15-25% of the shorter image edge. On a 1920×1080 image, that's 160-270 px tall.</p>
+<p class="text-slate-300 leading-relaxed mb-4">Smaller than 10% — easy to ignore. Larger than 30% — distracting and probably cropable by the viewer. The 15-25% range is the sweet spot for "visible but not dominant."</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Preventing Easy Removal</h2>
+<p class="text-slate-300 leading-relaxed mb-4">No watermark is immune to a determined removal attempt — AI tools can now inpaint even complex watermarks. But you can make casual theft expensive enough that most people don't bother:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Overlap your watermark with the subject</strong> — corner-only watermarks are cropped in seconds. Watermarks crossing the subject require clone-stamp work.</li>
+  <li><strong>Use multiple watermarks</strong> — one large and one small, on different edges. Cropping one still leaves the other.</li>
+  <li><strong>Tile translucent watermarks</strong> — subtle repeating pattern across the whole image. Very hard to remove cleanly.</li>
+  <li><strong>Match watermark complexity to image content</strong> — a simple text watermark over a complex pattern is harder to inpaint than over a plain sky.</li>
+  <li><strong>Register copyright separately</strong> — legally, the watermark just documents authorship. Actual protection comes from copyright registration and DMCA enforcement.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Logo Watermark: Technical Setup</h2>
+<p class="text-slate-300 leading-relaxed mb-4">For a logo watermark you'll use repeatedly, prepare the asset once:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Format:</strong> PNG with transparency. SVG for infinitely scalable use. Never JPG — the white background will obviously appear.</li>
+  <li><strong>Color:</strong> White for dark images, black for light images, or create two versions. Consider a 50% gray version that reads on either.</li>
+  <li><strong>Resolution:</strong> at least 1000 px on the longest edge. Better to scale down than up.</li>
+  <li><strong>Single color flat</strong> rather than detailed color logo — reads better at small sizes and low opacity.</li>
+  <li><strong>Save the master file in PSD/Sketch/Figma</strong> so you can regenerate variants without quality loss.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Batch Watermarking</h2>
+<p class="text-slate-300 leading-relaxed mb-4">If you're watermarking more than a handful of photos, automate it. Options:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Lightroom presets</strong> — built-in watermark module in the export dialog.</li>
+  <li><strong>Photoshop actions</strong> — record once, run on a folder via File → Automate → Batch.</li>
+  <li><strong>ImageMagick CLI</strong> — <code>composite -gravity southeast -geometry +20+20 watermark.png input.jpg out.jpg</code> scripted across directories.</li>
+  <li><strong>Browser tools with queue UI</strong> — best for occasional batch runs (10-100 images) when you don't want to install software.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Does adding a watermark reduce image quality?</dt>
+<dd class="text-slate-300 leading-relaxed">No — the watermark is composited onto the image, not encoded into it. As long as you save the watermarked version at high JPG quality (85%+) or PNG, the underlying image quality is unchanged. Multiple re-saves of JPG would cause compounding compression loss, but that's a JPG issue, not a watermark issue.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can AI remove watermarks?</dt>
+<dd class="text-slate-300 leading-relaxed">Modern inpainting AI (Photoshop's Generative Fill, Stable Diffusion inpainting, specialized tools) can remove simple watermarks convincingly. Complex multi-position watermarks that overlap the subject are still meaningfully harder. The combination of watermark + stored EXIF + timestamp + copyright registration is the practical protection stack for 2026.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I watermark social media posts?</dt>
+<dd class="text-slate-300 leading-relaxed">For content you want reshared — usually no (watermarks discourage sharing). For distinctive photography or illustration that gets stolen — yes, subtle corner watermark or signature. Instagram/TikTok inherently "watermark" by showing your handle, but that disappears on reposts.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between a watermark and a signature?</dt>
+<dd class="text-slate-300 leading-relaxed">Practically none — "signature" tends to mean a small subtle text/logo attribution, "watermark" tends to mean a more visible protective overlay. Both serve the same function: associating the image with its creator.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I add a watermark without installing software?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — browser-based watermark tools using the Canvas API composite everything locally, no upload needed. They're enough for most personal and small-business workflows. Only switch to Lightroom/Photoshop if you need to batch hundreds of photos or want export presets saved for repeated use.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="image-compression-formats.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">compress</span>
+                <div><p class="font-semibold text-sm text-white">Image Compression Formats</p>
+                <p class="text-xs text-slate-400 mt-0.5">JPG, PNG, WebP — choosing the right output</p></div>
+              </a>
+              <a href="svg-icons-web-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">bolt</span>
+                <div><p class="font-semibold text-sm text-white">SVG Icons Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Using scalable logos as watermarks</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/watermark-creator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">branding_watermark</span>Watermark Creator
+              </a>
+              <a href="/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">compress</span>Image Compressor
+              </a>
+              <a href="/image-resizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">crop</span>Image Resizer
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

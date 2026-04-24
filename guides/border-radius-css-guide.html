@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS border-radius Guide: Rounded Corners, Ellipses &amp; Asymmetric Shapes | StudioLimb</title>
+  <meta name="description" content="Master CSS border-radius: 8-value syntax, elliptical corners, asymmetric shapes, pill buttons, squircles, and percentage vs pixel units.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/border-radius-css-guide.html">
+  <meta property="og:title" content="CSS border-radius Guide">
+  <meta property="og:description" content="8-value syntax, elliptical corners, squircles, and more.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/border-radius-css-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS border-radius Guide">
+  <meta name="twitter:description" content="Rounded corners, ellipses, and asymmetric shapes.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"CSS border-radius Guide: Rounded Corners, Ellipses & Asymmetric Shapes","description":"Complete CSS border-radius reference covering 8-value syntax, elliptical corners, pill buttons, squircles, and asymmetric shape design.","keywords":"css border radius, border-radius css, rounded corners css, pill button css, squircle css, elliptical corners","wordCount":1700,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/border-radius-css-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/border-radius-css-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"CSS border-radius Guide","item":"https://www.studiolimb.com/guides/border-radius-css-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(124,92,252,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-primary">CSS</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-primary">rounded_corner</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">CSS border-radius Guide: Rounded Corners &amp; Asymmetric Shapes</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">Most developers stop at <code>border-radius: 8px</code> — but the property supports an 8-value syntax that can create pills, circles, squircles, leaves, and petals without any SVG. This guide covers the full range of shapes you can make with nothing but <code>border-radius</code>.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Shorthand Syntax</h2>
+<p class="text-slate-300 leading-relaxed mb-4">The shorthand follows the same clockwise pattern as padding/margin, starting from the top-left:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>border-radius: 16px;                /* all four corners */
+border-radius: 16px 8px;            /* top-left+bottom-right, top-right+bottom-left */
+border-radius: 16px 8px 4px;        /* top-left, top-right+bottom-left, bottom-right */
+border-radius: 16px 8px 4px 2px;    /* top-left, top-right, bottom-right, bottom-left */</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">The 8-Value (Elliptical) Syntax</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Each corner actually accepts <strong>two</strong> values — a horizontal radius and a vertical radius — separated by a slash. This creates elliptical corners instead of circular ones:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Pattern: horizontal-radii / vertical-radii */
+border-radius: 50px 20px 30px 40px / 10px 20px 30px 40px;
+
+/* Shorthand: same for all corners */
+border-radius: 50% / 25%;
+
+/* Per-corner full control */
+border-top-left-radius:     30px 60px;
+border-top-right-radius:    60px 30px;
+border-bottom-right-radius: 30px 60px;
+border-bottom-left-radius:  60px 30px;</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">The first value of each corner pair is the horizontal radius (how far in from the side the curve starts). The second is the vertical radius (how far down from the top the curve starts). Equal values make circular arcs; unequal values create stretched elliptical arcs.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Shapes</h2>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Circle</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Pill Button</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.pill {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px; /* always larger than half the height */
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Use a huge pixel value (like <code>9999px</code>) for pills — the browser clamps to half the element's height, giving perfect semicircular ends no matter the size.</p>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Leaf / Teardrop</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.leaf {
+  width: 120px;
+  height: 120px;
+  border-radius: 0 100% 0 100%;
+}
+
+.teardrop {
+  width: 100px;
+  height: 100px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Blob (Asymmetric Rounded Shape)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.blob {
+  width: 200px;
+  height: 200px;
+  background: #7c5cfc;
+  border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Organic blobs are the 8-value syntax's superpower. Each corner gets unique horizontal/vertical radii, creating irregular-looking but mathematically precise shapes perfect for decorative backgrounds.</p>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Squircle (Apple-Style Rounded Square)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Approximation — true squircles require SVG or mask */
+.squircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 30%;
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Note: <code>border-radius</code> produces a true ellipse, not a squircle (a mathematical shape with continuous curvature). Apple's real squircle requires SVG or CSS <code>mask-image</code> with a custom shape. For most UI, a 20-30% border-radius is visually indistinguishable.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Pixel vs Percentage</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Unit</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Behavior</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Use Case</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">px</td><td class="py-2 pr-4">Fixed radius regardless of element size</td><td class="py-2 pr-4">Consistent corners on varied-size elements (e.g. cards)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">%</td><td class="py-2 pr-4">Relative to element dimensions</td><td class="py-2 pr-4">Circles, ellipses, blobs that scale with the shape</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">rem</td><td class="py-2 pr-4">Relative to root font size</td><td class="py-2 pr-4">Radius that scales with user zoom</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">em</td><td class="py-2 pr-4">Relative to element's font size</td><td class="py-2 pr-4">Radius that scales with button text size</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Overflow Considerations</h2>
+<p class="text-slate-300 leading-relaxed mb-4">By default, a rounded-corner element doesn't clip its children. An image inside a rounded card will still have square corners unless you add:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.card {
+  border-radius: 16px;
+  overflow: hidden;  /* clip children to the rounded shape */
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Note: <code>overflow: hidden</code> breaks outside-element effects like box-shadow glows that extend past the container. If you need both, apply <code>border-radius</code> to the child image directly instead.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Per-Corner Control for Asymmetric Designs</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Tab-like shape (only top corners rounded) */
+.tab {
+  border-radius: 12px 12px 0 0;
+}
+
+/* Notification banner (left corners squared) */
+.banner {
+  border-radius: 0 12px 12px 0;
+}
+
+/* Speech bubble corner */
+.bubble-left {
+  border-radius: 16px 16px 16px 0;
+}
+
+/* Capsule on one side only */
+.half-pill {
+  border-radius: 9999px 0 0 9999px;
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Why doesn't a big border-radius make a bigger circle?</dt>
+<dd class="text-slate-300 leading-relaxed">Once the radius exceeds half the smaller dimension, browsers clamp it. A 50px radius on a 40×40 element behaves the same as 20px (which is half of 40). Use percentages for shapes that scale with size, or use <code>9999px</code> as a foolproof "fully rounded" value.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Does border-radius affect performance?</dt>
+<dd class="text-slate-300 leading-relaxed">Barely. Modern browsers render rounded corners as fast as square ones. The only time it matters is when combined with <code>overflow: hidden</code> on large scrolling elements, which can force off-screen rendering. For normal UI elements, there's no measurable cost.</dd></div>
+<div><dt class="font-semibold text-white mb-1">How do I animate border-radius smoothly?</dt>
+<dd class="text-slate-300 leading-relaxed">Use <code>transition: border-radius 0.3s ease;</code> — browsers interpolate radii smoothly. For morphing between very different shapes (e.g., circle to squircle), add <code>will-change: border-radius</code> to hint the renderer.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I make a triangle or star with border-radius?</dt>
+<dd class="text-slate-300 leading-relaxed">No — border-radius rounds corners of rectangles. For triangles use the border trick or <code>clip-path</code>. For stars and other polygons, use <code>clip-path</code> or SVG. See our CSS Triangle Tutorial for details.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What's the difference between border-radius and -webkit-border-radius?</dt>
+<dd class="text-slate-300 leading-relaxed">The <code>-webkit-</code> prefix was needed for older Safari/Chrome versions (pre-2013). Today the unprefixed version works everywhere — drop the prefix unless supporting ancient browsers.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="css-clip-path-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">crop_free</span>
+                <div><p class="font-semibold text-sm text-white">CSS clip-path Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Beyond rounded corners — polygon-based shapes</p></div>
+              </a>
+              <a href="css-triangle-tutorial.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">change_history</span>
+                <div><p class="font-semibold text-sm text-white">CSS Triangle Tutorial</p>
+                <p class="text-xs text-slate-400 mt-0.5">For shapes border-radius can't make</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/border-radius-visualizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">rounded_corner</span>Border Radius Visualizer
+              </a>
+              <a href="/box-shadow-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">filter_drama</span>Box Shadow Generator
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

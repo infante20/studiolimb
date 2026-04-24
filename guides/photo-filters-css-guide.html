@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Photo Filters Guide: Instagram-Style Effects with filter() | StudioLimb</title>
+  <meta name="description" content="Apply photo filters with CSS filter(): brightness, contrast, saturate, hue-rotate, sepia, blur. Create Instagram-style presets and layer effects with backdrop-filter.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/photo-filters-css-guide.html">
+  <meta property="og:title" content="CSS Photo Filters Guide">
+  <meta property="og:description" content="Instagram-style photo filters with pure CSS — no JavaScript.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/photo-filters-css-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Photo Filters Guide">
+  <meta name="twitter:description" content="Instagram-style photo filters with pure CSS.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"CSS Photo Filters Guide: Instagram-Style Effects with filter()","description":"Complete guide to CSS photo filters: brightness, contrast, saturate, hue-rotate, sepia, blur, and composing Instagram-style presets.","keywords":"css photo filters, css filter, instagram filters css, css image effects, backdrop-filter, grayscale sepia css","wordCount":1700,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/photo-filters-css-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/photo-filters-css-guide.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"CSS Photo Filters Guide","item":"https://www.studiolimb.com/guides/photo-filters-css-guide.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-amber-400">CSS &amp; Images</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-amber-400">auto_fix_high</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">CSS Photo Filters Guide: Instagram-Style Effects with filter()</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">The CSS <code>filter</code> property applies Photoshop-style effects to images with a single line: grayscale, sepia, blur, contrast, brightness. This guide covers every filter function, Instagram-style preset combinations, and the often-confused difference between <code>filter</code> and <code>backdrop-filter</code>.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Filter Functions Reference</h2>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Function</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Range</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Effect</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>brightness()</code></td><td class="py-2 pr-4">0 to ∞ (1 = original)</td><td class="py-2 pr-4">Darker below 1, brighter above</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>contrast()</code></td><td class="py-2 pr-4">0 to ∞ (1 = original)</td><td class="py-2 pr-4">Flatter below 1, punchier above</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>saturate()</code></td><td class="py-2 pr-4">0 to ∞ (1 = original)</td><td class="py-2 pr-4">0 = grayscale, 2 = oversaturated</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>grayscale()</code></td><td class="py-2 pr-4">0 to 1</td><td class="py-2 pr-4">0 = color, 1 = black and white</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>sepia()</code></td><td class="py-2 pr-4">0 to 1</td><td class="py-2 pr-4">Warm brown tint, vintage feel</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>hue-rotate()</code></td><td class="py-2 pr-4">0deg to 360deg</td><td class="py-2 pr-4">Shifts color wheel by degree</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>invert()</code></td><td class="py-2 pr-4">0 to 1</td><td class="py-2 pr-4">Inverts colors (photo negative)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>opacity()</code></td><td class="py-2 pr-4">0 to 1</td><td class="py-2 pr-4">Transparency (prefer <code>opacity</code> property)</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>blur()</code></td><td class="py-2 pr-4">0px to ∞</td><td class="py-2 pr-4">Gaussian blur, affects sharpness</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4"><code>drop-shadow()</code></td><td class="py-2 pr-4">shadow params</td><td class="py-2 pr-4">Like box-shadow but respects image transparency</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Combining Filters</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Apply multiple filters by space-separating them. Order matters — filters apply left to right:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>img {
+  filter: contrast(1.1) brightness(1.05) saturate(1.2);
+}
+
+/* Order matters: grayscale after hue-rotate vs before */
+.a { filter: hue-rotate(90deg) grayscale(1); }  /* gray result */
+.b { filter: grayscale(1) hue-rotate(90deg); }  /* still gray */</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Instagram-Style Presets</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Classic filter recipes you can apply directly:</p>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Clarendon (Cool, Punchy)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.clarendon {
+  filter: contrast(1.2) saturate(1.35);
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Gingham (Soft, Vintage)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.gingham {
+  filter: brightness(1.05) hue-rotate(-10deg) sepia(0.04);
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Moon (Cool Black &amp; White)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.moon {
+  filter: grayscale(1) contrast(1.1) brightness(1.1);
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Lark (Bright, Desaturated Greens)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.lark {
+  filter: brightness(1.1) contrast(0.95) saturate(1.15);
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Reyes (Dusty, Faded)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.reyes {
+  filter: sepia(0.22) brightness(1.1) contrast(0.85) saturate(0.75);
+}</code></pre>
+
+<h3 class="text-xl font-semibold text-white mt-6 mb-3">Juno (Warm, Vivid)</h3>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>.juno {
+  filter: contrast(1.15) saturate(1.4) hue-rotate(-5deg);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Hover Effects with filter()</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Color on hover, grayscale at rest — portfolio classic */
+.gallery img {
+  filter: grayscale(1);
+  transition: filter 0.4s ease;
+}
+.gallery img:hover {
+  filter: grayscale(0);
+}
+
+/* Blur on hover for out-of-focus effect */
+.blurrable {
+  transition: filter 0.3s;
+}
+.blurrable:hover {
+  filter: blur(8px);
+}
+
+/* Brightness pulse on card hover */
+.card:hover img {
+  filter: brightness(1.1) saturate(1.1);
+}</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">filter vs backdrop-filter</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Two different properties for two different jobs:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong><code>filter</code></strong> — applies effects to the element itself. The element and everything inside it gets filtered.</li>
+  <li><strong><code>backdrop-filter</code></strong> — applies effects to whatever is <em>behind</em> the element, visible through its transparent/semi-transparent background. The element itself is not filtered.</li>
+</ul>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Glassmorphism panel — blur what's behind the element */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Darkened image with text overlay readable */
+.hero {
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: brightness(0.6);
+}</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4"><code>backdrop-filter</code> is what powers iOS-style glassmorphism. It needs a transparent or semi-transparent background to show the filtered backdrop through.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Performance Notes</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Most filters are GPU-accelerated</strong> — safe to use on large images and animate smoothly.</li>
+  <li><strong>blur() is expensive at large radii</strong> — 20px+ blur on a full-screen element can drop frame rate on mobile.</li>
+  <li><strong>backdrop-filter is heavier than filter</strong> — the browser must composite everything behind. Use sparingly on mobile.</li>
+  <li><strong>Combining filter with animations</strong> — stick to opacity and transform for transitions if possible; filter animations stress compositing.</li>
+  <li><strong>Add <code>will-change: filter</code></strong> when animating, but remove it after the animation ends (it reserves resources).</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Browser Support</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong><code>filter</code></strong> — supported in all browsers since 2015. Safe to use unconditionally.</li>
+  <li><strong><code>backdrop-filter</code></strong> — Chrome, Edge, Safari fully support. Firefox supports since 2022. Include <code>-webkit-backdrop-filter</code> for older Safari.</li>
+  <li><strong>SVG filters</strong> (referenced via <code>filter: url(#id)</code>) — supported everywhere but harder to write. Built-ins cover most use cases.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">Are CSS filters destructive?</dt>
+<dd class="text-slate-300 leading-relaxed">No — they apply at render time. The underlying image is untouched. Remove the <code>filter</code> property and you're back to the original. This is the main advantage over server-side filtering.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I save a CSS-filtered image?</dt>
+<dd class="text-slate-300 leading-relaxed">Not directly from CSS — the filter is a display layer. To persist the filtered result, render the image to a Canvas with the same filter applied, then export the canvas. Most browser-based filter tools do this behind the scenes.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Why does my backdrop-filter not work?</dt>
+<dd class="text-slate-300 leading-relaxed">Three common issues: (1) the element has a fully opaque background (no backdrop visible), (2) you forgot the <code>-webkit-backdrop-filter</code> prefix for Safari, or (3) the parent has <code>overflow: hidden</code> with rounded corners clipping the backdrop area.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Is there a way to get more control than built-in filters?</dt>
+<dd class="text-slate-300 leading-relaxed">Yes — use SVG filters via <code>filter: url(#my-filter)</code> referencing an inline <code>&lt;filter&gt;</code> element. You can compose arbitrary matrix operations, displacement maps, and turbulence effects. Complex, but gives you Photoshop-level control.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Can I apply different filters to different parts of an image?</dt>
+<dd class="text-slate-300 leading-relaxed">Not with pure <code>filter</code> — it applies to the whole element. You can use <code>clip-path</code> or masks to reveal different filtered layers, or use Canvas/SVG for true per-pixel control.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="glassmorphism-css-tutorial.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">blur_on</span>
+                <div><p class="font-semibold text-sm text-white">Glassmorphism CSS Tutorial</p>
+                <p class="text-xs text-slate-400 mt-0.5">backdrop-filter in action for frosted-glass UI</p></div>
+              </a>
+              <a href="css-hover-effects-examples.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">touch_app</span>
+                <div><p class="font-semibold text-sm text-white">CSS Hover Effects</p>
+                <p class="text-xs text-slate-400 mt-0.5">Combining filters with hover transitions</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/photo-filters.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">auto_fix_high</span>Photo Filters Tool
+              </a>
+              <a href="/glassmorphism-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">blur_on</span>Glassmorphism Gen
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>

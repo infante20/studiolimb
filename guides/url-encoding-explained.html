@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Encoding Explained: Percent-Encoding, Reserved Chars, UTF-8 | StudioLimb</title>
+  <meta name="description" content="Complete URL encoding guide: percent-encoding mechanics, reserved vs unreserved characters, UTF-8 handling, encodeURIComponent vs encodeURI, and when to encode.">
+  <link rel="canonical" href="https://www.studiolimb.com/guides/url-encoding-explained.html">
+  <meta property="og:title" content="URL Encoding Explained">
+  <meta property="og:description" content="Percent-encoding, reserved characters, UTF-8, and encodeURI vs encodeURIComponent.">
+  <meta property="og:url" content="https://www.studiolimb.com/guides/url-encoding-explained.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.studiolimb.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="URL Encoding Explained">
+  <meta name="twitter:description" content="Percent-encoding and UTF-8 in URLs.">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"URL Encoding Explained: Percent-Encoding, Reserved Chars, UTF-8","description":"Complete URL encoding reference: percent-encoding mechanics, reserved vs unreserved characters, UTF-8 multi-byte handling, and the difference between encodeURI and encodeURIComponent.","keywords":"url encoding, percent encoding, url decode, encodeuricomponent, url encode special characters, utf-8 url","wordCount":1700,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/guides/url-encoding-explained.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/guides/url-encoding-explained.html"}}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    body{font-family:'Public Sans',sans-serif;background:#050508}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide h3{font-size:1.2rem;font-weight:600;color:#e2e8f0;margin-top:2rem;margin-bottom:.75rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.8;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432"
+       crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.studiolimb.com/guides/"},{"@type":"ListItem","position":3,"name":"URL Encoding Explained","item":"https://www.studiolimb.com/guides/url-encoding-explained.html"}]}
+  </script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition-colors">Tools</a>
+        <a href="/guides/" class="hover:text-white transition-colors text-white">Guides</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/guides/" class="hover:text-white transition-colors">Guides</a><span>/</span>
+        <span class="text-indigo-400">Developer</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-indigo-400">link</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">URL Encoding Explained: Percent-Encoding, Reserved Chars, UTF-8</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">URL encoding (percent-encoding) converts characters that have special meaning in URLs — spaces, ampersands, non-ASCII — into <code>%HH</code> escape sequences. This guide explains the mechanics, when encoding is mandatory, the difference between encodeURI and encodeURIComponent, and how UTF-8 handles non-English characters.</p>
+      <p class="text-slate-500 text-sm mt-4">April 2026 · 7 min read</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Why URLs Need Encoding</h2>
+<p class="text-slate-300 leading-relaxed mb-4">URLs reserve certain characters as structural delimiters: <code>/</code> separates paths, <code>?</code> starts the query string, <code>&amp;</code> separates query parameters, <code>#</code> marks a fragment. If your data contains any of these characters, browsers and servers would interpret them as structure rather than content — breaking your URL.</p>
+<p class="text-slate-300 leading-relaxed mb-4">Example problem — a search query for "black &amp; white":</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>/* Wrong: ampersand breaks the parameter parsing */
+https://example.com/search?q=black &amp; white
+
+/* Correct: ampersand encoded */
+https://example.com/search?q=black%20%26%20white</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">How Percent-Encoding Works</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Each encoded character is replaced with <code>%</code> followed by two hexadecimal digits representing the character's byte value in UTF-8:</p>
+<div class="overflow-x-auto mb-6"><table class="w-full text-sm text-slate-300 border-collapse">
+<thead><tr class="border-b border-white/10"><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Character</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Encoded</th><th class="text-left py-2 pr-4 text-slate-400 font-semibold">Why encoded</th></tr></thead><tbody>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">space</td><td class="py-2 pr-4"><code>%20</code> or <code>+</code> (in queries)</td><td class="py-2 pr-4">Not allowed in URLs</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">&amp;</td><td class="py-2 pr-4"><code>%26</code></td><td class="py-2 pr-4">Parameter separator</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">?</td><td class="py-2 pr-4"><code>%3F</code></td><td class="py-2 pr-4">Starts query string</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">#</td><td class="py-2 pr-4"><code>%23</code></td><td class="py-2 pr-4">Starts fragment</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">/</td><td class="py-2 pr-4"><code>%2F</code></td><td class="py-2 pr-4">Path separator</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">=</td><td class="py-2 pr-4"><code>%3D</code></td><td class="py-2 pr-4">Key-value delimiter</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">+</td><td class="py-2 pr-4"><code>%2B</code></td><td class="py-2 pr-4">Means space in query context</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">%</td><td class="py-2 pr-4"><code>%25</code></td><td class="py-2 pr-4">Escape character itself</td></tr>
+<tr class="border-b border-white/5"><td class="py-2 pr-4">:</td><td class="py-2 pr-4"><code>%3A</code></td><td class="py-2 pr-4">Scheme separator</td></tr>
+</tbody></table></div>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Reserved vs Unreserved Characters</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Per RFC 3986:</p>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Unreserved</strong> (never need encoding): <code>A-Z a-z 0-9 - _ . ~</code></li>
+  <li><strong>Reserved</strong> (encode when they'd be confused with structure): <code>: / ? # [ ] @ ! $ &amp; ' ( ) * + , ; =</code></li>
+  <li><strong>Other</strong> (always encode): spaces, non-ASCII, control characters</li>
+</ul>
+<p class="text-slate-300 leading-relaxed mb-4">Unreserved characters are guaranteed safe to pass through any URL context unchanged. Reserved characters are safe only when they're not being interpreted as structure — but since you usually don't control interpretation, encoding them is the safe default.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">encodeURI vs encodeURIComponent</h2>
+<p class="text-slate-300 leading-relaxed mb-4">JavaScript provides two built-in functions that behave differently:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>// encodeURI: encodes spaces and non-ASCII but leaves URL structure intact
+encodeURI("https://example.com/path with spaces?a=b&amp;c=d");
+// Result: "https://example.com/path%20with%20spaces?a=b&amp;c=d"
+
+// encodeURIComponent: encodes EVERYTHING including URL structure
+encodeURIComponent("https://example.com/path with spaces?a=b&amp;c=d");
+// Result: "https%3A%2F%2Fexample.com%2Fpath%20with%20spaces%3Fa%3Db%26c%3Dd"</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4"><strong>Rule of thumb:</strong> use <code>encodeURIComponent</code> for individual query values. Use <code>encodeURI</code> only when encoding a complete URL that might contain spaces, and you want to preserve the URL structure.</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>// Correct way to build a query URL:
+const query = "black &amp; white";
+const url = `https://example.com/search?q=${encodeURIComponent(query)}`;
+// Result: "https://example.com/search?q=black%20%26%20white"</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">UTF-8 and Non-ASCII Characters</h2>
+<p class="text-slate-300 leading-relaxed mb-4">Non-English characters like <code>ñ</code>, <code>中</code>, <code>한</code>, <code>日</code> are multi-byte in UTF-8. Each byte gets its own <code>%HH</code> escape:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>encodeURIComponent("ñ");      // "%C3%B1"      (2 bytes)
+encodeURIComponent("中");      // "%E4%B8%AD"   (3 bytes)
+encodeURIComponent("한");      // "%ED%95%9C"   (3 bytes)
+encodeURIComponent("😀");      // "%F0%9F%98%80" (4 bytes — emoji)</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Modern browsers display unencoded UTF-8 characters in the address bar for readability (IDN — Internationalized Domain Names), but the underlying HTTP request still sends the percent-encoded version. This is why a URL looks clean in your browser but shows <code>%E4%B8%AD</code> when you copy-paste it.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Query String: + vs %20 for Spaces</h2>
+<p class="text-slate-300 leading-relaxed mb-4">In <strong>query strings</strong> (after <code>?</code>), <code>+</code> is a valid alternative for space. In <strong>paths</strong>, it's literal "+". This inconsistency causes real bugs:</p>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>// encodeURIComponent always produces %20, never +
+encodeURIComponent("hello world");
+// "hello%20world"
+
+// Browsers decode BOTH + and %20 as space in query strings
+// Result of search?q=hello+world == search?q=hello%20world
+
+// But in path segments, + stays as literal +
+// /tags/c%2B%2B → "c++"  (encoded)
+// /tags/c++     → "c++"  (no special meaning)</code></pre>
+<p class="text-slate-300 leading-relaxed mb-4">Safer to always use <code>%20</code> everywhere. The <code>+</code> shortcut is a legacy HTML form convention that causes ambiguity outside of pure query-string contexts.</p>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Decoding URLs</h2>
+<pre class="bg-[#0d0d14] border border-white/10 rounded-xl p-5 overflow-x-auto text-sm text-slate-300 mb-6"><code>// JavaScript decoding
+decodeURIComponent("hello%20world");        // "hello world"
+decodeURIComponent("black%20%26%20white");  // "black &amp; white"
+decodeURIComponent("%E4%B8%AD");            // "中"
+
+// Reversibility: encode then decode gives you the original
+const original = "Hello, 世界! &amp; more";
+const encoded = encodeURIComponent(original);
+const decoded = decodeURIComponent(encoded);
+decoded === original;  // true</code></pre>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Common Pitfalls</h2>
+<ul class="list-disc list-inside space-y-2 text-slate-300 mb-6 ml-2">
+  <li><strong>Double-encoding</strong> — accidentally calling <code>encodeURIComponent</code> twice. <code>"hello world"</code> becomes <code>"hello%2520world"</code> (the <code>%</code> got re-encoded). Decode once correctly reverses it; decoding twice garbles.</li>
+  <li><strong>Using encodeURI for parameter values</strong> — it doesn't encode <code>&amp;</code>, so an ampersand in user input breaks the URL structure. Always use <code>encodeURIComponent</code> for values.</li>
+  <li><strong>Trusting URLs in forms</strong> — HTML forms encode with <code>application/x-www-form-urlencoded</code>, which uses <code>+</code> for spaces. Server-side parsers must handle both <code>+</code> and <code>%20</code>.</li>
+  <li><strong>Encoding already-encoded URLs</strong> — if you're passing a full URL as a query parameter (e.g., a redirect URL), encode it once with <code>encodeURIComponent</code>. Don't pre-encode.</li>
+</ul>
+
+<h2 class="text-2xl font-bold text-white mt-10 mb-4">Frequently Asked Questions</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">What's the maximum URL length?</dt>
+<dd class="text-slate-300 leading-relaxed">No hard spec limit, but practical limits: browsers support 2,000-8,000 characters (IE was 2,083 — still quoted as "the limit"). Servers may reject longer. For anything beyond a few hundred characters of parameter data, use a POST request with a body instead of a GET query string.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Should I encode the full URL or just the parameters?</dt>
+<dd class="text-slate-300 leading-relaxed">Encode individual parameter values with <code>encodeURIComponent</code>. Never encode the full URL — you'd convert the <code>//</code> in the scheme, breaking it. Build the URL structure manually with <code>${encodeURIComponent(value)}</code> interpolation.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Why does my URL look fine in the browser but fail when shared?</dt>
+<dd class="text-slate-300 leading-relaxed">Browsers display UTF-8 characters unencoded for readability. When copied, some systems get the displayed version and don't re-encode properly. Always generate URLs with <code>encodeURIComponent</code> — don't rely on the browser's display form being portable.</dd></div>
+<div><dt class="font-semibold text-white mb-1">Is URL encoding case-sensitive?</dt>
+<dd class="text-slate-300 leading-relaxed">The hex digits themselves are not — <code>%3F</code> and <code>%3f</code> both mean <code>?</code>. Per RFC 3986, uppercase is preferred for consistency, and some strict parsers only accept uppercase. Use uppercase when generating.</dd></div>
+<div><dt class="font-semibold text-white mb-1">What about URL encoding vs HTML entity encoding?</dt>
+<dd class="text-slate-300 leading-relaxed">They're different and not interchangeable. HTML entities (<code>&amp;amp;</code>, <code>&amp;lt;</code>) escape characters in HTML documents. URL encoding (<code>%26</code>, <code>%3C</code>) escapes characters in URLs. If you embed a URL inside HTML, you may need both — URL encode the URL first, then HTML-entity encode the ampersands in the resulting URL string.</dd></div>
+</dl>
+
+      </article>
+      <div class="mt-12 mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Related Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="base64-images-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">code</span>
+                <div><p class="font-semibold text-sm text-white">Base64 Encoding Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Another encoding scheme — for binary in text contexts</p></div>
+              </a>
+              <a href="json-formatting-guide.html" class="glass-panel rounded-xl p-4 flex items-start gap-3 hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">data_object</span>
+                <div><p class="font-semibold text-sm text-white">JSON Formatting Guide</p>
+                <p class="text-xs text-slate-400 mt-0.5">Structure and escaping rules for JSON</p></div>
+              </a></div>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Try the Free Tools</p>
+        <div class="flex flex-wrap gap-4">
+              <a href="/url-encode-decode.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">link</span>URL Encoder / Decoder
+              </a>
+              <a href="/base64-encode-decode.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-primary text-base">code</span>Base64 Encoder
+              </a></div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; Free browser-based design tools. No upload, no signup.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">Privacy</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">Terms</a>
+      <a href="/guides/" class="hover:text-white transition-colors">Guides</a>
+    </div>
+  </footer>
+</body>
+</html>
