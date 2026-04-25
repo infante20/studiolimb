@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이미지 크기 조정 방법 (화질 손실 없이 무료) | StudioLimb</title>
+  <meta name="description" content="화질 손실 없이 이미지 크기를 조정하는 방법: 화면비, 리샘플링 알고리즘 (Lanczos, bicubic), 업스케일 vs 다운스케일, 일괄 처리 — 100% 브라우저에서.">
+  <link rel="canonical" href="https://www.studiolimb.com/ko/guides/image-resizer-guide.html">
+  <link rel="alternate" hreflang="en" href="https://www.studiolimb.com/guides/image-resizer-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://www.studiolimb.com/ko/guides/image-resizer-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://www.studiolimb.com/guides/image-resizer-guide.html">
+  <meta property="og:title" content="이미지 크기 조정 방법 (화질 손실 없이)">
+  <meta property="og:description" content="리샘플링 알고리즘, 화면비, 업스케일 vs 다운스케일.">
+  <meta property="og:url" content="https://www.studiolimb.com/ko/guides/image-resizer-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","inLanguage":"ko","headline":"이미지 크기 조정 방법 (화질 손실 없이 무료)","description":"리샘플링 알고리즘, 화면비, 업스케일 vs 다운스케일에 대한 완벽 가이드.","keywords":"이미지 크기 조정, 이미지 리사이저, 사진 크기 변경, 이미지 사이즈 조절, lanczos bicubic","wordCount":1200,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/ko/guides/image-resizer-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/ko/guides/image-resizer-guide.html"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com/ko/"},{"@type":"ListItem","position":2,"name":"가이드","item":"https://www.studiolimb.com/ko/guides/"},{"@type":"ListItem","position":3,"name":"이미지 크기 조정 방법","item":"https://www.studiolimb.com/ko/guides/image-resizer-guide.html"}]}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Noto Sans KR',sans-serif;background:#06060f}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.85;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.875rem}
+    .prose-guide th{text-align:left;padding:.5rem 1rem .5rem 0;color:#94a3b8;font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
+    .prose-guide td{padding:.5rem 1rem .5rem 0;color:#cbd5e1;border-bottom:1px solid rgba(255,255,255,.05)}
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432" crossorigin="anonymous"></script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/ko/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/ko/" class="hover:text-white transition-colors">도구</a>
+        <a href="/ko/guides/" class="hover:text-white transition-colors text-white">가이드</a>
+        <a href="/guides/image-resizer-guide.html" class="text-xs hover:text-white">EN</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(217,70,239,0.12) 0%, rgba(5,5,8,0) 60%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/ko/guides/" class="hover:text-white transition-colors">가이드</a><span>/</span>
+        <span class="text-fuchsia-400">이미지 & 에셋</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-fuchsia-400">crop</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">이미지 크기 조정 방법 (화질 손실 없이 무료)</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">이미지 크기 조정은 단순해 보이지만 작은 선택들 — 리샘플링 알고리즘, 치수, 화면비 잠금 — 이 결과물의 선명도를 결정합니다. 이 가이드는 수학, 알고리즘, 저렴한 도구가 도입하는 화질 손실 없이 크기 조정하는 워크플로우를 다룹니다.</p>
+      <p class="text-slate-500 text-sm mt-4">2026년 4월 · 8분 분량</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2>화면비 이해하기</h2>
+<p>화면비는 이미지의 가로와 세로 사이의 비례 관계입니다. 1920×1080 이미지는 16:9, 1080×1080은 1:1(정사각), 1080×1920은 9:16(세로)입니다.</p>
+<p>화면비를 유지하면서 크기를 조정하면 이미지가 비례적으로 확장됩니다 — 왜곡 없이. 화면비를 무시하고 임의의 치수를 입력하면 이미지가 늘어나서 원이 타원이 되고 얼굴이 캐리커처가 됩니다. 자르기 대신 크기 조정을 원하지 않는 한 항상 화면비를 잠그세요.</p>
+<p>빠른 수학: 주어진 너비에 맞는 새 높이를 찾으려면 원본 비율을 곱합니다. 4000×3000 사진을 너비 1200으로 조정하면 새 높이는 1200 × (3000/4000) = 900px입니다.</p>
+
+<h2>리샘플링 알고리즘 설명</h2>
+<p>크기를 조정할 때 픽셀이 어떻게 보간되는지 결정하는 알고리즘이 목표 크기보다 더 중요합니다. 저렴한 도구는 기본적으로 "최근접 이웃"을 사용합니다 — 빠르지만 거칩니다. 좋은 도구는 Lanczos 또는 bicubic 리샘플링을 사용합니다.</p>
+<table>
+<thead><tr><th>알고리즘</th><th>속도</th><th>품질</th><th>사용 사례</th></tr></thead>
+<tbody>
+<tr><td>최근접 이웃</td><td>가장 빠름</td><td>나쁨 (거침)</td><td>픽셀 아트만</td></tr>
+<tr><td>Bilinear</td><td>빠름</td><td>보통 (부드러움)</td><td>썸네일, 미리보기</td></tr>
+<tr><td>Bicubic</td><td>중간</td><td>좋음</td><td>일반 사진</td></tr>
+<tr><td>Lanczos</td><td>느림</td><td>우수</td><td>큰 사진 다운스케일</td></tr>
+<tr><td>AI / 신경망</td><td>가장 느림</td><td>업스케일에 최고</td><td>작은 이미지 업스케일</td></tr>
+</tbody>
+</table>
+<p>Lanczos는 진지한 다운스케일의 기본값입니다 — bicubic이 부드럽게 만드는 가장자리 선명도를 보존합니다. 이미 작은 이미지를 업스케일하는 경우 전통적인 알고리즘은 모두 흐림을 만듭니다; AI 업스케일러(ESRGAN, Real-ESRGAN)는 그럴듯한 디테일을 환각으로 만드는 다른 카테고리입니다.</p>
+
+<h2>다운스케일 vs 업스케일</h2>
+<p><strong>다운스케일</strong>(이미지를 작게 만들기)은 수학적으로 안전합니다 — 정보를 버리는 것입니다. 좋은 알고리즘은 보이는 품질을 보존하기 위해 올바른 데이터를 버립니다. 4000×3000 → 1200×900에서 Lanczos는 네이티브 1200×900으로 촬영한 것과 구별할 수 없는 결과를 만듭니다.</p>
+<p><strong>업스케일</strong>(이미지를 크게 만들기)은 근본적으로 데이터를 발명하는 것입니다. 전통적 알고리즘은 흐려지고; AI 업스케일러는 추측합니다. 결과는 소스 품질에 따라 달라집니다 — 400×400 사진을 4000×4000으로 업스케일해도 마법처럼 실제 디테일이 드러나지 않지만, AI가 그럴듯하게 숨길 수는 있습니다.</p>
+<p>경험 법칙: 항상 필요보다 크게 촬영/저장하고 다운스케일하세요. 업스케일은 비상 해결책이어야지 워크플로우가 되어서는 안 됩니다.</p>
+
+<h2>일반적인 목표 크기</h2>
+<table>
+<thead><tr><th>사용 사례</th><th>권장 크기</th></tr></thead>
+<tbody>
+<tr><td>웹 히어로 / 커버</td><td>1920 × 1080 또는 2560 × 1440</td></tr>
+<tr><td>블로그 게시물 리드 이미지</td><td>1200 × 630 (OG 표준)</td></tr>
+<tr><td>블로그 본문 이미지</td><td>800 × 600</td></tr>
+<tr><td>제품 썸네일</td><td>400 × 400 ~ 800 × 800</td></tr>
+<tr><td>이메일 뉴스레터</td><td>너비 600px (고정)</td></tr>
+<tr><td>프로필 사진</td><td>400 × 400</td></tr>
+<tr><td>파비콘 소스</td><td>512 × 512 (다운스케일됨)</td></tr>
+</tbody>
+</table>
+
+<h2>크기 조정 + 압축 함께</h2>
+<p>크기 조정은 픽셀 수를 줄이고; 압축은 픽셀당 바이트를 줄입니다. 보통 둘 다 원합니다. 4MB, 4000×3000 JPG를 1200×900, 85% 품질로 조정하면 일반적으로 150-300KB가 됩니다 — 표시 크기에서 본질적으로 보이는 화질 손실 없이 15-25배 감소.</p>
+<p>순서가 중요합니다: 압축 <em>전에</em> 크기 조정. 4000×3000 JPG를 80%로 압축한 다음 크기를 조정하면 크기 조정이 전파하는 아티팩트를 도입합니다. 먼저 크기 조정(불필요한 픽셀 제거), 그다음 압축(나머지 픽셀 최적화).</p>
+
+<h2>일반적인 실수</h2>
+<ul>
+  <li><strong>DPI 무시 — 웹에서는 중요하지 않습니다.</strong> DPI는 인쇄에만 중요합니다. 화면 사용에서는 픽셀 치수만 중요합니다. 같은 1200×900 이미지의 72 DPI와 300 DPI 버전은 모든 화면에서 동일하게 보입니다.</li>
+  <li><strong>이미 작은 이미지를 "HD"처럼 보이도록 업스케일.</strong> 흐릿한 큰 파일을 만들 뿐입니다. 소스가 작다는 것을 받아들이세요.</li>
+  <li><strong>"정확한 치수에 맞추기 위해" 화면비 잠금 해제.</strong> 얼굴이 늘어나고 레이아웃이 왜곡됩니다. 대신 자르기를 사용하세요.</li>
+  <li><strong>JPG로 충분한 곳에 PNG로 저장.</strong> PNG로 저장한 크기 조정된 사진은 같은 고품질 JPG로 크기 조정한 것보다 5-10배 크고 가시적인 품질 향상은 없습니다.</li>
+  <li><strong>이중 압축</strong> — JPG를 저장하고, 크기 조정하고, 다시 JPG로 저장. 각 JPG 저장은 품질을 잃습니다. 이전 내보내기가 아닌 원본 파일에서 크기 조정하세요.</li>
+</ul>
+
+<h2>자주 묻는 질문</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">크기 조정이 이미지 품질을 떨어뜨리나요?</dt>
+<dd>좋은 알고리즘(Lanczos/bicubic)으로 다운스케일하면 일반 보기 크기에서 시각적으로 무손실입니다. 업스케일은 AI 업스케일을 사용하지 않는 한 항상 흐림이나 아티팩트를 도입합니다. 규칙: 크게 시작해서 목표에서 끝내세요.</dd></div>
+<div><dt class="font-semibold text-white mb-1">화질 손실 없이 이미지 크기를 조정할 수 있나요?</dt>
+<dd>다운스케일의 경우 — 좋은 리샘플링 알고리즘으로 화질 손실은 인지되지 않습니다. 업스케일의 경우 — 진정한 디테일을 얻을 수는 없지만 AI 업스케일러가 일반적인 피사체 사진에 대해 그럴듯하게 발명할 수 있습니다.</dd></div>
+<div><dt class="font-semibold text-white mb-1">크기 조정 후 가장 좋은 파일 포맷은?</dt>
+<dd>사진은 JPG (허용되는 품질로 가장 작음). 텍스트/선명한 가장자리가 있는 그래픽은 PNG. WebP는 둘 다보다 작고 이제 보편적으로 지원됩니다 — 대상 플랫폼이 받아들이면 WebP를 사용하세요.</dd></div>
+<div><dt class="font-semibold text-white mb-1">여러 이미지를 일괄 크기 조정하려면?</dt>
+<dd>대부분의 브라우저 도구는 한 번에 하나씩 처리합니다. 일괄 워크플로우의 경우 여러 탭을 열거나 데스크톱 도구(ImageMagick, Squoosh CLI, 포토샵 액션)를 사용하세요. 진정한 대량 작업(100개 이상)에는 스크립트가 어떤 UI보다 효율적입니다.</dd></div>
+<div><dt class="font-semibold text-white mb-1">브라우저 기반 크기 조정에 최대 파일 크기 제한이 있나요?</dt>
+<dd>최신 노트북에서 실용적 한계는 약 50-100MB. 그 이상에서는 브라우저가 메모리 부족이 될 수 있습니다. 매우 큰 파일(드론 사진, 스캔)에는 데스크톱 도구가 더 안정적으로 처리합니다.</dd></div>
+</dl>
+
+      </article>
+      <div class="glass-panel rounded-2xl p-6 mt-12">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">무료 도구 사용해보기</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/image-resizer.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"><span class="material-symbols-outlined text-primary text-base">crop</span>이미지 리사이저</a>
+          <a href="/image-compressor.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"><span class="material-symbols-outlined text-primary text-base">compress</span>이미지 압축</a>
+          <a href="/image-format-converter.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"><span class="material-symbols-outlined text-primary text-base">transform</span>포맷 변환</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; 무료 브라우저 기반 디자인 도구</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/ko/" class="hover:text-white transition-colors">홈</a>
+      <a href="/ko/guides/" class="hover:text-white transition-colors">가이드</a>
+      <a href="/guides/image-resizer-guide.html" class="hover:text-white transition-colors">English</a>
+    </div>
+  </footer>
+</body>
+</html>

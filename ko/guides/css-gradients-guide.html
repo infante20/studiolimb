@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 그라디언트 가이드: 선형, 방사형, 원뿔형, 메시 효과 | StudioLimb</title>
+  <meta name="description" content="CSS 그라디언트 마스터하기: linear-gradient, radial-gradient, conic-gradient, 색상 정지점, 그라디언트 텍스트, 메시 그라디언트 기법.">
+  <link rel="canonical" href="https://www.studiolimb.com/ko/guides/css-gradients-guide.html">
+  <link rel="alternate" hreflang="en" href="https://www.studiolimb.com/guides/css-gradients-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://www.studiolimb.com/ko/guides/css-gradients-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://www.studiolimb.com/guides/css-gradients-guide.html">
+  <meta property="og:title" content="CSS 그라디언트 가이드">
+  <meta property="og:description" content="선형, 방사형, 원뿔형, 메시 그라디언트 마스터하기.">
+  <meta property="og:url" content="https://www.studiolimb.com/ko/guides/css-gradients-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","inLanguage":"ko","headline":"CSS 그라디언트 가이드: 선형, 방사형, 원뿔형, 메시 효과","description":"linear-gradient, radial-gradient, conic-gradient, 그라디언트 텍스트, 메시 그라디언트, 애니메이션 그라디언트의 완벽한 CSS 그라디언트 참조서.","keywords":"CSS 그라디언트, linear gradient, radial gradient, conic gradient, 그라디언트 텍스트, 메시 그라디언트","wordCount":1300,"datePublished":"2026-04-24","dateModified":"2026-04-24","author":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com"},"publisher":{"@type":"Organization","name":"StudioLimb","url":"https://www.studiolimb.com","logo":{"@type":"ImageObject","url":"https://www.studiolimb.com/icons/icon-192x192.png"}},"url":"https://www.studiolimb.com/ko/guides/css-gradients-guide.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.studiolimb.com/ko/guides/css-gradients-guide.html"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"StudioLimb","item":"https://www.studiolimb.com/ko/"},{"@type":"ListItem","position":2,"name":"가이드","item":"https://www.studiolimb.com/ko/guides/"},{"@type":"ListItem","position":3,"name":"CSS 그라디언트 가이드","item":"https://www.studiolimb.com/ko/guides/css-gradients-guide.html"}]}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Noto Sans KR',sans-serif;background:#06060f}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px)}
+    .prose-guide h2{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2.5rem;margin-bottom:1rem}
+    .prose-guide p{color:#cbd5e1;line-height:1.85;margin-bottom:1rem}
+    .prose-guide ul{list-style:disc;padding-left:1.5rem;color:#cbd5e1;margin-bottom:1.5rem}
+    .prose-guide li{margin-bottom:.4rem}
+    .prose-guide pre{background:#0d0d14;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;overflow-x:auto;font-size:.875rem;margin-bottom:1.5rem}
+    .prose-guide code{color:#cbd5e1;font-family:monospace}
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432" crossorigin="anonymous"></script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/ko/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/ko/" class="hover:text-white">도구</a>
+        <a href="/ko/guides/" class="hover:text-white text-white">가이드</a>
+        <a href="/guides/css-gradients-guide.html" class="text-xs hover:text-white">EN</a>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6" style="background:linear-gradient(135deg, rgba(124,92,252,0.15) 0%, rgba(236,72,153,0.08) 40%, rgba(5,5,8,0) 70%);">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <a href="/ko/guides/" class="hover:text-white">가이드</a><span>/</span><span class="text-primary">CSS</span>
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-5xl text-primary">gradient</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">CSS 그라디언트 가이드: 선형, 방사형, 원뿔형, 메시 효과</h1>
+      </div>
+      <p class="text-slate-300 text-lg leading-relaxed">CSS 그라디언트는 10년 동안의 이미지 기반 장식을 순수 코드로 대체했습니다 — 해상도 독립적, 즉시 테마 적용 가능, 쉽게 애니메이션화. 이 가이드는 기본 선형부터 최신 원뿔형, 메시 스타일 다층 그라디언트까지 모든 그라디언트 유형을 다루며 각각에 대한 복사-붙여넣기 레시피를 제공합니다.</p>
+      <p class="text-slate-500 text-sm mt-4">2026년 4월 · 9분 분량</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <article class="prose-guide">
+
+<h2>선형 그라디언트</h2>
+<p>가장 일반적입니다. 색상이 두 점 사이의 직선을 따라 전환됩니다. 각도(또는 방향 키워드)가 그라디언트가 진행되는 위치를 제어합니다:</p>
+<pre><code>/* 각도 구문 */
+background: linear-gradient(135deg, #7c5cfc, #ec4899);
+
+/* 방향 키워드 (더 읽기 쉬움) */
+background: linear-gradient(to right, #7c5cfc, #ec4899);
+background: linear-gradient(to bottom right, #7c5cfc, #ec4899);
+
+/* 여러 색상 정지점 */
+background: linear-gradient(to right, #7c5cfc 0%, #ec4899 50%, #f59e0b 100%);</code></pre>
+<p>각도 규칙: <code>0deg</code>는 위, <code>90deg</code>는 오른쪽, <code>180deg</code>는 아래, <code>270deg</code>는 왼쪽을 가리킵니다. 기본 방향(각도 미지정)은 <code>to bottom</code>(180deg)입니다.</p>
+
+<h2>색상 정지점</h2>
+<p>각 색상은 "완전히" 그 색상이 되어야 하는 위치 백분율이나 길이를 지정할 수 있습니다. 그 사이의 정지점은 부드러운 전환을 유지합니다:</p>
+<pre><code>/* 선명한 색상 경계 (줄무늬처럼 보임) */
+background: linear-gradient(to right, #7c5cfc 50%, #ec4899 50%);
+
+/* 중간 유지가 있는 부드러운 전환 */
+background: linear-gradient(to right, #7c5cfc 0%, #7c5cfc 20%, #ec4899 80%, #ec4899 100%);</code></pre>
+
+<h2>방사형 그라디언트</h2>
+<p>색상이 한 점에서 원이나 타원으로 바깥으로 퍼집니다:</p>
+<pre><code>/* 기본값: 중앙의 타원 */
+background: radial-gradient(#7c5cfc, transparent);
+
+/* 모양과 위치 */
+background: radial-gradient(circle at top left, #7c5cfc, transparent);
+background: radial-gradient(ellipse at 30% 70%, #7c5cfc, transparent);
+
+/* 명시적 반지름 */
+background: radial-gradient(circle 200px at center, #7c5cfc, transparent);</code></pre>
+<p>스포트라이트 효과, 미묘한 분위기 배경, 버튼 발광 상태에 방사형 그라디언트를 사용하세요. 투명으로 사라지는 여러 겹친 방사형은 풍부한 "꿈같은" 페이지 배경을 만듭니다.</p>
+
+<h2>원뿔형 그라디언트</h2>
+<p>색상이 중심점 주위로 회전합니다 — 파이 차트처럼. 2020년경 브라우저에 추가됨:</p>
+<pre><code>/* 기본 원뿔형 (무지개 스윕) */
+background: conic-gradient(red, yellow, green, blue, red);
+
+/* 각도 + 위치에서 */
+background: conic-gradient(from 45deg at center, #7c5cfc, #ec4899, #7c5cfc);
+
+/* 파이 차트 */
+background: conic-gradient(
+  #7c5cfc 0deg 90deg,
+  #ec4899 90deg 200deg,
+  #f59e0b 200deg 360deg
+);</code></pre>
+
+<h2>그라디언트 텍스트</h2>
+<p>현대 웹 디자인의 모든 곳에 있는 "무지개 헤딩" 트릭:</p>
+<pre><code>.gradient-text {
+  background: linear-gradient(135deg, #7c5cfc, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}</code></pre>
+<p>요소가 그라디언트 배경을 받고, 배경이 텍스트 모양에만 클립되며, 텍스트 자체는 투명으로 설정되어 그라디언트가 보입니다. Safari를 위해 접두사가 있는 속성과 없는 속성을 모두 포함하세요.</p>
+
+<h2>메시 스타일 그라디언트</h2>
+<p>2021년 이후 인기 있는 흐릿한 다색 배경인 "메시 그라디언트"는 실제로 CSS 기능이 아닙니다. 투명으로 페이드되는 다층 방사형 그라디언트입니다:</p>
+<pre><code>.mesh-bg {
+  background-color: #0a0a1a;
+  background-image:
+    radial-gradient(at 20% 30%, rgba(124, 92, 252, 0.4) 0px, transparent 50%),
+    radial-gradient(at 80% 10%, rgba(236, 72, 153, 0.3) 0px, transparent 50%),
+    radial-gradient(at 40% 90%, rgba(245, 158, 11, 0.3) 0px, transparent 50%),
+    radial-gradient(at 90% 70%, rgba(16, 185, 129, 0.25) 0px, transparent 50%);
+}</code></pre>
+<p>각 방사형은 투명으로 페이드되는 부드러운 색상 덩어리입니다. 다양한 위치와 색상에서 3-5개 쌓으면 "메시" 환상이 생깁니다.</p>
+
+<h2>애니메이션 그라디언트</h2>
+<p>CSS는 그라디언트 색상 정지점을 직접 애니메이션화하지 않습니다 — 컨테이너보다 큰 그라디언트의 위치를 애니메이션화해야 합니다:</p>
+<pre><code>.animated-gradient {
+  background: linear-gradient(135deg, #7c5cfc, #ec4899, #f59e0b, #7c5cfc);
+  background-size: 300% 300%;
+  animation: shift 8s ease infinite;
+}
+
+@keyframes shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}</code></pre>
+
+<h2>색 공간: 최신 그라디언트가 더 좋아 보이는 이유</h2>
+<p>전통적 CSS 그라디언트는 sRGB 색 공간에서 보간됩니다. 최신 CSS는 더 부드럽고 더 생생한 전환을 위해 보간 색 공간 지정을 지원합니다:</p>
+<pre><code>/* 구식: 탁한 중간 색상을 만들 수 있음 */
+background: linear-gradient(to right, blue, yellow);
+
+/* 신식: 더 부드러운 지각적 보간 */
+background: linear-gradient(in oklch to right, blue, yellow);
+background: linear-gradient(in oklab to right, blue, yellow);</code></pre>
+<p><code>oklch</code>와 <code>oklab</code> 색 공간은 지각적으로 균일한 전환을 만듭니다 — 파랑-노랑 그라디언트 중간에 탁한 회색 없음. 2023년부터 Chrome, Safari, Firefox에서 지원됩니다.</p>
+
+<h2>자주 묻는 질문</h2>
+<dl class="space-y-6 mb-6">
+<div><dt class="font-semibold text-white mb-1">화면에서 그라디언트가 줄무늬처럼 보이는 이유는?</dt>
+<dd>8비트 디스플레이에서 큰 영역의 그라디언트는 비슷한 색상 사이에 보이는 단계를 보입니다. 수정: <code>background-image: url('noise.png'), linear-gradient(...)</code>로 미묘한 노이즈 추가, 또는 더 부드러운 지각적 전환을 위해 <code>oklch</code> 색 공간 사용.</dd></div>
+<div><dt class="font-semibold text-white mb-1">SVG 요소에 그라디언트를 사용할 수 있나요?</dt>
+<dd>SVG에는 자체 그라디언트 구문이 있습니다(<code>&lt;defs&gt;</code>에 정의된 <code>&lt;linearGradient&gt;</code>와 <code>&lt;radialGradient&gt;</code>, <code>fill="url(#id)"</code>로 참조). CSS 그라디언트는 CSS 속성(<code>background</code>, <code>border-image</code>)에서만 작동하며 SVG <code>fill</code>에서는 작동하지 않습니다.</dd></div>
+<div><dt class="font-semibold text-white mb-1">이미지 주위에 그라디언트 테두리를 만드는 방법은?</dt>
+<dd>이미지를 패딩이 있는 div로 감싸고 위에 표시된 다층 배경 기법을 사용하세요. 또는 정사각 테두리에만 <code>border-image</code>를 사용하세요.</dd></div>
+<div><dt class="font-semibold text-white mb-1">그라디언트 패턴을 반복할 수 있나요?</dt>
+<dd>네 — 크기 범위 내의 색상 정지점과 함께 <code>repeating-linear-gradient()</code>나 <code>repeating-radial-gradient()</code>를 사용하세요. 클래식 사용: <code>repeating-linear-gradient(45deg, #7c5cfc 0 10px, transparent 10px 20px)</code>를 통한 줄무늬.</dd></div>
+<div><dt class="font-semibold text-white mb-1">그라디언트가 피그마와 웹사이트에서 다르게 보이는 이유는?</dt>
+<dd>피그마는 기본적으로 지각적으로 선형인 보간을 사용합니다. 브라우저 CSS(2023년 이전)는 sRGB 보간을 사용합니다. <code>linear-gradient(in oklab to right, ...)</code>를 사용하여 피그마의 모양과 일치시키세요 — 최신 브라우저에서 사용 가능.</dd></div>
+</dl>
+
+      </article>
+      <div class="glass-panel rounded-2xl p-6 mt-12">
+        <p class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">무료 도구 사용해보기</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/gradient-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white"><span class="material-symbols-outlined text-primary text-base">gradient</span>그라디언트 생성기</a>
+          <a href="/color-palette-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white"><span class="material-symbols-outlined text-primary text-base">palette</span>컬러 팔레트</a>
+          <a href="/glassmorphism-generator.html" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white"><span class="material-symbols-outlined text-primary text-base">blur_on</span>글래스모피즘</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; 무료 브라우저 기반 디자인 도구</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/ko/" class="hover:text-white">홈</a>
+      <a href="/ko/guides/" class="hover:text-white">가이드</a>
+      <a href="/guides/css-gradients-guide.html" class="hover:text-white">English</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>디자인 & 개발 가이드 — CSS, 타이포그래피, 이미지 최적화 | StudioLimb</title>
+  <meta name="description" content="CSS, 타이포그래피, 이미지 최적화, SVG 등 웹 디자인과 개발에 대한 심층 가이드. 47개 이상의 실무 자료를 한곳에서.">
+  <link rel="canonical" href="https://www.studiolimb.com/ko/guides/">
+  <link rel="alternate" hreflang="en" href="https://www.studiolimb.com/guides/">
+  <link rel="alternate" hreflang="ko" href="https://www.studiolimb.com/ko/guides/">
+  <link rel="alternate" hreflang="x-default" href="https://www.studiolimb.com/guides/">
+  <meta property="og:title" content="디자인 & 개발 가이드 | StudioLimb">
+  <meta property="og:description" content="CSS, 타이포그래피, 이미지 최적화에 대한 47개 이상의 심층 가이드.">
+  <meta property="og:url" content="https://www.studiolimb.com/ko/guides/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#7c6fff'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Noto Sans KR','Public Sans',sans-serif;background:#06060f}
+    .glass-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:all 0.22s}
+    .glass-panel:hover{border-color:rgba(124,92,252,0.4);transform:translateY(-4px)}
+    .lang-selector{position:relative;z-index:100}
+    .lang-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.85rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:0.5rem}
+    .lang-dropdown{position:absolute;top:calc(100% + 0.5rem);right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.5rem;min-width:140px;opacity:0;visibility:hidden;transform:translateY(-10px);transition:all 0.2s;display:flex;flex-direction:column;gap:0.25rem}
+    .lang-selector:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+    .lang-option{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;color:#94a3b8;text-decoration:none;font-size:0.85rem;border-radius:6px;font-weight:500}
+    .lang-option:hover{background:rgba(255,255,255,0.05);color:#fff}
+    .lang-option.active{color:#10b981;background:rgba(16,185,129,0.15)}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7000965074807432" crossorigin="anonymous"></script>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/ko/" class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary">design_services</span>StudioLimb</a>
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="/ko/" class="hover:text-white transition-colors">도구</a>
+        <a href="/ko/guides/" class="hover:text-white transition-colors text-white">가이드</a>
+        <div class="lang-selector">
+          <button class="lang-btn">🇰🇷 KO</button>
+          <div class="lang-dropdown">
+            <a href="/guides/" class="lang-option">🇺🇸 English</a>
+            <a href="/ko/guides/" class="lang-option active">🇰🇷 한국어</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header class="pt-28 pb-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4">디자인 & 개발 가이드</h1>
+      <p class="text-slate-400 text-lg max-w-2xl">CSS, 타이포그래피, 이미지 최적화, SVG에 대한 47개 이상의 심층 가이드. 각 도구를 효과적으로 사용하는 방법을 배우세요.</p>
+    </div>
+  </header>
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <a href="social-media-image-sizes-guide.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#be185d,#831843);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">share</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-400 text-[10px] font-bold uppercase">이미지</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 10분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">소셜미디어 이미지 사이즈 2026</h2>
+            <p class="text-sm text-slate-400">인스타그램, 페이스북, X, 링크드인, 틱톡, 유튜브, 핀터레스트의 정확한 치수.</p>
+          </div>
+        </a>
+
+        <a href="remove-background-guide.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#0e7490,#164e63);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">person_cancel</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] font-bold uppercase">이미지</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 9분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">이미지 배경 제거하는 방법</h2>
+            <p class="text-sm text-slate-400">기기 내 AI로 무료로 배경 제거. 작동 원리, 한계, 깨끗한 투명 PNG 만드는 법.</p>
+          </div>
+        </a>
+
+        <a href="image-resizer-guide.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#a21caf,#701a75);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">crop</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-fuchsia-500/10 text-fuchsia-400 text-[10px] font-bold uppercase">이미지</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 8분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">이미지 크기 조정 방법</h2>
+            <p class="text-sm text-slate-400">화질 손실 없이 이미지 크기 조정. 리샘플링 알고리즘, 화면비, 업스케일 vs 다운스케일.</p>
+          </div>
+        </a>
+
+        <a href="css-gradients-guide.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#7c5cfc,#ec4899,#f59e0b);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">gradient</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase">CSS</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 9분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">CSS 그라디언트 가이드</h2>
+            <p class="text-sm text-slate-400">선형, 방사형, 원뿔형, 메시 그라디언트, 그라디언트 텍스트, 애니메이션 레시피.</p>
+          </div>
+        </a>
+
+        <a href="font-pairing-guide.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#ea580c,#9a3412);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">match_case</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 text-[10px] font-bold uppercase">타이포그래피</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 9분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">폰트 페어링 가이드</h2>
+            <p class="text-sm text-slate-400">페어링 원칙과 검증된 12개 Google Fonts 조합. 복사해서 바로 쓰는 CSS 코드.</p>
+          </div>
+        </a>
+
+        <a href="css-hover-effects-examples.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#6d28d9,#4c1d95);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">touch_app</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-400 text-[10px] font-bold uppercase">CSS</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 10분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">CSS 호버 효과 15가지 예제</h2>
+            <p class="text-sm text-slate-400">버튼, 카드, 이미지, 아이콘용 호버 패턴 — JavaScript 없이.</p>
+          </div>
+        </a>
+
+        <a href="image-compression-formats.html" class="glass-panel rounded-2xl overflow-hidden group">
+          <div class="aspect-video flex items-center justify-center" style="background:linear-gradient(135deg,#9333ea,#581c87);">
+            <span class="material-symbols-outlined text-6xl text-white/40 group-hover:scale-110 transition-transform">compress</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase">이미지</span>
+              <span class="text-[10px] text-slate-500 font-bold uppercase">2026년 4월 · 8분</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">이미지 압축 포맷 비교</h2>
+            <p class="text-sm text-slate-400">JPG, PNG, WebP, AVIF — 사용 사례별로 적합한 포맷 선택하기.</p>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="mt-16 text-center text-slate-400">
+        <p class="mb-4">한국어로 더 많은 가이드가 곧 출시됩니다. 지금은 영어로 47개 이상의 가이드를 확인할 수 있습니다.</p>
+        <a href="/guides/" class="inline-flex items-center gap-2 text-primary hover:text-white transition-colors font-semibold">
+          영어 가이드 모두 보기 <span class="material-symbols-outlined text-base">arrow_outward</span>
+        </a>
+      </div>
+    </div>
+  </main>
+  <footer class="border-t border-white/5 py-8 px-6 text-center text-slate-500 text-sm">
+    <p>&copy; 2026 StudioLimb &mdash; 무료 브라우저 기반 디자인 도구. 업로드도, 가입도 필요 없습니다.</p>
+    <div class="flex justify-center gap-6 mt-3">
+      <a href="/privacy-policy.html" class="hover:text-white transition-colors">개인정보 처리방침</a>
+      <a href="/terms.html" class="hover:text-white transition-colors">이용약관</a>
+      <a href="/ko/" class="hover:text-white transition-colors">홈</a>
+    </div>
+  </footer>
+</body>
+</html>
