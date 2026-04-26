@@ -1,4 +1,4 @@
-const CACHE_NAME = 'studiolimb-cache-v5';
+const CACHE_NAME = 'studiolimb-cache-v6';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -10,6 +10,7 @@ const urlsToCache = [
   '/border-radius-visualizer.html',
   '/css-triangle-generator.html',
   '/snowfall-premier.html',
+  '/css-animation-generator.html',
   // Typography & Layout
   '/flexbox-playground.html',
   '/grid-generator.html',

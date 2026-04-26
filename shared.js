@@ -40,6 +40,7 @@
     { slug: 'contrast-checker',         title: 'Contrast Checker',      icon: 'contrast',             cat: 'color',     desc: 'WCAG accessibility check' },
     { slug: 'px-rem-converter',         title: 'PX to REM',             icon: 'calculate',            cat: 'color',     desc: 'Convert px to rem units' },
     { slug: 'social-media-sizes',       title: 'Social Sizes',          icon: 'share',                cat: 'color',     desc: 'Platform image dimensions' },
+    { slug: 'css-animation-generator',  title: 'CSS Animation Gen',     icon: 'animation',            cat: 'css',       desc: 'Visual keyframe animation builder' },
   ];
 
   // ─── Detect current tool ──────────────────────────────────────────────────

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta property="og:image" content="https://www.studiolimb.com/icons/icon-512x512.png" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CSS Animation Generator | Create Keyframe Animations Visually - StudioLimb</title>
+    <meta name="description" content="Build CSS keyframe animations visually with live preview. Choose presets or customize keyframes, easing, and timing. Copy clean @keyframes code instantly." />
+    <meta property="og:title" content="CSS Animation Generator — StudioLimb" />
+    <meta property="og:description" content="Build CSS keyframe animations visually with live preview. Free browser-based tool." />
+    <meta property="og:url" content="https://www.studiolimb.com/css-animation-generator.html" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="canonical" href="https://www.studiolimb.com/css-animation-generator.html" />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#7c5cfc", "background-dark": "#050508" },
+                    fontFamily: { "display": ["Public Sans", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+        .canvas-container { background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%); }
+        input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #7c5cfc; border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px rgba(124,92,252,0.5); transition: transform 0.1s; }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .preset-btn { transition: all 0.2s; }
+        .preset-btn:hover { background: rgba(124,92,252,0.15); border-color: rgba(124,92,252,0.4); }
+        .preset-btn.active { background: rgba(124,92,252,0.2); border-color: #7c5cfc; color: #fff; }
+        .kf-dot { width: 14px; height: 14px; border-radius: 50%; background: #7c5cfc; border: 2px solid #050508; cursor: pointer; position: absolute; top: 50%; transform: translate(-50%, -50%); transition: box-shadow 0.2s; z-index: 2; }
+        .kf-dot:hover, .kf-dot.active { box-shadow: 0 0 12px rgba(124,92,252,0.7); }
+        .kf-track { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; position: relative; }
+        .kf-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, #7c5cfc, #a855f7); border-radius: 2px; }
+        #preview-element { width: 100px; height: 100px; border-radius: 16px; background: linear-gradient(135deg, #7c5cfc, #a855f7); box-shadow: 0 8px 32px rgba(124,92,252,0.3); }
+        .code-output { font-family: 'Courier New', monospace; font-size: 0.8rem; line-height: 1.6; color: #c4b5fd; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.25rem; overflow-x: auto; white-space: pre; }
+    </style>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050508" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+</head>
+
+<body class="bg-background-dark font-display text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <header class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
+        <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg">
+                <span class="material-symbols-outlined">token</span>
+            </div>
+            <h1 class="text-xl font-bold">CSS Animation Generator</h1>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 pb-16">
+
+        <!-- Presets -->
+        <section class="mb-6">
+            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Presets</h2>
+            <div class="flex flex-wrap gap-2" id="presets"></div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- Left: Controls -->
+            <div class="space-y-6">
+
+                <!-- Keyframes -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">Keyframes</h3>
+                        <button id="add-kf-btn" class="flex items-center gap-1 text-xs text-primary font-bold hover:text-white transition-colors">
+                            <span class="material-symbols-outlined text-sm">add</span> Add
+                        </button>
+                    </div>
+                    <!-- Timeline -->
+                    <div class="mb-6 px-2">
+                        <div class="kf-track" id="kf-timeline"><div class="kf-fill" style="width:100%"></div></div>
+                    </div>
+                    <!-- Keyframe editor -->
+                    <div id="kf-editor" class="space-y-4 max-h-[360px] overflow-y-auto pr-1"></div>
+                </div>
+
+                <!-- Animation Properties -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Properties</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs text-slate-400 font-semibold block mb-1">Duration</label>
+                            <div class="flex items-center gap-2">
+                                <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1" />
+                                <span id="duration-val" class="text-xs text-primary font-bold w-10 text-right">1s</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 font-semibold block mb-1">Delay</label>
+                            <div class="flex items-center gap-2">
+                                <input type="range" id="delay" min="0" max="3" step="0.1" value="0" />
+                                <span id="delay-val" class="text-xs text-primary font-bold w-10 text-right">0s</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 font-semibold block mb-1">Timing</label>
+                            <select id="timing" class="w-full h-9 px-3 rounded-lg bg-white/5 border border-white/10 text-slate-100 text-xs focus:outline-none focus:border-primary/60">
+                                <option value="ease">ease</option>
+                                <option value="linear">linear</option>
+                                <option value="ease-in">ease-in</option>
+                                <option value="ease-out">ease-out</option>
+                                <option value="ease-in-out">ease-in-out</option>
+                                <option value="cubic-bezier(0.68,-0.55,0.27,1.55)">cubic-bezier (bounce)</option>
+                                <option value="cubic-bezier(0.25,0.46,0.45,0.94)">cubic-bezier (smooth)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 font-semibold block mb-1">Iterations</label>
+                            <div class="flex items-center gap-2">
+                                <input type="range" id="iterations" min="1" max="10" step="1" value="1" />
+                                <span id="iter-val" class="text-xs text-primary font-bold w-10 text-right">1</span>
+                                <button id="inf-toggle" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all" title="Toggle infinite">∞</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 font-semibold block mb-1">Direction</label>
+                            <select id="direction" class="w-full h-9 px-3 rounded-lg bg-white/5 border border-white/10 text-slate-100 text-xs focus:outline-none focus:border-primary/60">
+                                <option value="normal">normal</option>
+                                <option value="reverse">reverse</option>
+                                <option value="alternate">alternate</option>
+                                <option value="alternate-reverse">alternate-reverse</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 font-semibold block mb-1">Fill Mode</label>
+                            <select id="fill" class="w-full h-9 px-3 rounded-lg bg-white/5 border border-white/10 text-slate-100 text-xs focus:outline-none focus:border-primary/60">
+                                <option value="none">none</option>
+                                <option value="forwards">forwards</option>
+                                <option value="backwards">backwards</option>
+                                <option value="both">both</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Preview + Code -->
+            <div class="space-y-6">
+
+                <!-- Preview -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">Preview</h3>
+                        <div class="flex gap-2">
+                            <button id="play-btn" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/20 text-primary text-xs font-bold hover:bg-primary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">play_arrow</span> Play
+                            </button>
+                            <button id="restart-btn" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 transition-all">
+                                <span class="material-symbols-outlined text-sm">replay</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="canvas-container rounded-xl flex items-center justify-center" style="min-height:280px;">
+                        <div id="preview-element"></div>
+                    </div>
+                </div>
+
+                <!-- Code Output -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">CSS Code</h3>
+                        <button id="copy-btn" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 transition-all">
+                            <span class="material-symbols-outlined text-sm">content_copy</span> Copy
+                        </button>
+                    </div>
+                    <div class="code-output" id="code-output"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/shared.js"></script>
+    <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}</script>
+
+    <script>
+    (function() {
+        var PRESETS = {
+            'Fade In':       [{p:0, opacity:0, tx:0, ty:0, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Fade Out':      [{p:0, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:100, opacity:0, tx:0, ty:0, scale:1, rotate:0}],
+            'Slide Left':    [{p:0, opacity:0, tx:-60, ty:0, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Slide Right':   [{p:0, opacity:0, tx:60, ty:0, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Slide Up':      [{p:0, opacity:0, tx:0, ty:40, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Slide Down':    [{p:0, opacity:0, tx:0, ty:-40, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Bounce':        [{p:0, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:20, opacity:1, tx:0, ty:-30, scale:1, rotate:0}, {p:40, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:60, opacity:1, tx:0, ty:-15, scale:1, rotate:0}, {p:80, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Pulse':         [{p:0, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:50, opacity:1, tx:0, ty:0, scale:1.1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Spin':          [{p:0, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:360}],
+            'Shake':         [{p:0, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:25, opacity:1, tx:-10, ty:0, scale:1, rotate:0}, {p:50, opacity:1, tx:10, ty:0, scale:1, rotate:0}, {p:75, opacity:1, tx:-10, ty:0, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Scale Up':      [{p:0, opacity:1, tx:0, ty:0, scale:0, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Scale Down':    [{p:0, opacity:1, tx:0, ty:0, scale:1.5, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}],
+            'Flip':          [{p:0, opacity:1, tx:0, ty:0, scale:1, rotate:0}, {p:50, opacity:0.5, tx:0, ty:0, scale:1, rotate:180}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:360}],
+        };
+
+        var keyframes = [{p:0, opacity:0, tx:0, ty:30, scale:1, rotate:0}, {p:100, opacity:1, tx:0, ty:0, scale:1, rotate:0}];
+        var activePreset = 'Slide Up';
+        var isInfinite = false;
+        var isPlaying = true;
+        var styleEl = document.createElement('style');
+        document.head.appendChild(styleEl);
+
+        // --- Presets ---
+        var presetsEl = document.getElementById('presets');
+        Object.keys(PRESETS).forEach(function(name) {
+            var btn = document.createElement('button');
+            btn.className = 'preset-btn px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold';
+            btn.textContent = name;
+            btn.dataset.preset = name;
+            if (name === activePreset) btn.classList.add('active');
+            btn.addEventListener('click', function() {
+                presetsEl.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                activePreset = name;
+                keyframes = JSON.parse(JSON.stringify(PRESETS[name]));
+                renderAll();
+            });
+            presetsEl.appendChild(btn);
+        });
+
+        // --- Keyframe Editor ---
+        var kfEditor = document.getElementById('kf-editor');
+        var kfTimeline = document.getElementById('kf-timeline');
+
+        function renderTimeline() {
+            kfTimeline.querySelectorAll('.kf-dot').forEach(function(d) { d.remove(); });
+            keyframes.forEach(function(kf, i) {
+                var dot = document.createElement('div');
+                dot.className = 'kf-dot';
+                dot.style.left = kf.p + '%';
+                dot.title = kf.p + '%';
+                kfTimeline.appendChild(dot);
+            });
+        }
+
+        function renderEditor() {
+            kfEditor.innerHTML = '';
+            keyframes.forEach(function(kf, i) {
+                var div = document.createElement('div');
+                div.className = 'bg-white/[0.02] rounded-xl p-4 border border-white/5';
+                div.innerHTML =
+                    '<div class="flex items-center justify-between mb-3">' +
+                        '<span class="text-xs font-bold text-primary">' + kf.p + '%</span>' +
+                        (keyframes.length > 2 && i > 0 && i < keyframes.length - 1 ?
+                        '<button class="kf-del text-slate-500 hover:text-red-400 transition-colors" data-idx="' + i + '"><span class="material-symbols-outlined text-sm">close</span></button>' : '') +
+                    '</div>' +
+                    '<div class="grid grid-cols-2 gap-3">' +
+                        mkSlider('Opacity', 'opacity', i, 0, 1, 0.05, kf.opacity) +
+                        mkSlider('TranslateX', 'tx', i, -200, 200, 1, kf.tx) +
+                        mkSlider('TranslateY', 'ty', i, -200, 200, 1, kf.ty) +
+                        mkSlider('Scale', 'scale', i, 0, 3, 0.05, kf.scale) +
+                        mkSlider('Rotate', 'rotate', i, -360, 360, 1, kf.rotate) +
+                    '</div>';
+                kfEditor.appendChild(div);
+            });
+
+            kfEditor.querySelectorAll('.kf-del').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var idx = parseInt(btn.dataset.idx);
+                    keyframes.splice(idx, 1);
+                    clearActivePreset();
+                    renderAll();
+                });
+            });
+
+            kfEditor.querySelectorAll('input[type="range"]').forEach(function(inp) {
+                inp.addEventListener('input', function() {
+                    var idx = parseInt(inp.dataset.idx);
+                    var prop = inp.dataset.prop;
+                    keyframes[idx][prop] = parseFloat(inp.value);
+                    inp.nextElementSibling.textContent = inp.value;
+                    clearActivePreset();
+                    updatePreview();
+                    updateCode();
+                });
+            });
+        }
+
+        function mkSlider(label, prop, idx, min, max, step, val) {
+            return '<div>' +
+                '<label class="text-[10px] text-slate-500 font-semibold block mb-1">' + label + '</label>' +
+                '<div class="flex items-center gap-2">' +
+                    '<input type="range" data-idx="' + idx + '" data-prop="' + prop + '" min="' + min + '" max="' + max + '" step="' + step + '" value="' + val + '" />' +
+                    '<span class="text-[10px] text-slate-400 font-mono w-8 text-right">' + val + '</span>' +
+                '</div></div>';
+        }
+
+        // --- Add Keyframe ---
+        document.getElementById('add-kf-btn').addEventListener('click', function() {
+            if (keyframes.length >= 8) return;
+            var lastP = keyframes[keyframes.length - 1].p;
+            var secondLastP = keyframes[keyframes.length - 2].p;
+            var newP = Math.round((secondLastP + lastP) / 2);
+            if (keyframes.some(function(k) { return k.p === newP; })) {
+                newP = Math.min(lastP - 1, 99);
+            }
+            keyframes.push({p: newP, opacity: 1, tx: 0, ty: 0, scale: 1, rotate: 0});
+            keyframes.sort(function(a, b) { return a.p - b.p; });
+            clearActivePreset();
+            renderAll();
+        });
+
+        // --- Properties ---
+        var durationEl = document.getElementById('duration');
+        var delayEl = document.getElementById('delay');
+        var timingEl = document.getElementById('timing');
+        var iterEl = document.getElementById('iterations');
+        var dirEl = document.getElementById('direction');
+        var fillEl = document.getElementById('fill');
+        var infToggle = document.getElementById('inf-toggle');
+
+        [durationEl, delayEl, timingEl, iterEl, dirEl, fillEl].forEach(function(el) {
+            el.addEventListener('input', function() {
+                document.getElementById('duration-val').textContent = durationEl.value + 's';
+                document.getElementById('delay-val').textContent = delayEl.value + 's';
+                document.getElementById('iter-val').textContent = isInfinite ? '∞' : iterEl.value;
+                updatePreview();
+                updateCode();
+            });
+        });
+
+        infToggle.addEventListener('click', function() {
+            isInfinite = !isInfinite;
+            infToggle.style.background = isInfinite ? 'rgba(124,92,252,0.3)' : '';
+            infToggle.style.borderColor = isInfinite ? '#7c5cfc' : '';
+            infToggle.style.color = isInfinite ? '#7c5cfc' : '';
+            document.getElementById('iter-val').textContent = isInfinite ? '∞' : iterEl.value;
+            updatePreview();
+            updateCode();
+        });
+
+        // --- Preview ---
+        var previewEl = document.getElementById('preview-element');
+        var playBtn = document.getElementById('play-btn');
+        var restartBtn = document.getElementById('restart-btn');
+
+        function buildKeyframesCSS() {
+            var css = '@keyframes sl-anim {\n';
+            keyframes.forEach(function(kf) {
+                var transforms = [];
+                if (kf.tx !== 0) transforms.push('translateX(' + kf.tx + 'px)');
+                if (kf.ty !== 0) transforms.push('translateY(' + kf.ty + 'px)');
+                if (kf.scale !== 1) transforms.push('scale(' + kf.scale + ')');
+                if (kf.rotate !== 0) transforms.push('rotate(' + kf.rotate + 'deg)');
+                css += '  ' + kf.p + '% {\n';
+                if (kf.opacity !== 1) css += '    opacity: ' + kf.opacity + ';\n';
+                if (transforms.length > 0) css += '    transform: ' + transforms.join(' ') + ';\n';
+                if (kf.opacity === 1 && transforms.length === 0) css += '    opacity: 1;\n';
+                css += '  }\n';
+            });
+            css += '}';
+            return css;
+        }
+
+        function buildAnimationProp() {
+            return 'animation: sl-anim ' + durationEl.value + 's ' +
+                timingEl.value + ' ' +
+                delayEl.value + 's ' +
+                (isInfinite ? 'infinite' : iterEl.value) + ' ' +
+                dirEl.value + ' ' +
+                fillEl.value + ';';
+        }
+
+        function updatePreview() {
+            var kfCSS = buildKeyframesCSS();
+            var animProp = buildAnimationProp();
+            styleEl.textContent = kfCSS + '\n#preview-element {\n  ' + animProp + '\n}';
+
+            if (isPlaying) {
+                previewEl.style.animationPlayState = 'running';
+            } else {
+                previewEl.style.animationPlayState = 'paused';
+            }
+        }
+
+        function restartAnimation() {
+            previewEl.style.animation = 'none';
+            previewEl.offsetHeight;
+            previewEl.style.animation = '';
+            isPlaying = true;
+            playBtn.innerHTML = '<span class="material-symbols-outlined text-sm">pause</span> Pause';
+            updatePreview();
+        }
+
+        playBtn.addEventListener('click', function() {
+            isPlaying = !isPlaying;
+            playBtn.innerHTML = isPlaying ?
+                '<span class="material-symbols-outlined text-sm">pause</span> Pause' :
+                '<span class="material-symbols-outlined text-sm">play_arrow</span> Play';
+            previewEl.style.animationPlayState = isPlaying ? 'running' : 'paused';
+        });
+
+        restartBtn.addEventListener('click', restartAnimation);
+
+        // --- Code Output ---
+        var codeOutput = document.getElementById('code-output');
+        var copyBtn = document.getElementById('copy-btn');
+
+        function updateCode() {
+            var code = buildKeyframesCSS() + '\n\n.animated-element {\n  ' + buildAnimationProp() + '\n}';
+            codeOutput.textContent = code;
+        }
+
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(codeOutput.textContent).then(function() {
+                copyBtn.innerHTML = '<span class="material-symbols-outlined text-sm" style="color:#34d399">check</span> <span style="color:#34d399">Copied!</span>';
+                setTimeout(function() {
+                    copyBtn.innerHTML = '<span class="material-symbols-outlined text-sm">content_copy</span> Copy';
+                }, 2000);
+            });
+        });
+
+        // --- Utilities ---
+        function clearActivePreset() {
+            presetsEl.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+            activePreset = null;
+        }
+
+        function renderAll() {
+            renderTimeline();
+            renderEditor();
+            updatePreview();
+            updateCode();
+        }
+
+        // --- Init ---
+        keyframes = JSON.parse(JSON.stringify(PRESETS[activePreset]));
+        document.getElementById('duration-val').textContent = durationEl.value + 's';
+        document.getElementById('delay-val').textContent = delayEl.value + 's';
+        document.getElementById('iter-val').textContent = iterEl.value;
+        renderAll();
+    })();
+    </script>
+</body>
+</html>
